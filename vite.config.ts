@@ -39,6 +39,5 @@ export default defineConfig(({ command }) => {
         '@entities': path.resolve(__dirname, 'src/entities'),
       },
     },
-    base: '/3d-creativick/',
   };
 });
