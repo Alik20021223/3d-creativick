@@ -15,6 +15,6 @@ export const useAppStore = create<AppState>()(
       open: false,
       setOpen: (v) => set({ open: v }),
     }),
-    { name: 'app-store' }
-  )
+    { name: 'app-store' },
+  ),
 );
