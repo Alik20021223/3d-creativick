@@ -1,39 +1,38 @@
-'use client';
-
 import { Button } from '@shadcn/button';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoSrc from '@assets/logo-3d.svg';
 import userSrc from '@assets/user-profile.svg';
-import { headerMock } from '@utils/mock';
 import { ShoppingCart } from 'lucide-react';
 import { useIsMobile } from '@app/hook/useMobile';
 import MobileHeader from './mobileHeader';
 import { useAppStore } from '@app/store';
 import { useEffect } from 'react';
+import { HeaderType } from '@shared/types';
+import NavItem from '../navItem/ui';
 
 type HeaderProps = {
-  isAuth?: boolean; // прокидывай из сессии/стора
+  menuItems: HeaderType[];
 };
 
-export default function Header({ isAuth = false }: HeaderProps) {
-  const location = useLocation();
-  const pathname = location.pathname;
-  const menuItems = isAuth ? headerMock.auth : headerMock.guest;
-
+export default function Header({ menuItems }: HeaderProps) {
+  const { pathname, hash } = useLocation();
   const isMobile = useIsMobile();
+  const { open, setOpen, isAuth } = useAppStore();
 
-  const { open, setOpen } = useAppStore();
+  const navigate = useNavigate()
+
+  const isHashHref = (href: string) => href.startsWith('#');
 
   const linkClass = (href: string) => {
-    const isActive = pathname === href;
+    const active = isHashHref(href) ? hash === href : pathname === href;
     return [
       'inline-flex items-center h-full px-2 transition-colors border-b-2',
-      isActive ? 'text-primary border-primary' : 'text-gray-500 border-transparent ',
+      active ? 'text-primary border-primary' : 'text-gray-500 border-transparent ',
     ].join(' ');
   };
 
   useEffect(() => {
-    const { style } = document.documentElement; // или document.body
+    const { style } = document.documentElement;
     if (open) {
       const prev = style.overflow;
       style.overflow = 'hidden';
@@ -45,12 +44,9 @@ export default function Header({ isAuth = false }: HeaderProps) {
 
   return (
     <>
-      {/* Фиксированный wrapper на ширину экрана */}
       <div className='fixed inset-x-0 top-5 z-50'>
-        {/* Контейнер ограничивает ширину */}
-        <div className='mx-auto max-w-[1456px] px-[38px] max-sm:px-2.5'>
+        <div className='w-[1460px] w-full px-[38px] max-sm:px-2.5'>
           <header className='header-shadow flex h-16 items-center justify-between rounded-4xl bg-white p-2.5'>
-            {/* Лого */}
             <div className='flex items-center'>
               <Link to='/' aria-label='На главную'>
                 <img src={logoSrc} alt='logo' />
@@ -59,7 +55,7 @@ export default function Header({ isAuth = false }: HeaderProps) {
 
             {isMobile ? (
               <MobileHeader
-                isAuth={isAuth}
+                menuItems={menuItems}
                 open={open}
                 setOpen={setOpen}
                 linkClass={linkClass}
@@ -69,13 +65,16 @@ export default function Header({ isAuth = false }: HeaderProps) {
               <>
                 <nav className='hidden h-11 gap-6 md:flex'>
                   {menuItems.map((item) => (
-                    <Link key={item.href} to={item.href} className={linkClass(item.href)}>
-                      {item.label}
-                    </Link>
+                    <NavItem
+                      pathname={pathname}
+                      linkClass={linkClass}
+                      key={item.href}
+                      label={item.label}
+                      href={item.href}
+                    />
                   ))}
                 </nav>
 
-                {/* Правый блок */}
                 <div className='flex gap-2'>
                   {isAuth ? (
                     <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
@@ -85,10 +84,10 @@ export default function Header({ isAuth = false }: HeaderProps) {
                       </div>
                     </Button>
                   ) : (
-                    <Button className='flex h-11 w-[189px] text-white'>В магазин</Button>
+                    <Button onClick={() => navigate('/shop')} className='flex h-11 w-[189px] text-white'>В магазин</Button>
                   )}
 
-                  <Button className='bg-pink-active flex h-11 w-[83px] justify-center' asChild>
+                  <Button variant="pink" className='bg-pink-active  flex h-11 w-[83px] justify-center' asChild>
                     <Link to={isAuth ? '/profile' : '/login'}>
                       <img src={userSrc} alt='user' className='pt-[5px]' />
                     </Link>
@@ -100,7 +99,6 @@ export default function Header({ isAuth = false }: HeaderProps) {
         </div>
       </div>
 
-      {/* Глобальный блюр-вейл под хедером, поверх контента */}
       {open && (
         <button
           type='button'
@@ -110,8 +108,7 @@ export default function Header({ isAuth = false }: HeaderProps) {
         />
       )}
 
-      {/* Спейсер под фиксированным хедером */}
-      <div className='h-20' />
+      <div className='h-16' />
     </>
   );
 }

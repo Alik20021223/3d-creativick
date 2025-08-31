@@ -4,15 +4,15 @@ import React from 'react';
 import { Button } from '@shadcn/button';
 import MenuIcon from '@assets/menu-icon.svg';
 import { Popover, PopoverTrigger, PopoverContent } from '@shadcn/popover';
-
 import userSrc from '@assets/user-profile.svg';
-import { headerMock } from '@utils/mock';
 import { Link } from 'react-router-dom';
 import { cn } from '@/shared/lib/utils';
 import { ShoppingCart, XIcon } from 'lucide-react';
+import { HeaderType } from '@shared/types';
+import { useAppStore } from '@app/store';
 
 type MobileHeaderProps = {
-  isAuth?: boolean; // прокидывай из сессии/стора
+  menuItems: HeaderType[]; // передаём массив напрямую
   cartCount: number; // количество в корзине
   linkClass: (href: string) => string;
   setOpen: (v: boolean) => void;
@@ -20,14 +20,13 @@ type MobileHeaderProps = {
 };
 
 const MobileHeader: React.FC<MobileHeaderProps> = ({
-  isAuth = false,
+  menuItems = [],
   linkClass,
   cartCount = 0,
   setOpen,
   open,
-  // onMenuClick,
 }) => {
-  const menuItems = isAuth ? headerMock.auth : headerMock.guest;
+  const { isAuth } = useAppStore();
 
   return (
     <>
@@ -36,7 +35,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
           <PopoverTrigger asChild>
             <Button
               variant='ghost'
-              className={cn('h-11 w-11 p-0!', open ? 'bg-[#F1F5F9]' : 'bg-primary-active')}
+              className={cn('h-11 w-11 p-0!', open ? 'bg-secondary-active' : 'bg-primary-active')}
               aria-label='Открыть меню'
             >
               {open ? (
@@ -48,7 +47,6 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
           </PopoverTrigger>
 
           <PopoverContent
-            // якорим под кнопку, но растягиваем почти на ширину экрана
             side='bottom'
             align='end'
             sideOffset={20}
@@ -75,7 +73,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
                 <Button className='flex h-11 w-[169px] text-white'>В магазин</Button>
               )}
 
-              <Button className='bg-pink-active flex h-11 w-[83px] justify-center' asChild>
+              <Button variant="pink" className=' flex h-11 w-[83px] justify-center' asChild>
                 <Link to={isAuth ? '/profile' : '/login'}>
                   <img src={userSrc} alt='user' className='pt-[5px]' />
                 </Link>

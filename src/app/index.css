@@ -42,9 +42,26 @@
   
 }
 
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-100px); }
+}
+@keyframes floatYrev {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(100px); }
+}
+
+@keyframes floatRocket {
+  0%, 100% { transform: translateY(-25px); }
+  50%      { transform: translateY(40px); }
+}
+
 @theme {
     --color-pink-active: #F238B1; 
     --color-primary-active: #0487d9;
+    --color-secondary-active: #F1F5F9;
+    --color-dark-blue: #034AA6;
+    
 }
 
 :root {
@@ -94,6 +111,25 @@
   --index-sections-gap: 80px;
   --thumb-width: 100px;
   --thumb-height: 32px;
+
+  --animate-float: floatY 4s ease-in-out infinite;
+    --animate-floatSlow: floatY 6s ease-in-out infinite;
+    --animate-floatRev: floatYrev 5s ease-in-out infinite;
+    --animate-floatRocket: floatRocket 3s ease-in-out infinite;
+}
+
+.float       { animation: var(--animate-float); }
+.float-slow  { animation: var(--animate-floatSlow); }
+.float-rev   { animation: var(--animate-floatRev); }
+.float-rocket {animation: var(--animate-floatRocket);}
+
+/* Опционально — плавнее и забота о доступности */
+.float, .float-slow, .float-rev {
+  will-change: transform;
+  transform: translateZ(0); /* подсказка GPU */
+}
+@media (prefers-reduced-motion: reduce) {
+  .float, .float-slow, .float-rev { animation: none; }
 }
 
 .dark {
@@ -146,3 +182,92 @@ body {
 
   box-shadow: -561px 705px 250px 0px #06054a00;
 }
+
+body {
+  font-family: 'Rosatom';
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;         /* будет скроллиться вместе со страницей */
+  inset: -16px;               /* чуть больше, чтобы не было «срезов» после blur */
+  z-index: -1;
+  background-image: url(./assets/bg-default.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  filter: blur(12px);
+  /* transform больше не нужен, inset:-16px решает артефакты по краям */
+  pointer-events: none;
+}
+
+.button-shadow-blue:hover {
+box-shadow: 0px 77px 23px 0px #05AFF200;
+color: var(--primary);
+}
+
+.button-shadow-pink:hover {
+  box-shadow: 0px 12px 60px 0px #8800FF66;
+}
+
+
+.bg-linear-gradient {
+  background: linear-gradient(87.11deg, rgba(249, 36, 117, 0) 13.25%, #EA2178 91.89%);
+}
+
+.main-block {
+  background-image: url(./assets/main-bg-content.ppg);
+  background-size: cover;       /* чтобы фон заполнил весь экран */
+  background-position: center;  /* центрировать */
+  background-repeat: no-repeat;
+}
+
+.feedback-block {
+
+}
+
+
+@font-face {
+  font-family: 'Rosatom';
+  src: url('./assets/font/Rosatom-Regular.ttf') format('truetype');
+  font-weight: 400; /* Regular */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rosatom';
+  src: url('./assets/font/Rosatom-Light.ttf') format('truetype');
+  font-weight: 300; /* Light */
+  font-style: normal;
+  font-display: swap;
+}
+
+.number-about-text {
+  font-family: "Geist", sans-serif;
+}
+
+@font-face {
+  font-family: 'Rosatom';
+  src: url('./assets/font/Rosatom-Bold.ttf') format('truetype');
+  font-weight: 700; /* Bold */
+  font-style: normal;
+  font-display: swap;
+}
+
+p.no-hyphen {
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  overflow-wrap: break-word; /* или word-wrap: break-word; для старых */
+  word-break: normal;
+}
+
+.bg-feedback {
+  background-image: url(./assets/feedback-bg.jpg);
+  background-size: cover;       /* чтобы фон заполнил весь экран */
+  background-position: center;  /* центрировать */
+  background-repeat: no-repeat;
+}
+
