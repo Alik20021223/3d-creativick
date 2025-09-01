@@ -1,7 +1,7 @@
-import wbLogo from '@assets/wb-image.png'
-import yandexLogo from '@assets/yandex-market.svg'
-import megaLogo from '@assets/mega-market.svg'
-import ozonLogo from '@assets/ozon-slot.png'
+import wbLogo from '@assets/wb-image.png';
+import yandexLogo from '@assets/yandex-market.svg';
+import megaLogo from '@assets/mega-market.svg';
+import ozonLogo from '@assets/ozon-slot.png';
 
 export const headerMock = {
   main: [
@@ -21,33 +21,63 @@ export const headerMock = {
 };
 
 export const itemsFeedback = [
-  { rating: 4, text: "Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.", authorName: "Игорь Сорокин", authorRole: "Учитель" },
-  { rating: 5, text: "Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.", authorName: "Мария Воронова", authorRole: "Преподаватель" },
-  { rating: 3, text: "Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.", authorName: "Дмитрий Полевой", authorRole: "Родитель" },
-  { rating: 4, text: "Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.", authorName: "Игорь Сорокин", authorRole: "Учитель" },
-  { rating: 5, text: "Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.", authorName: "Мария Воронова", authorRole: "Преподаватель" },
-  { rating: 3, text: "Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.", authorName: "Дмитрий Полевой", authorRole: "Родитель" },
+  {
+    rating: 4,
+    text: 'Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.',
+    authorName: 'Игорь Сорокин',
+    authorRole: 'Учитель',
+  },
+  {
+    rating: 5,
+    text: 'Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.',
+    authorName: 'Мария Воронова',
+    authorRole: 'Преподаватель',
+  },
+  {
+    rating: 3,
+    text: 'Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.',
+    authorName: 'Дмитрий Полевой',
+    authorRole: 'Родитель',
+  },
+  {
+    rating: 4,
+    text: 'Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.',
+    authorName: 'Игорь Сорокин',
+    authorRole: 'Учитель',
+  },
+  {
+    rating: 5,
+    text: 'Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.',
+    authorName: 'Мария Воронова',
+    authorRole: 'Преподаватель',
+  },
+  {
+    rating: 3,
+    text: 'Таким образом, глубокий уровень погружения не оставляет шанса для своевременного выполнения сверхзадачи.',
+    authorName: 'Дмитрий Полевой',
+    authorRole: 'Родитель',
+  },
 ];
 
 export const marketplaces = [
   {
-    name: "Wildberries",
+    name: 'Wildberries',
     logo: wbLogo,
-    url: "https://www.wildberries.ru",
+    url: 'https://www.wildberries.ru',
   },
   {
-    name: "Яндекс Маркет",
+    name: 'Яндекс Маркет',
     logo: yandexLogo,
-    url: "https://market.yandex.ru",
+    url: 'https://market.yandex.ru',
   },
   {
-    name: "Мега Маркет",
+    name: 'Мега Маркет',
     logo: megaLogo,
-    url: "https://megamarket.ru",
+    url: 'https://megamarket.ru',
   },
   {
-    name: "Ozon",
+    name: 'Ozon',
     logo: ozonLogo,
-    url: "https://ozon.ru",
+    url: 'https://ozon.ru',
   },
 ];

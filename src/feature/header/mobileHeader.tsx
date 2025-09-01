@@ -73,7 +73,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
                 <Button className='flex h-11 w-[169px] text-white'>В магазин</Button>
               )}
 
-              <Button variant="pink" className=' flex h-11 w-[83px] justify-center' asChild>
+              <Button variant='pink' className='flex h-11 w-[83px] justify-center' asChild>
                 <Link to={isAuth ? '/profile' : '/login'}>
                   <img src={userSrc} alt='user' className='pt-[5px]' />
                 </Link>

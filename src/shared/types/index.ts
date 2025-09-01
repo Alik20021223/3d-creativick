@@ -1,4 +1,4 @@
-import SwiperInstance from "swiper";
+import SwiperInstance from 'swiper';
 
 export type BreadCrumpType = {
   PATH: string;

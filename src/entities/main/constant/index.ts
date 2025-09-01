@@ -1,4 +1,4 @@
 export enum MAIN_URL {
-  PREFIX = "/",
-  SUPPORT = '/support'
+  PREFIX = '/',
+  SUPPORT = '/support',
 }

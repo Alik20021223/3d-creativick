@@ -9,20 +9,25 @@ import { useAppStore } from '@app/store';
 import { useEffect } from 'react';
 import { HeaderType } from '@shared/types';
 import NavItem from '../navItem/ui';
+import { useHideOnScroll } from '@app/hook/useHideOnScroll';
 
-type HeaderProps = {
-  menuItems: HeaderType[];
-};
+type HeaderProps = { menuItems: HeaderType[] };
 
 export default function Header({ menuItems }: HeaderProps) {
   const { pathname, hash } = useLocation();
   const isMobile = useIsMobile();
   const { open, setOpen, isAuth } = useAppStore();
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  // 👇 скрываем при скролле вниз, показываем при скролле вверх
+  const { hidden, atTop, setHidden } = useHideOnScroll({
+    threshold: 80,
+    delta: 6,
+    revealOnIdleMs: 250, // автопоказ после остановки прокрутки
+    disabled: open,
+  });
 
   const isHashHref = (href: string) => href.startsWith('#');
-
   const linkClass = (href: string) => {
     const active = isHashHref(href) ? hash === href : pathname === href;
     return [
@@ -44,57 +49,83 @@ export default function Header({ menuItems }: HeaderProps) {
 
   return (
     <>
-      <div className='fixed inset-x-0 top-5 z-50'>
-        <div className='w-[1460px] w-full px-[38px] max-sm:px-2.5'>
-          <header className='header-shadow flex h-16 items-center justify-between rounded-4xl bg-white p-2.5'>
-            <div className='flex items-center'>
-              <Link to='/' aria-label='На главную'>
-                <img src={logoSrc} alt='logo' />
-              </Link>
-            </div>
+      {/* fixed-хедер с анимацией появления/скрытия */}
+      <div
+        className={[
+          'fixed inset-x-0 z-50 px-[38px]',
+          'top-5', // оставляем твой отступ сверху
+          'transition-transform duration-300 will-change-transform',
+          hidden ? '-translate-y-[120%]' : 'translate-y-0',
+        ].join(' ')}
+        onMouseEnter={() => setHidden(false)}
+      >
+        <div
+          className={[
+            'h-16 w-full rounded-4xl bg-white p-2.5 pl-[42px] max-sm:px-2.5',
+            'transition-shadow duration-300',
+            atTop ? 'shadow-none' : 'shadow-2xl',
+          ].join(' ')}
+        >
+          <header className='flex justify-center'>
+            <div className='flex w-full max-w-[1540px] items-center justify-between'>
+              <div className='flex items-center'>
+                <Link to='/' aria-label='На главную'>
+                  <img src={logoSrc} alt='logo' />
+                </Link>
+              </div>
 
-            {isMobile ? (
-              <MobileHeader
-                menuItems={menuItems}
-                open={open}
-                setOpen={setOpen}
-                linkClass={linkClass}
-                cartCount={12}
-              />
-            ) : (
-              <>
-                <nav className='hidden h-11 gap-6 md:flex'>
-                  {menuItems.map((item) => (
-                    <NavItem
-                      pathname={pathname}
-                      linkClass={linkClass}
-                      key={item.href}
-                      label={item.label}
-                      href={item.href}
-                    />
-                  ))}
-                </nav>
+              {isMobile ? (
+                <MobileHeader
+                  menuItems={menuItems}
+                  open={open}
+                  setOpen={setOpen}
+                  linkClass={linkClass}
+                  cartCount={12}
+                />
+              ) : (
+                <>
+                  <nav className='hidden h-11 gap-6 md:flex'>
+                    {menuItems.map((item) => (
+                      <NavItem
+                        pathname={pathname}
+                        linkClass={linkClass}
+                        key={item.href}
+                        label={item.label}
+                        href={item.href}
+                      />
+                    ))}
+                  </nav>
 
-                <div className='flex gap-2'>
-                  {isAuth ? (
-                    <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
-                      <ShoppingCart className='!h-8 !w-8' />
-                      <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
-                        12
-                      </div>
+                  <div className='flex gap-2'>
+                    {isAuth ? (
+                      <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
+                        <ShoppingCart className='!h-8 !w-8' />
+                        <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
+                          12
+                        </div>
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => navigate('/shop')}
+                        className='flex h-11 w-[189px] text-white'
+                      >
+                        В магазин
+                      </Button>
+                    )}
+
+                    <Button
+                      variant='pink'
+                      className='bg-pink-active flex h-11 w-[83px] justify-center'
+                      asChild
+                    >
+                      <Link to={isAuth ? '/profile' : '/login'}>
+                        <img src={userSrc} alt='user' className='pt-[5px]' />
+                      </Link>
                     </Button>
-                  ) : (
-                    <Button onClick={() => navigate('/shop')} className='flex h-11 w-[189px] text-white'>В магазин</Button>
-                  )}
-
-                  <Button variant="pink" className='bg-pink-active  flex h-11 w-[83px] justify-center' asChild>
-                    <Link to={isAuth ? '/profile' : '/login'}>
-                      <img src={userSrc} alt='user' className='pt-[5px]' />
-                    </Link>
-                  </Button>
-                </div>
-              </>
-            )}
+                  </div>
+                </>
+              )}
+            </div>
           </header>
         </div>
       </div>
@@ -108,6 +139,7 @@ export default function Header({ menuItems }: HeaderProps) {
         />
       )}
 
+      {/* Прокладка под фиксированный хедер (его высота = h-16 = 64px) */}
       <div className='h-16' />
     </>
   );

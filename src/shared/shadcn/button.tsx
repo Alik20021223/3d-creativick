@@ -11,12 +11,11 @@ const buttonVariants = cva(
         default: 'bg-primary-active button-shadow-blue text-foreground hover:bg-primary-active ',
         destructive:
           'bg-destructive text-white shadow-xs hover:bg-destructive/90  dark:bg-destructive/60',
-        outline:
-          'border bg-white border-primary-active button-shadow-blue text-primary-active',
+        outline: 'border bg-white border-primary-active button-shadow-blue text-primary-active',
         secondary: 'bg-secondary-active text-[#333333] button-shadow-blue hover:text-dark-blue',
         ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
         link: 'text-primary',
-        pink: 'duration-500 button-shadow-pink bg-pink-active text-white'
+        pink: 'duration-500 button-shadow-pink bg-pink-active text-white',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

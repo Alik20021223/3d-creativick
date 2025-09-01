@@ -1,7 +1,7 @@
-import { lazy } from "react";
-import { MAIN_URL } from "@entities/main/constant";
+import { lazy } from 'react';
+import { MAIN_URL } from '@entities/main/constant';
 
-const MainPage = lazy(() => import("@pages/main-page"));
+const MainPage = lazy(() => import('@pages/main-page'));
 
 export const MAIN_ROUTES = [
   {
