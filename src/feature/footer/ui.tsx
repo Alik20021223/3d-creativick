@@ -4,7 +4,7 @@
 const Footer = () => {
   return (
     <>
-      <footer className='flex justify-between gap-4 pt-20 pb-[34px] select-none max-lg:flex-col max-lg:gap-10'>
+      <footer className='flex  z-10 px-10 relative justify-between gap-4 pt-20 pb-[34px] select-none max-lg:flex-col max-lg:gap-10'>
         <div className='flex w-[320px] flex-col gap-5 max-lg:w-auto max-lg:max-w-[330px]'>
           <a
             href='/'

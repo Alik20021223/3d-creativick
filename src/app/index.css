@@ -265,7 +265,7 @@ p.no-hyphen {
 }
 
 .bg-feedback {
-  background-image: url(./assets/feedback-bg.jpg);
+  background-image: url(./assets/feedback.png);
   background-size: cover;       /* чтобы фон заполнил весь экран */
   background-position: center;  /* центрировать */
   background-repeat: no-repeat;
