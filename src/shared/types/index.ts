@@ -13,3 +13,21 @@ export type HeaderType = {
 export interface SwiperButtonProps {
   swiperRef: React.RefObject<SwiperInstance | null>; // Define the type for swiperRef
 }
+
+export type ProductCardMock = {
+  id: string;
+  image: string;
+  title: string;
+  rating: number;
+  bought: number;
+  href: string;
+};
+
+export type BenefitCardMock = {
+  id: string;
+  title: string[];
+  lines: string[];
+  buttonText?: string;
+  image?: string;
+  accentClassName?: string;
+};

@@ -7,6 +7,7 @@ const MainPage = () => {
       <div className='z-10 w-full'>
         <TopMainContent />
         <MainContent />
+
         {/* <SwiperContent />
         <StatisticContent /> */}
       </div>

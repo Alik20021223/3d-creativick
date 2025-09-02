@@ -28,7 +28,7 @@ const TopOne = () => {
           <div>
             <p className='number-about-text text-dark-blue text-8xl font-bold'>
               &gt;
-              <span className='text-[#333333]'>500</span>
+              <span className='text-secondary-text'>500</span>
             </p>
             <p className='font-semibold text-[#7D8891]'>Готовых моделей</p>
           </div>
@@ -36,7 +36,7 @@ const TopOne = () => {
           <div>
             <p className='number-about-text text-dark-blue text-8xl font-bold'>
               &gt;
-              <span className='text-[#333333]'>16</span>
+              <span className='text-secondary-text'>16</span>
             </p>
             <p className='font-semibold text-[#7D8891]'>Различных серий</p>
           </div>

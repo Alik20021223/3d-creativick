@@ -1,140 +1,170 @@
 // src/widgets/top-two/ui.tsx
 import React from 'react';
+import { topTwoMock } from '@utils/mock';
+import { useInView } from '@app/hook/useInView';
 
 type TopTwoProps = {
-  imgPrinter?: string; // розовый 3D-принтер
-  imgPhone?: string; // розовый "смартфон"
-  imgReels?: string; // катушки филамента
-  imgGear?: string; // розовая шестерня
+  imgPrinter?: string;
+  imgPhone?: string;
+  imgReels?: string;
+  imgGear?: string;
+  imgReelsBlue?: string;
 };
 
-const TopTwo: React.FC<TopTwoProps> = ({ imgPrinter, imgPhone, imgReels, imgGear }) => {
-  return (
-    <section className='relative mx-auto w-full max-w-[1540px] px-[38px] py-12 md:py-16'>
-      <div className='grid grid-cols-1 gap-6 md:grid-cols-12'>
-        {/* A) 3D-принтер (розовая карточка) */}
-        <article className='relative overflow-hidden rounded-3xl bg-[#FF5BA6] text-white md:col-span-6'>
-          <div className='relative z-10 grid grid-cols-12 gap-4 p-6 md:p-8'>
-            <header className='col-span-12 md:col-span-6'>
-              <h3 className='text-2xl font-bold md:text-3xl'>3D-принтер</h3>
-              <ul className='mt-4 space-y-2 text-sm md:text-base'>
-                <li>— Простой и удобный</li>
-                <li>— Безопасный и компактный</li>
-                <li>— Красочный и бесшумный</li>
-                <li>— Стабильный и эффективный</li>
-              </ul>
-            </header>
+const TopTwo: React.FC<TopTwoProps> = ({
+  imgPrinter,
+  imgPhone,
+  imgReels,
+  imgReelsBlue,
+  imgGear,
+}) => {
+  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.2 });
 
-            {/* Декор: принтер */}
-            <div className='relative col-span-12 md:col-span-6'>
-              {imgPrinter ? (
+  // внутри компонента (до return), можно прямо рядом с JSX:
+  const kitItems = topTwoMock.kit.items;
+  const half = Math.ceil(kitItems.length / 2);
+  const left = kitItems.slice(0, half);
+  const right = kitItems.slice(half);
+
+  return (
+    <section className='relative mx-auto w-full max-w-[1540px] py-12 md:py-16'>
+      <div className='flex flex-col gap-[50px]'>
+        {/* A) 3D-принтер */}
+        <div className='flex items-center space-x-5'>
+          <article className='pink-block relative flex items-center text-white'>
+            <div className='relative flex'>
+              <header className='col-span-12 h-full px-8 md:col-span-6'>
+                <h3 className='text-2xl font-bold md:text-3xl'>{topTwoMock.printer.title}</h3>
+                <ul className='list-pill mt-3 space-y-1.5 text-sm leading-[130%] md:text-lg'>
+                  {topTwoMock.printer.items.map((text, i) => (
+                    <li key={i}>{text}</li>
+                  ))}
+                </ul>
+              </header>
+            </div>
+
+            {/* Декор: принтер с "подъёмом" при входе в вьюпорт */}
+            <div
+              ref={ref}
+              className={[
+                'absolute -top-[85px] right-[35px] z-0 will-change-transform',
+                'transition-transform duration-3000 ease-out',
+                'transition-opacity', // одна строка для скорости, можно задать ту же длительность
+                inView ? 'translate-y-0 opacity-100' : 'translate-y-96 opacity-0',
+              ].join(' ')}
+            >
+              {imgPrinter && (
                 <img
                   src={imgPrinter}
                   alt=''
-                  className='pointer-events-none select-none md:mt-2 md:-mr-6 md:translate-x-2'
+                  className='pointer-events-none h-[547px] w-[444px] select-none'
                 />
-              ) : null}
+              )}
             </div>
-          </div>
+          </article>
 
-          {/* Значок A (опционально) */}
-          <div className='pointer-events-none absolute top-4 right-4 z-20 hidden h-10 w-10 items-center justify-center rounded-full bg-emerald-600 text-sm font-semibold select-none md:flex'>
-            A
-          </div>
-
-          {/* Мягкая тень/сияние */}
-          <div className='pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-white/20 blur-3xl' />
-        </article>
-
-        {/* B) Креативик.Store (синяя карточка) */}
-        <article className='relative overflow-hidden rounded-3xl bg-[#1177CF] text-white md:col-span-6'>
-          <div className='relative z-10 grid grid-cols-12 gap-4 p-6 md:p-8'>
-            <header className='col-span-12 md:col-span-7'>
-              <h3 className='text-2xl font-bold md:text-3xl'>Креативик.Store</h3>
-              <ul className='mt-4 space-y-2 text-sm md:text-base'>
-                <li>— Онлайн покупка</li>
-                <li>— Эксклюзивные 3D-модели</li>
-                <li>— Новые серии</li>
-                <li>— Подписка</li>
-              </ul>
-            </header>
-
-            {/* Декор: телефон + «брызги» */}
-            <div className='relative col-span-12 md:col-span-5'>
-              {imgPhone ? (
+          {/* B) Store */}
+          <article className='bg-primary-active relative rounded-[20px] text-white'>
+            <div className='z-10 flex h-[275px] w-[621px] items-center px-7.5 py-[36px]'>
+              <header className='flex flex-col'>
+                <h3 className='text-2xl font-semibold md:text-3xl'>{topTwoMock.store.title}</h3>
+                <ul className='list-pill'>
+                  {topTwoMock.store.items.map((text, i) => (
+                    <li key={i}>{text}</li>
+                  ))}
+                </ul>
+              </header>
+            </div>
+            <div className='absolute -top-25 -right-13 z-10'>
+              {imgPhone && (
                 <img
                   src={imgPhone}
                   alt=''
-                  className='float-slow pointer-events-none mx-auto select-none md:mt-2 md:-mr-2'
+                  className='pointer-events-none h-[460px] w-[429px] animate-bounce select-none'
                 />
-              ) : null}
-              {/* брызги */}
-              <div className='pointer-events-none absolute top-6 -left-3 h-2 w-8 rounded-full bg-[#FF5BA6]' />
-              <div className='pointer-events-none absolute top-12 left-2 h-2 w-5 rounded-full bg-[#FF5BA6]' />
-              <div className='pointer-events-none absolute top-4 left-4 h-2 w-4 rounded-full bg-[#FF5BA6]' />
+              )}
             </div>
-          </div>
-        </article>
+          </article>
+        </div>
 
         {/* C) Материалы */}
-        <article className='relative overflow-hidden rounded-3xl bg-[#1177CF] text-white md:col-span-4'>
-          <div className='relative z-10 grid grid-cols-12 gap-4 p-6 md:p-8'>
-            <header className='col-span-12'>
-              <h3 className='text-xl font-semibold md:text-2xl'>Материалы</h3>
-            </header>
+        <div className='flex h-[236px] space-x-4'>
+          <article className='bg-primary-active relative w-[557px] rounded-[20px] text-white'>
+            <div className='flex h-full items-center px-7.5 pt-5 pb-6'>
+              <header className='flex w-[148px] flex-col'>
+                <h3 className='text-xl font-semibold md:text-3xl'>{topTwoMock.materials.title}</h3>
+                <div className='col-span-7'>
+                  <ul className='list-pill'>
+                    {topTwoMock.materials.items.map((text, i) => (
+                      <li key={i}>{text}</li>
+                    ))}
+                  </ul>
+                </div>
+              </header>
+            </div>
+            <div className='absolute w-full'>
+              <div className='relative w-full'>
+                {imgReelsBlue && (
+                  <img
+                    src={imgReelsBlue}
+                    alt=''
+                    className='pointer-events-none absolute right-40 -bottom-8 h-[161px] w-[163px] select-none'
+                  />
+                )}
+                {imgReels && (
+                  <img
+                    src={imgReels}
+                    alt=''
+                    className='pointer-events-none absolute -right-2.5 -bottom-2 h-[225px] w-[214px] select-none'
+                  />
+                )}
+              </div>
+            </div>
+          </article>
 
-            <div className='col-span-7'>
-              <ul className='mt-4 space-y-2 text-sm md:text-base'>
-                <li>— Эксклюзивные филаменты для 3D-печати</li>
-                <li>— Безопасный и биоразлагаемый материал</li>
+          {/* D) Сервис */}
+          <article className='bg-primary-active relative w-[352px] rounded-[20px] text-white'>
+            <div className='flex h-full flex-col px-7.5 pt-5 pb-[58px]'>
+              <h3 className='text-xl font-semibold md:text-3xl'>{topTwoMock.service.title}</h3>
+              <ul className='list-pill'>
+                {topTwoMock.service.items.map((text, i) => (
+                  <li key={i}>{text}</li>
+                ))}
               </ul>
             </div>
-
-            <div className='relative col-span-5 flex items-end justify-end'>
-              {imgReels ? (
-                <img src={imgReels} alt='' className='pointer-events-none select-none' />
-              ) : null}
+            <div className='absolute top-12 right-5 z-10 h-[291px] w-[291px]'>
+              {imgGear && (
+                <img
+                  src={imgGear}
+                  alt=''
+                  className='float-gear pointer-events-none h-full w-full scale-200 select-none'
+                />
+              )}
             </div>
-          </div>
-        </article>
+          </article>
 
-        {/* D) Сервис */}
-        <article className='relative overflow-hidden rounded-3xl bg-[#1177CF] text-white md:col-span-4'>
-          <div className='relative z-10 p-6 md:p-8'>
-            <h3 className='text-xl font-semibold md:text-2xl'>Сервис</h3>
-            <ul className='mt-4 space-y-2 text-sm md:text-base'>
-              <li>— Поддержка</li>
-              <li>— Ремонт</li>
-              <li>— Гарантия</li>
-              <li>— Запчасти</li>
-            </ul>
-          </div>
-        </article>
+          {/* E) Комплектация */}
+          <article className='bg-primary-active relative w-[470px] rounded-[20px] text-white'>
+            <div className='flex h-full flex-col px-7.5 pt-5 pb-[18px]'>
+              <h3 className='text-xl font-semibold md:text-3xl'>{topTwoMock.kit.title}</h3>
 
-        {/* E) Комплектация */}
-        <article className='relative overflow-hidden rounded-3xl bg-[#1177CF] text-white md:col-span-4'>
-          <div className='relative z-10 p-6 md:p-8'>
-            <h3 className='text-xl font-semibold md:text-2xl'>Комплектация</h3>
-            <ul className='mt-4 grid grid-cols-1 gap-2 text-sm md:text-base'>
-              <li>— 3D-принтер</li>
-              <li>— Филамент 250 г</li>
-              <li>— Набор инструментов</li>
-              <li>— USB-накопитель</li>
-              <li>— Держатель катушки филамента</li>
-              <li>— Комплект проводов</li>
-              <li>— Бумажное руководство пользователя</li>
-            </ul>
-          </div>
+              {/* две колонки с промежутком */}
+              <div className='flex space-x-2'>
+                <ul className='list-pill'>
+                  {left.map((text, i) => (
+                    <li key={`left-${i}`}>{text}</li>
+                  ))}
+                </ul>
 
-          {/* Декор: розовая шестерня */}
-          {imgGear ? (
-            <img
-              src={imgGear}
-              alt=''
-              className='pointer-events-none absolute -right-4 -bottom-6 z-0 w-36 select-none md:w-44'
-            />
-          ) : null}
-        </article>
+                <ul className='list-pill'>
+                  {right.map((text, i) => (
+                    <li key={`right-${i}`}>{text}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
   );
