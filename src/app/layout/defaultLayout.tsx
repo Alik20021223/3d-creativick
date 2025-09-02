@@ -18,7 +18,7 @@ export default function MainLayout() {
           <Outlet />
         </main>
       </div>
-      <div className='rounded-t-[80px] bg-white'>
+      <div className='mt-[90px] rounded-t-[80px] bg-white'>
         <ExclusiveContent />
         <BottomContent />
       </div>
