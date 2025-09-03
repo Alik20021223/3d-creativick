@@ -50,7 +50,7 @@ export default function FeedbackCarousel({
           slidesPerView='auto' // авто-ширина слайдов
           spaceBetween={GAP} // расстояние между карточками
           loop // бесконечный цикл (опц.)
-          autoplay={{ delay: 2500, disableOnInteraction: false }} // опц.
+          autoplay={{ delay: 3500, disableOnInteraction: false }} // опц.
           style={{ maxWidth: `${INNER_W}px` }}
         >
           {items.map((it, i) => (
