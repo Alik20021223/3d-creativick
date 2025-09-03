@@ -7,8 +7,8 @@ const ExclusiveContent = () => {
   return (
     <>
       <div className='relative z-5 grid w-screen place-items-center'>
-        <div className='max-w-[1540px] pt-20 pb-10'>
-          <WhyUsBlock />
+        <WhyUsBlock />
+        <div className='max-w-[1540px] pb-10'>
           <ExclusiveBlock />
           <ExclusiveCta href='#' />
           <OurActionsContent />

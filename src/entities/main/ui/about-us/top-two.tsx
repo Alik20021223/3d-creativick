@@ -80,7 +80,7 @@ const TopTwo: React.FC<TopTwoProps> = ({
                 <img
                   src={imgPhone}
                   alt=''
-                  className='pointer-events-none h-[460px] w-[429px] animate-bounce select-none'
+                  className='pointer-events-none h-[460px] w-[429px] select-none'
                 />
               )}
             </div>
@@ -137,7 +137,7 @@ const TopTwo: React.FC<TopTwoProps> = ({
                 <img
                   src={imgGear}
                   alt=''
-                  className='float-gear pointer-events-none h-full w-full scale-200 select-none'
+                  className='pointer-events-none h-full w-full scale-200 select-none'
                 />
               )}
             </div>
