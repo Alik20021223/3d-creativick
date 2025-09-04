@@ -16,8 +16,8 @@ export default function MainLayout() {
       </div>
 
       <FloatingButtons
-        chatHref="https://t.me/your_support_bot"  // замени на нужную ссылку
-        showAt={200}                               // когда показывать кнопку «вверх»
+        chatHref='https://t.me/your_support_bot' // замени на нужную ссылку
+        showAt={200} // когда показывать кнопку «вверх»
       />
 
       {/* Футер просто последним — без позиционирования */}

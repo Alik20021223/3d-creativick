@@ -95,8 +95,6 @@ export default function Header({ menuItems }: HeaderProps) {
                   </nav>
 
                   <div className='flex gap-2'>
-                    
-
                     <Button
                       variant='pink'
                       className='bg-pink-active flex h-11 w-[83px] justify-center'
