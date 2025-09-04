@@ -7,7 +7,7 @@ const Footer = () => {
       {' '}
       {/* верхняя белая зона */}
       <div className='bg-white'>
-        <div className='mx-auto max-w-[1540px] px-6 py-12 md:px-10'>
+        <div className='mx-auto max-w-[1540px] px-2.5 py-12 md:px-10'>
           <div className='grid grid-cols-12 gap-8'>
             {/* Левый блок: логотип, контакты, соцкнопки */}
             <div className='col-span-12 md:col-span-3'>

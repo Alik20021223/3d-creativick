@@ -205,24 +205,9 @@ body {
   box-sizing: border-box;
   font-family: 'Rosatom';
   position: relative;
-  background-image: url(./assets/bg-default.png);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: #F1F5F9;
 }
 
-.exclusive-card {
-  background-image: url(./assets/bg-default.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.pink-block {
-  background-image: url(./assets/bg-pink.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 740px;
-  height: 402px;
-}
 
 /* (опционально) Вариант с «пилюлей»-черточкой */
 @layer components {
