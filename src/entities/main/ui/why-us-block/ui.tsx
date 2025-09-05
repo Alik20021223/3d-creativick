@@ -12,18 +12,18 @@ const CARD_CLASSES = [
 const WhyUsBlock = () => {
   return (
     <>
-      <section className=''>
+      <section className='pt-15'>
         <div className='mb-[67px] flex flex-col items-center justify-center space-y-3'>
-          <h1 className='text-dark-blue text-[54px] font-bold'>Играй, учись и создавай!</h1>
-          <div className='bg-pink-active flex h-[68px] w-[443px] -rotate-3 items-center justify-center rounded-[44px] text-[32px] font-bold text-white'>
+          <h1 className='text-dark-blue md:text-[54px] text-[32px] font-bold'>Играй, учись и создавай!</h1>
+          <div className='bg-pink-active flex md:h-[68px] h-[63px] md:w-[443px] w-[355px] -rotate-3 items-center justify-center rounded-[44px] md:text-[32px] text-[24px] font-bold text-white'>
             вместе с 3D Кретивик
           </div>
         </div>
         <div className='relative'>
-          <div className='absolute -top-25'>
+          <div className='absolute -top-25 max-md:hidden'>
             <img src={DotImg} alt={DotImg} className='' />
           </div>
-          <div className='flex gap-4 px-10'>
+          <div className='flex max-md:flex-col md:gap-4 gap-5 md:px-10 px-2.5'>
             {benefitsMock.map((b, i) => (
               <BenefitCard
                 key={b.id}

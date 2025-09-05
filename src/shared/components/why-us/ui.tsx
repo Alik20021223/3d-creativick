@@ -2,6 +2,7 @@
 import React from 'react';
 import PaperClipImg from '@assets/paperclip-img.svg';
 import { useInView } from '@app/hook/useInView';
+import { useIsMobile } from '@app/hook/useMobile';
 
 type BenefitCardProps = {
   title: string[];
@@ -10,7 +11,7 @@ type BenefitCardProps = {
   image?: string;
   className?: string;
   accentClassName?: string;
-  staggerIndex?: number; // <- добавим для задержки анимации
+  staggerIndex?: number;
 };
 
 const BenefitCard: React.FC<BenefitCardProps> = ({
@@ -22,61 +23,89 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
   accentClassName = '',
   staggerIndex = 0,
 }) => {
+  const isMobile = useIsMobile();
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.2 });
 
+  const containerClass = `group relative ${isMobile ? '' : className}`;
+
+  // Входная анимация карточки — только на десктопе
+  const enterAnimClass = !isMobile
+    ? (inView ? 'animate-fade-up' : 'translate-y-3 opacity-0')
+    : '';
+
+  // Плавающая анимация изображения — только на десктопе
+  const floatAnimClass = !isMobile ? 'animate-float-y' : '';
+
+  // Задержка анимации стека — только на десктопе
+  const delayedStyle = !isMobile ? { animationDelay: `${staggerIndex * 120}ms` } : undefined;
+
   return (
-    <div className={`group relative ${className}`}>
-      {/* Скрепка: внешний слой задаёт базовый поворот, внутренний — лёгкую раскачку */}
-      <div className='pointer-events-none absolute -top-[46px] right-3 z-20 h-[110.49px] w-[80.28px] origin-top-right rotate-12'>
+    <div className={containerClass}>
+      {/* Скрепка скрыта на мобилке */}
+      <div className="pointer-events-none absolute -top-[46px] right-3 z-20 h-[110.49px] w-[80.28px] origin-top-right rotate-12 max-md:hidden">
         <img
           src={PaperClipImg}
-          alt=''
-          className='animate-clip-wiggle h-full w-full origin-top-right will-change-transform'
+          alt=""
+          className="h-full w-full origin-top-right will-change-transform md:animate-clip-wiggle"
         />
       </div>
 
       <div
         ref={ref}
-        style={{ animationDelay: `${staggerIndex * 120}ms` }}
+        style={delayedStyle}
         className={[
-          'relative h-[430px] w-[353px] rounded-[24px] bg-[#F3F7FB] pt-10.5 pr-2.5 pb-5.5 pl-5',
+          'relative md:h-[430px] md:w-[353px] rounded-[24px] bg-[#F3F7FB] md:pt-10.5 md:pr-2.5 md:pb-5.5 md:pl-5 p-5',
           'flex flex-col justify-between overflow-hidden',
-          // входная анимация
-          inView ? 'animate-fade-up' : 'translate-y-3 opacity-0',
+          enterAnimClass,
         ].join(' ')}
       >
         <div>
-          <div className='text-dark-blue text-[32px] leading-tight font-bold'>
+          <div className="text-dark-blue text-[32px] leading-tight font-bold">
             {title.map((t, i) => (
-              <span key={i} className='block'>
+              <span key={i} className="block">
                 {t}
               </span>
             ))}
           </div>
 
-          <div className='text-secondary-text mt-4 text-lg leading-[130%] font-normal'>
+          <div className="text-secondary-text mt-4 text-lg leading-[130%] font-normal">
             {lines.map((t, i) => (
-              <span key={i} className='block'>
+              <span key={i} className="block">
                 {t}
               </span>
             ))}
           </div>
         </div>
 
-        {buttonText && (
-          <div className='text-secondary-text z-10 w-fit rounded-[22px] bg-white px-4.5 py-2 text-sm font-normal'>
+        {buttonText && !isMobile && (
+          <div className="text-secondary-text z-10 w-fit rounded-[22px] bg-white px-4.5 py-2 text-sm font-normal">
             {buttonText}
           </div>
         )}
 
-        {image && (
+        {image && !isMobile && (
           <img
             src={image}
-            alt=''
-            className={`pointer-events-none absolute z-5 h-[355px] w-[368px] select-none ${accentClassName} animate-float-y`}
+            alt=""
+            className={[
+              'pointer-events-none absolute z-5 md:h-[355px] md:w-[368px] w-[160px] h-[160px] select-none',
+              accentClassName, // можно оставить — это не анимация; если тоже нужно отключить на мобилке, замените на (!isMobile ? accentClassName : '')
+              floatAnimClass,
+            ].join(' ')}
           />
         )}
       </div>
+      {image && isMobile && (
+        <img
+          src={image}
+          alt=""
+          className={[
+            'pointer-events-none absolute z-5 md:h-[355px] md:w-[368px] w-[160px] h-[160px] select-none',
+            accentClassName, // можно оставить — это не анимация; если тоже нужно отключить на мобилке, замените на (!isMobile ? accentClassName : '')
+            floatAnimClass,
+          ].join(' ')}
+        />
+      )}
     </div>
   );
 };

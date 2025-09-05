@@ -36,7 +36,7 @@ export default function FeedBackBlock({
     <div
       className={[
         'relative rounded-4xl',
-        'p-8 sm:p-6',
+        'p-5 md:p-8',
         "before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:content-['']",
         'bg-white',
         className,

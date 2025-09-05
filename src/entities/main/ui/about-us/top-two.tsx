@@ -2,6 +2,9 @@
 import React from 'react';
 import { topTwoMock } from '@utils/mock';
 import { useInView } from '@app/hook/useInView';
+import { useIsMobile } from '@app/hook/useMobile';
+
+import imgPhoneMobile from '@assets/mobile-phone.svg'
 
 type TopTwoProps = {
   imgPrinter?: string;
@@ -18,6 +21,9 @@ const TopTwo: React.FC<TopTwoProps> = ({
   imgReelsBlue,
   imgGear,
 }) => {
+
+  const isMobile = useIsMobile()
+
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.2 });
 
   // внутри компонента (до return), можно прямо рядом с JSX:
@@ -30,12 +36,12 @@ const TopTwo: React.FC<TopTwoProps> = ({
     <section className='relative mx-auto w-full max-w-[1540px] py-12 md:py-16'>
       <div className='flex flex-col gap-[50px]'>
         {/* A) 3D-принтер */}
-        <div className='flex items-center space-x-5'>
-          <article className='pink-block relative flex items-center text-white'>
+        <div className='flex max-md:flex-col items-center md:space-x-5'>
+          <article className='pink-block max-md:w-[315px] relative flex items-center text-white'>
             <div className='relative flex'>
               <header className='col-span-12 h-full px-8 md:col-span-6'>
                 <h3 className='text-2xl font-bold md:text-3xl'>{topTwoMock.printer.title}</h3>
-                <ul className='list-pill mt-3 space-y-1.5 text-sm leading-[130%] md:text-lg'>
+                <ul className='list-pill'>
                   {topTwoMock.printer.items.map((text, i) => (
                     <li key={i}>{text}</li>
                   ))}
@@ -47,25 +53,27 @@ const TopTwo: React.FC<TopTwoProps> = ({
             <div
               ref={ref}
               className={[
-                'absolute -top-[85px] right-[35px] z-0 will-change-transform',
-                'transition-transform duration-3000 ease-out',
-                'transition-opacity', // одна строка для скорости, можно задать ту же длительность
-                inView ? 'translate-y-0 opacity-100' : 'translate-y-96 opacity-0',
-              ].join(' ')}
+                'absolute md:-top-[85px] -top-[25px] -right-2.5 z-0 will-change-transform',
+                !isMobile && 'transition-transform duration-3000 ease-out transition-opacity',
+                inView && !isMobile ? 'translate-y-0 opacity-100' : (!isMobile ? 'translate-y-96 opacity-0' : 'opacity-100'),
+              ]
+                .filter(Boolean)
+                .join(' ')}
             >
               {imgPrinter && (
                 <img
                   src={imgPrinter}
                   alt=''
-                  className='pointer-events-none h-[547px] w-[444px] select-none'
+                  className='pointer-events-none md:h-[547px] md:w-[444px] w-[131px] h-[162px] select-none'
                 />
               )}
             </div>
+
           </article>
 
           {/* B) Store */}
-          <article className='bg-primary-active relative rounded-[20px] text-white'>
-            <div className='z-10 flex h-[275px] w-[621px] items-center px-7.5 py-[36px]'>
+          <article className='md:bg-primary-active mobile-blue-block max-md:w-[315px] relative rounded-[20px] text-white'>
+            <div className='z-10 flex md:h-[275px] md:w-[621px] w-full h-[279.5px] items-center px-7.5 py-[36px]'>
               <header className='flex flex-col'>
                 <h3 className='text-2xl font-semibold md:text-3xl'>{topTwoMock.store.title}</h3>
                 <ul className='list-pill'>
@@ -75,12 +83,12 @@ const TopTwo: React.FC<TopTwoProps> = ({
                 </ul>
               </header>
             </div>
-            <div className='absolute -top-25 -right-13 z-10'>
+            <div className='absolute md:-top-25 md:-right-13 -bottom-12.5 -right-7.5 z-10'>
               {imgPhone && (
                 <img
-                  src={imgPhone}
+                  src={isMobile ? imgPhoneMobile : imgPhone}
                   alt=''
-                  className='pointer-events-none h-[460px] w-[429px] select-none'
+                  className='pointer-events-none md:h-[460px] md:w-[429px] w-[167px] h-[183px] select-none'
                 />
               )}
             </div>
@@ -88,11 +96,11 @@ const TopTwo: React.FC<TopTwoProps> = ({
         </div>
 
         {/* C) Материалы */}
-        <div className='flex h-[236px] space-x-4'>
-          <article className='bg-primary-active relative w-[557px] rounded-[20px] text-white'>
-            <div className='flex h-full items-center px-7.5 pt-5 pb-6'>
-              <header className='flex w-[148px] flex-col'>
-                <h3 className='text-xl font-semibold md:text-3xl'>{topTwoMock.materials.title}</h3>
+        <div className='flex md:h-[236px] max-md:flex-col md:space-x-4 space-y-5'>
+          <article className='bg-primary-active relative md:w-[557px] md:h-full rounded-[20px] text-white'>
+            <div className='flex h-full items-center md:px-7.5 px-5 pt-5 pb-6'>
+              <header className='flex md:w-[148px] flex-col'>
+                <h3 className='text-[24px] font-bold md:font-semibold md:text-3xl'>{topTwoMock.materials.title}</h3>
                 <div className='col-span-7'>
                   <ul className='list-pill'>
                     {topTwoMock.materials.items.map((text, i) => (
@@ -102,7 +110,7 @@ const TopTwo: React.FC<TopTwoProps> = ({
                 </div>
               </header>
             </div>
-            <div className='absolute w-full'>
+            {!isMobile && <div className='absolute w-full'>
               <div className='relative w-full'>
                 {imgReelsBlue && (
                   <img
@@ -120,36 +128,39 @@ const TopTwo: React.FC<TopTwoProps> = ({
                 )}
               </div>
             </div>
+            }
           </article>
 
           {/* D) Сервис */}
-          <article className='bg-primary-active relative w-[352px] rounded-[20px] text-white'>
-            <div className='flex h-full flex-col px-7.5 pt-5 pb-[58px]'>
-              <h3 className='text-xl font-semibold md:text-3xl'>{topTwoMock.service.title}</h3>
+          <article className='bg-primary-active relative md:w-[352px] md:h-full rounded-[20px] text-white'>
+            <div className='flex h-full flex-col md:px-7.5 p-5 md:pt-5 md:pb-[58px]'>
+              <h3 className='text-[24px] font-bold md:font-semibold md:text-3xl'>{topTwoMock.service.title}</h3>
               <ul className='list-pill'>
                 {topTwoMock.service.items.map((text, i) => (
                   <li key={i}>{text}</li>
                 ))}
               </ul>
             </div>
-            <div className='absolute top-12 right-5 z-10 h-[291px] w-[291px]'>
-              {imgGear && (
-                <img
-                  src={imgGear}
-                  alt=''
-                  className='pointer-events-none h-full w-full scale-200 select-none'
-                />
-              )}
-            </div>
+            {!isMobile &&
+              <div className='absolute top-12 right-5 z-10 h-[291px] w-[291px]'>
+                {imgGear && (
+                  <img
+                    src={imgGear}
+                    alt=''
+                    className='pointer-events-none h-full w-full scale-200 select-none'
+                  />
+                )}
+              </div>
+            }
           </article>
 
           {/* E) Комплектация */}
-          <article className='bg-primary-active relative w-[470px] rounded-[20px] text-white'>
-            <div className='flex h-full flex-col px-7.5 pt-5 pb-[18px]'>
-              <h3 className='text-xl font-semibold md:text-3xl'>{topTwoMock.kit.title}</h3>
+          <article className='bg-primary-active relative md:w-[470px] md:h-full rounded-[20px] text-white'>
+            <div className='flex h-full flex-col md:px-7.5 p-5 md:pt-5 md:pb-[18px]'>
+              <h3 className='text-[24px] font-bold md:font-semibold md:text-3xl'>{topTwoMock.kit.title}</h3>
 
               {/* две колонки с промежутком */}
-              <div className='flex space-x-2'>
+              {!isMobile && <div className='md:flex space-x-2 hidden'>
                 <ul className='list-pill'>
                   {left.map((text, i) => (
                     <li key={`left-${i}`}>{text}</li>
@@ -161,7 +172,15 @@ const TopTwo: React.FC<TopTwoProps> = ({
                     <li key={`right-${i}`}>{text}</li>
                   ))}
                 </ul>
-              </div>
+              </div>}
+
+              {isMobile && <div className='flex space-x-2'>
+                <ul className='list-pill'>
+                  {topTwoMock.kit.items.map((text, i) => (
+                    <li key={`${i}`}>{text}</li>
+                  ))}
+                </ul>
+              </div>}
             </div>
           </article>
         </div>

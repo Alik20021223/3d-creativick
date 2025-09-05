@@ -2,6 +2,10 @@ import wbLogo from '@assets/wb-image.png';
 import yandexLogo from '@assets/yandex-market.svg';
 import megaLogo from '@assets/mega-market.svg';
 import ozonLogo from '@assets/ozon-slot.png';
+import wbLogoMobile from '@assets/mobile-wb.svg';
+import yandexLogoMobile from '@assets/mobile-yandex.svg';
+import megaLogoMobile from '@assets/mobile-mega.svg';
+import ozonLogoMobile from '@assets/mobile-ozon.svg';
 import HitOneImg from '@assets/hit-sell-one.svg';
 import { BenefitCardMock, ProductCardMock } from '@shared/types';
 import LampImg from '@assets/lump-icon.svg';
@@ -9,19 +13,18 @@ import ShieldCheckImg from '@assets/sheild-pink.svg';
 import InfinityImg from '@assets/infinityImg.svg';
 import BulbImg from '@assets/bulbImg.svg';
 import ourActions from '@assets/our-actions.svg';
+import ourActionsMobile from '@assets/mobile-actions.svg';
 
 export const headerMock = {
   main: [
     { label: 'О нас', href: '#about' },
-    { label: 'Эксклюзивные 3D серии', href: '#series' },
-    { label: 'Где купить', href: '#where-to-buy' },
+    { label: 'Креативик. Store', href: '#series' },
     { label: 'Контакты', href: '#contacts' },
     { label: 'Поддержка', href: '/support' },
   ],
   shop: [
     { label: 'Главная', href: '/' },
     { label: 'Каталог', href: '/shop' },
-    { label: 'Где купить?', href: '#where-to-buy' },
     { label: 'Контакты', href: '#contacts' },
     { label: 'Поддержка', href: '/support' },
   ],
@@ -85,6 +88,29 @@ export const marketplaces = [
   {
     name: 'Ozon',
     logo: ozonLogo,
+    url: 'https://ozon.ru',
+  },
+];
+
+export const marketplacesMobile = [
+  {
+    name: 'Wildberries',
+    logo: wbLogoMobile,
+    url: 'https://www.wildberries.ru',
+  },
+  {
+    name: 'Яндекс Маркет',
+    logo: yandexLogoMobile,
+    url: 'https://market.yandex.ru',
+  },
+  {
+    name: 'Мега Маркет',
+    logo: megaLogoMobile,
+    url: 'https://megamarket.ru',
+  },
+  {
+    name: 'Ozon',
+    logo: ozonLogoMobile,
     url: 'https://ozon.ru',
   },
 ];
@@ -191,7 +217,7 @@ export const benefitsMock: BenefitCardMock[] = [
     ],
     buttonText: 'Замена гаджетам',
     image: BulbImg,
-    accentClassName: '-bottom-6 right-5',
+    accentClassName: 'md:-bottom-6 md:right-5 -top-20 right-0 z-10',
   },
   {
     id: 'unlimited',
@@ -205,7 +231,7 @@ export const benefitsMock: BenefitCardMock[] = [
     ],
     buttonText: 'Рекомендует 9/10 педагогов',
     image: InfinityImg,
-    accentClassName: '-bottom-2 right-0',
+    accentClassName: 'md:-bottom-2 md:right-0 -top-15 right-0 z-10 -rotate-30',
   },
   {
     id: 'safe-simple',
@@ -218,7 +244,7 @@ export const benefitsMock: BenefitCardMock[] = [
     ],
     buttonText: 'Рекомендует 9/10 педагогов',
     image: ShieldCheckImg,
-    accentClassName: '-bottom-4 right-0',
+    accentClassName: 'md:-bottom-4 md:right-0 -top-20 right-0 z-10',
   },
   {
     id: 'useful',
@@ -231,8 +257,9 @@ export const benefitsMock: BenefitCardMock[] = [
     ],
     buttonText: 'Замена гаджетам',
     image: LampImg,
-    accentClassName: '-bottom-3 right-2',
+    accentClassName: 'md:-bottom-3 md:right-2 -top-20 right-0 z-10',
   },
 ];
 
 export const ourActionsMock: string[] = [ourActions, ourActions, ourActions];
+export const ourActionsMockMobile: string[] = [ourActionsMobile, ourActionsMobile, ourActionsMobile];

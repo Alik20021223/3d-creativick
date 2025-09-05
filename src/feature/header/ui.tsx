@@ -1,5 +1,5 @@
 import { Button } from '@shadcn/button';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logoSrc from '@assets/logo-3d.svg';
 import userSrc from '@assets/user-profile.svg';
 import { ShoppingCart } from 'lucide-react';
@@ -17,7 +17,6 @@ export default function Header({ menuItems }: HeaderProps) {
   const { pathname, hash } = useLocation();
   const isMobile = useIsMobile();
   const { open, setOpen, isAuth } = useAppStore();
-  const navigate = useNavigate();
 
   // 👇 скрываем при скролле вниз, показываем при скролле вверх
   const { hidden, atTop, setHidden } = useHideOnScroll({
@@ -31,7 +30,7 @@ export default function Header({ menuItems }: HeaderProps) {
   const linkClass = (href: string) => {
     const active = isHashHref(href) ? hash === href : pathname === href;
     return [
-      'inline-flex items-center h-full px-2 transition-colors border-b-2',
+      'inline-flex items-center h-full px-2 transition-colors border-b-2 hover:text-primary hover:border-primary',
       active ? 'text-primary border-primary' : 'text-gray-500 border-transparent ',
     ].join(' ');
   };
@@ -52,10 +51,10 @@ export default function Header({ menuItems }: HeaderProps) {
       {/* fixed-хедер с анимацией появления/скрытия */}
       <div
         className={[
-          'fixed inset-x-0 z-50 px-[38px]',
-          'top-5', // оставляем твой отступ сверху
+          'fixed inset-x-0 z-50 px-[38px] max-md:px-2.5',
+          'top-5 max-md:top-[56px]', // оставляем твой отступ сверху
           'transition-transform duration-300 will-change-transform',
-          hidden ? '-translate-y-[120%]' : 'translate-y-0',
+          hidden ? '-translate-y-[120%] max-md:-translate-y-[180%]' : 'translate-y-0',
         ].join(' ')}
         onMouseEnter={() => setHidden(false)}
       >
@@ -68,7 +67,7 @@ export default function Header({ menuItems }: HeaderProps) {
         >
           <header className='flex justify-center'>
             <div className='flex w-full max-w-[1540px] items-center justify-between'>
-              <div className='flex items-center'>
+              <div className='flex items-center max-md:pl-2.5'>
                 <Link to='/' aria-label='На главную'>
                   <img src={logoSrc} alt='logo' />
                 </Link>
@@ -96,32 +95,43 @@ export default function Header({ menuItems }: HeaderProps) {
                     ))}
                   </nav>
 
-                  <div className='flex gap-2'>
-                    {isAuth ? (
-                      <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
-                        <ShoppingCart className='!h-8 !w-8' />
-                        <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
-                          12
-                        </div>
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => navigate('/shop')}
-                        className='flex h-11 w-[189px] text-white'
-                      >
-                        В магазин
-                      </Button>
-                    )}
+                  <div className='flex gap-20'>
 
-                    <Button
-                      variant='pink'
-                      className='bg-pink-active flex h-11 w-[83px] justify-center'
-                      asChild
-                    >
-                      <Link to={isAuth ? '/profile' : '/login'}>
-                        <img src={userSrc} alt='user' className='pt-[5px]' />
-                      </Link>
-                    </Button>
+                    <div className='flex flex-col items-center'>
+                      <a
+                        href='mailto:info@3dkreativik.ru'
+                        className='text-lg font-normal text-dark-blue leading-[130%]'
+                      >
+                        info@3dkreativik.ru
+                      </a>
+                      <a
+                        href="tel:+84959888282"
+                        className='text-lg font-normal text-dark-blue leading-[130%]'
+                      >
+                        8 (495) 988-82-82
+                      </a>
+                    </div>
+
+                    <div className='flex gap-3'>
+                      {isAuth && (
+                        <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
+                          <ShoppingCart className='!h-8 !w-8' />
+                          <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
+                            12
+                          </div>
+                        </Button>
+                      )}
+
+                      <Button
+                        variant='pink'
+                        className='bg-pink-active flex h-11 w-[83px] justify-center'
+                        asChild
+                      >
+                        <Link to={isAuth ? '/profile' : '/login'}>
+                          <img src={userSrc} alt='user' className='pt-[5px]' />
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 </>
               )}

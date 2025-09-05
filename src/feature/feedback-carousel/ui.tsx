@@ -1,11 +1,12 @@
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper';
-import { Navigation, Autoplay } from 'swiper/modules';
+import { Navigation, Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import FeedBackBlock from '@feature/feedback-block';
 import PrevButton from './prevButton';
 import NextButton from './nextButton';
+import { useIsMobile } from '@/app/hook/useMobile';
 
 type Item = {
   rating: number;
@@ -17,59 +18,63 @@ type Item = {
 
 export default function FeedbackCarousel({
   items,
-  className = '',
 }: {
   items: Item[];
   className?: string;
 }) {
+  const isMobile = useIsMobile();
   const swiperRef = useRef<SwiperType | null>(null);
 
-  // Константы под твой дизайн
-  const CARD_W = 420; // ширина карточки
-  const GAP = 20; // spaceBetween
-  const VISIBLE = 3; // хотим видеть 3
-  const INNER_W = VISIBLE * CARD_W + (VISIBLE - 1) * GAP; // ширина области со слайдами
+  const CARD_W = isMobile ? 355 : 420;
+  const GAP = 20;
+  const VISIBLE = isMobile ? 1 : 3;
+  const INNER_W = VISIBLE * CARD_W + (VISIBLE - 1) * GAP;
+
+  // const swiperModules = isMobile ? [Pagination, Autoplay] : [Navigation, Autoplay];
 
   return (
-    <div className={`relative ${className}`}>
-      {/* Внешний контейнер с отступами по краям страницы */}
-      <div className='relative'>
-        {/* Стрелки — поверх слайдера и «чуть снаружи» */}
-        <PrevButton
-          swiperRef={swiperRef}
-          className='absolute top-1/2 -left-15 z-30 -translate-y-1/2'
-        />
-        <NextButton
-          swiperRef={swiperRef}
-          className='absolute top-1/2 -right-15 z-30 -translate-y-1/2'
-        />
+    <div className="relative">
+      {/* стрелки скрыты на мобилке */}
+      <PrevButton
+        swiperRef={swiperRef}
+        className="hidden md:block md:absolute md:top-1/2 md:-left-15 md:z-30 md:-translate-y-1/2"
+      />
+      <NextButton
+        swiperRef={swiperRef}
+        className="hidden md:block md:absolute md:top-1/2 md:-right-15 md:z-30 md:-translate-y-1/2"
+      />
 
-        <Swiper
-          modules={[Navigation, Autoplay]}
-          onSwiper={(s) => (swiperRef.current = s)}
-          slidesPerView='auto' // авто-ширина слайдов
-          spaceBetween={GAP} // расстояние между карточками
-          loop // бесконечный цикл (опц.)
-          autoplay={{ delay: 3500, disableOnInteraction: false }} // опц.
-          style={{ maxWidth: `${INNER_W}px` }}
-        >
-          {items.map((it, i) => (
-            <SwiperSlide
-              key={i}
-              className='!inline-flex !h-auto !w-[420px]' // фикс 420px и ширина по контенту
-            >
-              <FeedBackBlock
-                rating={Math.round(it.rating)}
-                text={it.text}
-                authorName={it.authorName}
-                authorRole={it.authorRole}
-                avatarUrl={it.avatarUrl}
-                className='h-full w-[420px]'
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay]} // ВСЕГДА подключены
+        onSwiper={(s) => (swiperRef.current = s)}
+        slidesPerView={1}
+        spaceBetween={GAP}
+        grabCursor
+        autoHeight
+        loop
+        style={{ maxWidth: `${INNER_W}px` }}
+        breakpoints={{
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          1024: { slidesPerView: 3, spaceBetween: 24 },
+        }}
+        // пагинация включена только на мобилке
+        pagination={isMobile && { clickable: true }}
+        className='max-md:!h-[280px] feedback-carousel'
+      >
+        {items.map((it, i) => (
+          <SwiperSlide key={i} className="!h-auto md:!w-[420px] !w-[355px]">
+            <FeedBackBlock
+              rating={Math.round(it.rating)}
+              text={it.text}
+              authorName={it.authorName}
+              authorRole={it.authorRole}
+              avatarUrl={it.avatarUrl}
+              className="h-full w-full md:w-[420px]"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
     </div>
   );
 }

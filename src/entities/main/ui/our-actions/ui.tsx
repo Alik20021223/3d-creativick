@@ -1,13 +1,19 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
-import { ourActionsMock } from '@utils/mock';
+import { ourActionsMock, ourActionsMockMobile } from '@utils/mock';
+import { useIsMobile } from '@app/hook/useMobile';
 
 const OurActionsContent = () => {
+
+  const isMobile = useIsMobile()
+
+  const swiperItems = isMobile ? ourActionsMockMobile : ourActionsMock
+
   return (
     <>
-      <div className={`mt-30 px-10`}>
-        <h1 className='text-dark-blue text-[54px] leading-[110%] font-bold'>Наши акции</h1>
+      <div className={`mt-30 md:px-10 px-2.5`}>
+        <h1 className='title-text max-md:text-center'>Наши акции</h1>
         <div>
           <Swiper
             modules={[Pagination]}
@@ -20,10 +26,10 @@ const OurActionsContent = () => {
             grabCursor
             autoHeight
             // сам Swiper — прозрачный, БЕЗ overflow-hidden
-            className='!h-[560px] !bg-transparent'
+            className='md:!h-[560px] max-md:!h-[460px] !bg-transparent max-md:mt-10'
           >
-            {ourActionsMock.map((p, i) => (
-              <SwiperSlide key={i} className='!h-[410px]'>
+            {swiperItems.map((p, i) => (
+              <SwiperSlide key={i} className='md:!h-[410px] !h-auto max-md:!flex max-md:!justify-center'>
                 <img src={p} alt={p} />
               </SwiperSlide>
             ))}

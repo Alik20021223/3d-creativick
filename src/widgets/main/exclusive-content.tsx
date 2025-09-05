@@ -6,7 +6,7 @@ import OurActionsContent from '@entities/main/ui/our-actions';
 const ExclusiveContent = () => {
   return (
     <>
-      <div className='relative z-5 grid w-screen place-items-center'>
+      <div className='relative z-5 md:grid md:w-screen md:place-items-center'>
         <WhyUsBlock />
         <div className='max-w-[1540px] pb-10'>
           <ExclusiveBlock />

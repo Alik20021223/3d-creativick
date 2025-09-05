@@ -217,11 +217,42 @@ body {
 }
 
 .pink-block {
+  background-image: url('./assets/mobile-bg-pink.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 330px;
+  width: 100%; /* можно адаптивно */
+}
+
+/* На экранах шире 768px заменяем */
+@media (min-width: 768px) {
+  .pink-block {
+    background-image: url('./assets/bg-pink.svg');
+    width: 740px;
+    height: 402px;
+  }
+}
+
+/* .pink-block {
   background-image: url(./assets/bg-pink.svg);
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   width: 740px;
   height: 402px;
+}
+
+.mobile-pink-block {
+  background-image: url(./assets/mobile-bg-pink.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 330px;
+} */
+
+.mobile-blue-block {
+  background-image: url(./assets/mobile-bg-blue.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 279.5px;
 }
 
 /* (опционально) Вариант с «пилюлей»-черточкой */
@@ -237,6 +268,28 @@ body {
     @apply absolute left-0 w-[10px] h-[2px] rounded-full bg-white/90;
     top: 0.65em; /* подгони под свой шрифт */
   }
+}
+
+@layer components {
+  .title-text {
+    @apply text-dark-blue md:text-[54px] text-[32px] font-bold leading-[110%];
+  }
+}
+
+.button-shadow-blue-active {
+  box-shadow: 0px 12px 13px 0px #05aff24c;
+  transform: scale(1.02);
+  transition: 0.3s all ease-in-out;
+  
+}
+
+.feedback-carousel .swiper-pagination-bullet {
+  background: white;
+  opacity: 0.8;
+}
+
+.feedback-carousel .swiper-pagination-bullet-active {
+  background: var(--primary);
 }
 
 .button-shadow-blue:hover {

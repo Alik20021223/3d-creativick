@@ -21,34 +21,29 @@ const ExclusiveCta: React.FC<ExclusiveCtaProps> = ({
   const navigate = useNavigate();
 
   return (
-    <section className={`w-full px-10 ${className}`}>
-      <div className='relative rounded-[40px] bg-[#EEF5FB] px-6 py-6 md:px-10 md:py-8'>
-        <div className='flex items-center justify-between gap-6'>
+    <section className={`w-full md:px-10 px-2.5 ${className}`}>
+      <div className='relative rounded-[40px] bg-[#EEF5FB] p-5 md:px-10 md:py-8'>
+        <div className='flex max-md:flex-col  items-center justify-between gap-6'>
           {/* Левый заголовок */}
-          <div className=''>
-            <h3 className='text-dark-blue text-[32px] leading-[110%] font-bold whitespace-pre-line'>
-              {title}
-            </h3>
-          </div>
+
+          <h3 className='text-dark-blue text-[32px] leading-[110%] font-bold md:whitespace-pre-line'>
+            {title}
+          </h3>
 
           {/* Текст */}
-          <div className='w-[488px]'>
+          <div className='md:w-[488px]'>
             <p className='text-secondary-text leading-[130%] md:text-lg'>{description}</p>
           </div>
 
           {/* Кнопка */}
-          <div className='flex md:justify-end'>
-            <div className='relative'>
+          <div className='flex md:justify-end w-full'>
               <Button
                 variant='default'
                 onClick={() => navigate(href)}
-                className='h-[56px] text-[22px] text-white'
+                className='h-[56px] md:text-[22px] text-base text-white bg-primary max-md:w-full'
               >
                 {buttonText}
               </Button>
-              {/* мягкое свечение под кнопкой */}
-              <span className='pointer-events-none absolute inset-x-3 -bottom-3 h-6 rounded-full bg-[#1177CF]/25 blur-2xl' />
-            </div>
           </div>
         </div>
       </div>

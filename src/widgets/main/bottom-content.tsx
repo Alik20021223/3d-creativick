@@ -1,18 +1,24 @@
 import FeedbackCarousel from '@feature/feedback-carousel/ui';
 import imgPlane from '@assets/rocket.png';
 import buildingImg from '@assets/building.svg';
-import { itemsFeedback, marketplaces } from '@utils/mock';
+import { itemsFeedback, marketplaces, marketplacesMobile } from '@utils/mock';
+import { useIsMobile } from '@app/hook/useMobile';
 
 const BottomContent = () => {
+
+  const isMobile = useIsMobile()
+
+  const marketPlaceItems = isMobile ? marketplacesMobile : marketplaces
+
   return (
     <>
-      <div className='bg-feedback mt-[56px] grid w-screen place-items-center rounded-t-[80px]'>
-        <div className='max-w-[1540px] px-[40px] pt-[80px] pb-10'>
+      <div className='bg-feedback mt-[56px] md:grid md:w-screen md:place-items-center rounded-t-[80px]'>
+        <div className='md:max-w-[1540px] md:px-[40px] px-2.5 md:pt-20 pt-15 pb-10'>
           <div className='grid place-items-center'>
             <div className='relative space-y-12'>
-              <div className='w-[761px] text-white'>
-                <h1 className='text-[54px] font-bold'>Отзывы о нас</h1>
-                <p className='w-[600px] text-lg font-normal'>
+              <div className='md:w-[761px] text-white'>
+                <h1 className='md:text-[54px] font-bold text-[32px] max-md:text-center'>Отзывы о нас</h1>
+                <p className='md:w-[600px] md:text-lg text-base font-normal'>
                   С другой стороны, реализация намеченных плановых заданий играет важную роль в
                   формировании глубокомысленных рассуждений
                 </p>
@@ -27,28 +33,28 @@ const BottomContent = () => {
               />
             </div>
           </div>
-          <div className='flex items-center justify-between'>
-            <div className='max-w-[455px]'>
-              <h2 className='text-[54px] leading-[110%] font-bold text-white'>
-                Где купить набор 3D-Креативик?
+          <div className='flex max-md:flex-col items-center justify-between max-md:space-y-10'>
+            <div className='md:max-w-[455px]'>
+              <h2 className='md:text-[54px] text-[32px] leading-[110%] font-bold text-white max-md:text-center'>
+                Где ещё купить набор 3D-Креативик?
               </h2>
             </div>
-            <div className='relative grid grid-cols-2 gap-3 pr-10'>
-              {marketplaces.map((m) => (
+            <div className='relative grid grid-cols-2 md:gap-3 gap-2.5  md:pr-10'>
+              {marketPlaceItems.map((m) => (
                 <a
                   key={m.name}
                   href={m.url}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className={`h-[250px] w-[334px] rounded-[22px]`}
+                  className={`md:h-[250px] md:w-[334px] w-[172.5px] h-[120px] rounded-[22px]`}
                 >
-                  <img src={m.logo} alt={m.name} className='h-full w-full object-fill' />
+                  <img src={m.logo} alt={m.name} className='h-full w-full md:object-fill ' />
                 </a>
               ))}
 
-              <div className='pointer-events-none absolute -right-90 -bottom-40 z-0 h-[780px] w-[780px]'>
+              {!isMobile && <div className='pointer-events-none absolute -right-90 -bottom-40 z-0 h-[780px] w-[780px]'>
                 <img src={buildingImg} alt={buildingImg} />
-              </div>
+              </div>}
             </div>
           </div>
         </div>

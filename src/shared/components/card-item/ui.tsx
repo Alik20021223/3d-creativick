@@ -33,17 +33,25 @@ const CardItem: React.FC<CardItemProps> = ({
     >
       {/* Топ: картинка с большим скруглением */}
       <div className='px-2.5 pt-2.5'>
-        <div className='exclusive-card relative h-[310px] w-full overflow-hidden rounded-[60px]'>
+        <div className="exclusive-card relative h-[310px] flex items-center justify-center w-full overflow-hidden rounded-[60px]">
           <img
             src={image}
             alt={title}
-            className='absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]'
+            className="
+      absolute inset-x-0 
+      md:inset-0 
+      h-full w-full
+      object-cover object-center
+      max-md:scale-[1]
+    "
           />
 
-          <div className='text-secondary-text absolute top-8 right-8 rounded-full bg-white px-5.5 py-1 text-lg font-normal'>
+          <div className="text-secondary-text absolute top-8 right-8 rounded-full bg-white px-5.5 py-1 text-lg font-normal">
             Хит продаж 🔥
           </div>
         </div>
+
+
       </div>
 
       {/* Контент */}
