@@ -50,7 +50,7 @@ export default function Header({ menuItems }: HeaderProps) {
       {/* fixed-хедер с анимацией появления/скрытия */}
       <div
         className={[
-          'fixed inset-x-0 z-50 px-[38px] max-md:p-2.5',
+          'fixed inset-x-0 z-50 px-[38px] max-md:px-2.5',
           'top-5 max-md:top-[56px]', // оставляем твой отступ сверху
           'transition-transform duration-300 will-change-transform',
           hidden ? '-translate-y-[120%]' : 'translate-y-0',

@@ -48,7 +48,7 @@ const TechPage = () => {
                 ВКонтакте
               </a>
               <a
-                href='mailto:support@example.com'
+                href='mailto:info@3dkreativik.ru'
                 className='bg-primary-active inline-flex h-[56px] w-[195px] items-center justify-center rounded-full text-[22px] font-normal text-white max-md:w-full max-md:text-lg'
               >
                 Email
