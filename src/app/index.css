@@ -201,6 +201,48 @@
   box-shadow: -561px 705px 250px 0px #06054a00;
 }
 
+.container-custom {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-custom {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container-custom {
+    max-width: 1440px;
+  }
+}
+
+@media (min-width: 1540px) {
+  .container-custom {
+    max-width: 1540px;
+  }
+}
+
 body {
   box-sizing: border-box;
   font-family: 'Rosatom';
@@ -217,19 +259,23 @@ body {
 }
 
 .pink-block {
-  background-image: url('./assets/mobile-bg-pink.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 330px;
+  background-color: var(--color-primary-active);
+  padding: 20px;
   width: 100%; /* можно адаптивно */
+  border-radius: 20px;
 }
 
 /* На экранах шире 768px заменяем */
 @media (min-width: 768px) {
   .pink-block {
+    background-color: transparent;
     background-image: url('./assets/bg-pink.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
     width: 740px;
     height: 402px;
+    padding: 0px;
+    border-radius: 0px;
   }
 }
 
@@ -249,10 +295,9 @@ body {
 } */
 
 .mobile-blue-block {
-  background-image: url(./assets/mobile-bg-blue.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 279.5px;
+  background-color: var(--color-primary-active);
+  padding: 20px;
+  width: 100%; /* можно адаптивно */
 }
 
 /* (опционально) Вариант с «пилюлей»-черточкой */

@@ -1,7 +1,6 @@
 // src/widgets/top-two/ui.tsx
 import React from 'react';
 import { topTwoMock } from '@utils/mock';
-import { useInView } from '@app/hook/useInView';
 import { useIsMobile } from '@app/hook/useMobile';
 
 import imgPhoneMobile from '@assets/mobile-phone.svg'
@@ -24,8 +23,6 @@ const TopTwo: React.FC<TopTwoProps> = ({
 
   const isMobile = useIsMobile()
 
-  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.2 });
-
   // внутри компонента (до return), можно прямо рядом с JSX:
   const kitItems = topTwoMock.kit.items;
   const half = Math.ceil(kitItems.length / 2);
@@ -33,13 +30,13 @@ const TopTwo: React.FC<TopTwoProps> = ({
   const right = kitItems.slice(half);
 
   return (
-    <section className='relative mx-auto w-full max-w-[1540px] py-12 md:py-16'>
-      <div className='flex flex-col gap-[50px]'>
+    <section className='relative mx-auto w-full container-custom py-12 md:py-16'>
+      <div className='flex flex-col md:gap-[50px] gap-5'>
         {/* A) 3D-принтер */}
-        <div className='flex max-md:flex-col items-center md:space-x-5'>
+        <div className='flex max-md:flex-col items-center gap-5'>
           <article className='pink-block max-md:w-[315px] relative flex items-center text-white'>
             <div className='relative flex'>
-              <header className='col-span-12 h-full px-8 md:col-span-6'>
+              <header className='col-span-12 h-full md:px-8 md:col-span-6'>
                 <h3 className='text-2xl font-bold md:text-3xl'>{topTwoMock.printer.title}</h3>
                 <ul className='list-pill'>
                   {topTwoMock.printer.items.map((text, i) => (
@@ -51,11 +48,8 @@ const TopTwo: React.FC<TopTwoProps> = ({
 
             {/* Декор: принтер с "подъёмом" при входе в вьюпорт */}
             <div
-              ref={ref}
               className={[
-                'absolute md:-top-[85px] -top-[25px] -right-2.5 z-0 will-change-transform',
-                !isMobile && 'transition-transform duration-3000 ease-out transition-opacity',
-                inView && !isMobile ? 'translate-y-0 opacity-100' : (!isMobile ? 'translate-y-96 opacity-0' : 'opacity-100'),
+                'absolute md:-top-[85px] top-[35px] -right-2.5 z-0',
               ]
                 .filter(Boolean)
                 .join(' ')}
@@ -64,7 +58,7 @@ const TopTwo: React.FC<TopTwoProps> = ({
                 <img
                   src={imgPrinter}
                   alt=''
-                  className='pointer-events-none md:h-[547px] md:w-[444px] w-[131px] h-[162px] select-none'
+                  className='pointer-events-none md:h-[547px] md:w-[444px] w-[144px] h-[178px] select-none'
                 />
               )}
             </div>
@@ -72,8 +66,8 @@ const TopTwo: React.FC<TopTwoProps> = ({
           </article>
 
           {/* B) Store */}
-          <article className='md:bg-primary-active mobile-blue-block max-md:w-[315px] relative rounded-[20px] text-white'>
-            <div className='z-10 flex md:h-[275px] md:w-[621px] w-full h-[279.5px] items-center px-7.5 py-[36px]'>
+          <article className='bg-primary-active max-md:w-full relative rounded-[20px] p-5 text-white md:p-0'>
+            <div className='z-10 flex md:h-[275px] md:w-[621px] w-full items-center md:px-7.5 md:py-[36px]'>
               <header className='flex flex-col'>
                 <h3 className='text-2xl font-semibold md:text-3xl'>{topTwoMock.store.title}</h3>
                 <ul className='list-pill'>

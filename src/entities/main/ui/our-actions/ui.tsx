@@ -12,7 +12,7 @@ const OurActionsContent = () => {
 
   return (
     <>
-      <div className={`mt-30 md:px-10 px-2.5`}>
+      <div className={`mt-30`}>
         <h1 className='title-text max-md:text-center'>Наши акции</h1>
         <div>
           <Swiper

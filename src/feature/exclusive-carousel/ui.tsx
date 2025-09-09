@@ -22,7 +22,8 @@ export default function ProductCarousel({
         spaceBetween={16}
         breakpoints={{
           640: { slidesPerView: 2, spaceBetween: 20 },
-          1024: { slidesPerView: 3, spaceBetween: 24 },
+          1440: { slidesPerView: 3, spaceBetween: 20 },
+          1540: { slidesPerView: 3, spaceBetween: 24 },
         }}
         speed={500}
         grabCursor

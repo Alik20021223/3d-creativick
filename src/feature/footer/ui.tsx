@@ -11,7 +11,7 @@ const Footer = () => {
     <footer className="relative z-5 select-none">
       {/* верхняя светлая зона */}
       <div className="bg-[#F1F5F9]">
-        <div className="mx-auto max-w-[1540px] px-4 py-8 md:px-10 md:py-12">
+        <div className="mx-auto container-custom px-4 py-8 md:px-10 md:py-12">
           {/* GRID: mobile-first */}
           <div className="grid grid-cols-12 gap-x-4 gap-y-8">
             {/* Левый блок */}
@@ -105,7 +105,7 @@ const Footer = () => {
 
       {/* нижняя тёмная плашка */}
       <div className="bg-secondary-text text-white">
-        <div className="mx-auto max-w-[1540px] px-4 py-5 md:px-10">
+        <div className="mx-auto container-custom px-4 py-5 md:px-10">
           {/* mobile: столбиком; desktop: в строку */}
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="text-xs opacity-90">Все права защищены ©2025.</div>

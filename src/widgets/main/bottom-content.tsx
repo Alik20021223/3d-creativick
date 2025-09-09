@@ -13,7 +13,7 @@ const BottomContent = () => {
   return (
     <>
       <div className='bg-feedback mt-[56px] md:grid md:w-screen md:place-items-center rounded-t-[80px]'>
-        <div className='md:max-w-[1540px] md:px-[40px] px-2.5 md:pt-20 pt-15 pb-10'>
+        <div className='md:container-custom md:px-[40px] px-2.5 md:pt-20 pt-15 pb-10'>
           <div className='grid place-items-center'>
             <div className='relative space-y-12'>
               <div className='md:w-[761px] text-white'>

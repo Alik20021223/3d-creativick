@@ -12,8 +12,8 @@ import LampImg from '@assets/lump-icon.svg';
 import ShieldCheckImg from '@assets/sheild-pink.svg';
 import InfinityImg from '@assets/infinityImg.svg';
 import BulbImg from '@assets/bulbImg.svg';
-import ourActions from '@assets/our-actions.svg';
-import ourActionsMobile from '@assets/mobile-actions.svg';
+import ourActions from '@assets/our-actions.png';
+import ourActionsMobile from '@assets/mobile-actions.png';
 
 export const headerMock = {
   main: [
@@ -217,7 +217,7 @@ export const benefitsMock: BenefitCardMock[] = [
     ],
     buttonText: 'Замена гаджетам',
     image: BulbImg,
-    accentClassName: 'md:-bottom-6 md:right-5 -top-20 right-0 z-10',
+    accentClassName: '-top-20 right-0 md:top-20 md:right-5 z-10',
   },
   {
     id: 'unlimited',
@@ -231,7 +231,7 @@ export const benefitsMock: BenefitCardMock[] = [
     ],
     buttonText: 'Рекомендует 9/10 педагогов',
     image: InfinityImg,
-    accentClassName: 'md:-bottom-2 md:right-0 -top-15 right-0 z-10 -rotate-30',
+    accentClassName: 'md:top-15 md:rotate-0 md:right-0 -top-15 right-0 z-10 -rotate-30',
   },
   {
     id: 'safe-simple',
@@ -244,7 +244,7 @@ export const benefitsMock: BenefitCardMock[] = [
     ],
     buttonText: 'Рекомендует 9/10 педагогов',
     image: ShieldCheckImg,
-    accentClassName: 'md:-bottom-4 md:right-0 -top-20 right-0 z-10',
+    accentClassName: 'md:top-20 md:-right-2 -top-20 right-0 z-10',
   },
   {
     id: 'useful',
@@ -257,7 +257,7 @@ export const benefitsMock: BenefitCardMock[] = [
     ],
     buttonText: 'Замена гаджетам',
     image: LampImg,
-    accentClassName: 'md:-bottom-3 md:right-2 -top-20 right-0 z-10',
+    accentClassName: 'md:top-20 md:right-2 -top-20 right-0 z-10',
   },
 ];
 

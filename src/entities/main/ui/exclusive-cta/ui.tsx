@@ -21,7 +21,7 @@ const ExclusiveCta: React.FC<ExclusiveCtaProps> = ({
   const navigate = useNavigate();
 
   return (
-    <section className={`w-full md:px-10 px-2.5 ${className}`}>
+    <section className={`w-full ${className}`}>
       <div className='relative rounded-[40px] bg-[#EEF5FB] p-5 md:px-10 md:py-8'>
         <div className='flex max-md:flex-col  items-center justify-between gap-6'>
           {/* Левый заголовок */}
@@ -36,7 +36,7 @@ const ExclusiveCta: React.FC<ExclusiveCtaProps> = ({
           </div>
 
           {/* Кнопка */}
-          <div className='flex md:justify-end w-full'>
+          <div className='flex md:justify-end max-md:w-full'>
               <Button
                 variant='default'
                 onClick={() => navigate(href)}

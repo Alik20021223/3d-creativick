@@ -90,7 +90,6 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
             className={[
               'pointer-events-none absolute z-5 md:h-[355px] md:w-[368px] w-[160px] h-[160px] select-none',
               accentClassName, // можно оставить — это не анимация; если тоже нужно отключить на мобилке, замените на (!isMobile ? accentClassName : '')
-              floatAnimClass,
             ].join(' ')}
           />
         )}

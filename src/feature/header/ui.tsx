@@ -52,7 +52,7 @@ export default function Header({ menuItems }: HeaderProps) {
       <div
         className={[
           'fixed inset-x-0 z-50 px-[38px] max-md:px-2.5',
-          'top-5 max-md:top-[56px]', // оставляем твой отступ сверху
+          'top-5 max-md:top-[20px]', // оставляем твой отступ сверху
           'transition-transform duration-300 will-change-transform',
           hidden ? '-translate-y-[120%] max-md:-translate-y-[180%]' : 'translate-y-0',
         ].join(' ')}
@@ -66,7 +66,7 @@ export default function Header({ menuItems }: HeaderProps) {
           ].join(' ')}
         >
           <header className='flex justify-center'>
-            <div className='flex w-full max-w-[1540px] items-center justify-between'>
+            <div className='flex w-full container-custom items-center justify-between'>
               <div className='flex items-center max-md:pl-2.5'>
                 <Link to='/' aria-label='На главную'>
                   <img src={logoSrc} alt='logo' />
