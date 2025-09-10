@@ -26,11 +26,11 @@ const BottomContent = () => {
 
               <FeedbackCarousel items={itemsFeedback} />
 
-              <img
+              {isMobile && <img
                 src={imgPlane}
                 alt={imgPlane}
                 className='float-rocket absolute -top-20 left-90 z-5'
-              />
+              />}
             </div>
           </div>
           <div className='flex max-md:flex-col items-center justify-between max-md:space-y-10'>

@@ -26,7 +26,7 @@ const OurActionsContent = () => {
             grabCursor
             autoHeight
             // сам Swiper — прозрачный, БЕЗ overflow-hidden
-            className='md:!h-[560px] max-md:!h-auto max-md:space-y-12 !bg-transparent max-md:mt-10'
+            className='md:!h-[440px] max-md:!h-auto max-md:space-y-12 !bg-transparent max-md:mt-10'
           >
             {swiperItems.map((p, i) => (
               <SwiperSlide key={i} className='md:!h-[410px] !h-auto max-md:!flex max-md:!justify-center'>

@@ -34,7 +34,7 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
   return (
     <div className={containerClass}>
       <div className="pointer-events-none absolute -top-[46px] right-3 z-20 h-[110.49px] w-[80.28px] origin-top-right rotate-12 max-md:hidden">
-        <img src={PaperClipImg} alt="" className="h-full w-full origin-top-right will-change-transform md:animate-clip-wiggle" />
+        <img src={PaperClipImg} alt="" className="h-full w-full origin-top-right will-change-transform animate-clip-wiggle" />
       </div>
 
       <div
@@ -70,7 +70,7 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
             src={image}
             alt=""
             className={[
-              'pointer-events-none absolute z-5 md:h-[355px] md:w-[368px] w-[160px] h-[160px] select-none',
+              'pointer-events-none absolute z-5 2xl:h-[330px] 2xl:w-[343px] md:h-[300px] md:w-[310px] w-[160px] h-[160px] select-none',
               accentClassName,
             ].join(' ')}
           />

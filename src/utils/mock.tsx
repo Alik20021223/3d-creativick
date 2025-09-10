@@ -216,7 +216,7 @@ export const benefitsMock: BenefitCardMock[] = [
       'своими руками',
     buttonText: 'Замена гаджетам',
     image: BulbImg,
-    accentClassName: '-top-22 right-0 2xl:top-22 xl:top-40 2xl:right-5 xl:top-16 z-10',
+    accentClassName: '-top-22 right-0 2xl:top-28 xl:top-50 2xl:right-5 xl:top-16 z-10',
   },
   {
     id: 'unlimited',
@@ -229,7 +229,7 @@ export const benefitsMock: BenefitCardMock[] = [
       'по тематическим сериям',
     buttonText: 'Рекомендует 9/10 педагогов',
     image: InfinityImg,
-    accentClassName: '2xl:top-17 xl:top-16 2xl:rotate-0 xl:top-40 2xl:right-0 xl:top-16 -top-15 right-0 z-10 -rotate-30 xl:-rotate-10',
+    accentClassName: '2xl:top-23 xl:top-16 2xl:rotate-0 xl:top-50 2xl:right-0 xl:top-16 -top-15 right-0 z-10 -rotate-30 xl:-rotate-10',
   },
   {
     id: 'safe-simple',
@@ -241,7 +241,7 @@ export const benefitsMock: BenefitCardMock[] = [
       'готовые 3D-модели (игрушки, животные, механизмы).',
     buttonText: 'Рекомендует 9/10 педагогов',
     image: ShieldCheckImg,
-    accentClassName: '2xl:top-22 xl:top-16 2xl:-right-3 xl:top-40 -top-18 right-0 z-10',
+    accentClassName: '2xl:top-29 xl:top-16 2xl:-right-3 xl:top-50 -top-18 right-0 z-10',
   },
   {
     id: 'useful',
@@ -253,7 +253,7 @@ export const benefitsMock: BenefitCardMock[] = [
       'и помогает отвлечься от гаджетов',
     buttonText: 'Замена гаджетам',
     image: LampImg,
-    accentClassName: '2xl:top-22 xl:top-40 2xl:right-2 xl:right-2 -top-18 right-0 z-10',
+    accentClassName: '2xl:top-26 xl:top-50 2xl:right-2 xl:right-2 -top-18 right-0 z-10',
   },
 ];
 

@@ -12,7 +12,7 @@ const TopMainContent = () => {
   return (
     <>
       <div className='bg-main relative w-full md:px-[83px] px-2.5 max-md:flex max-md:flex-col max-md:items-center max-md:gap-8'>
-        <div className='relative z-10 md:mt-[245px] mt-[200px] flex md:w-[551px] w-[355px] flex-col space-y-[47px] text-white max-md:text-center'>
+        <div className='relative z-10 md:mt-[245px] mt-[80px] flex md:w-[551px] w-[355px] flex-col space-y-[47px] text-white max-md:text-center'>
           <h1 className='font-ros-bold md:text-7xl text-[46px] leading-[110%] font-bold tracking-[0px]'>
             Сделай первый шаг в мир 3D!
           </h1>

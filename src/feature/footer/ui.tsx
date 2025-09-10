@@ -120,30 +120,6 @@ const Footer = () => {
               <a href="/offer" className="hover:underline text-primary">
                 Публичная оферта
               </a>
-              <a
-                href="https://webmaxup.ru"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:underline"
-              >
-                Разработка сайта WebMaxUP
-              </a>
-              <a
-                href="https://sobolevlab.ru"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:underline"
-              >
-                Разработка дизайна SobolevLab
-              </a>
-              <a
-                href="https://softix.dev"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:underline"
-              >
-                Разработчики Softix
-              </a>
             </nav>
           </div>
         </div>
