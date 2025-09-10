@@ -26,7 +26,7 @@ export type ProductCardMock = {
 export type BenefitCardMock = {
   id: string;
   title: string[];
-  lines: string[];
+  lines: string;
   buttonText?: string;
   image?: string;
   accentClassName?: string;

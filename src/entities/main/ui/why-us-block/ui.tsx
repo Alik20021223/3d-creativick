@@ -25,7 +25,7 @@ const WhyUsBlock = () => {
           <div className='absolute -top-25 max-md:hidden'>
             <img src={DotImg} alt={DotImg} className='' />
           </div>
-          <div className='flex max-md:flex-col md:gap-4 gap-5 md:px-10 px-2.5'>
+          <div className='flex max-md:flex-col 2xl:gap-4 xl:gap-12 gap-5 md:px-10 px-2.5'>
             {benefitsMock.map((b, i) => (
               <BenefitCard
                 key={b.id}

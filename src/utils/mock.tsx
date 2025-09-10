@@ -1,17 +1,17 @@
-import wbLogo from '@assets/wb-image.png';
-import yandexLogo from '@assets/yandex-market.svg';
-import megaLogo from '@assets/mega-market.svg';
-import ozonLogo from '@assets/ozon-slot.png';
-import wbLogoMobile from '@assets/mobile-wb.svg';
-import yandexLogoMobile from '@assets/mobile-yandex.svg';
-import megaLogoMobile from '@assets/mobile-mega.svg';
-import ozonLogoMobile from '@assets/mobile-ozon.svg';
+import wbLogo from '@assets/mobile-wb.png';
+import yandexLogo from '@assets/mobile-yandex.png';
+import megaLogo from '@assets/mobile-mega.png';
+import ozonLogo from '@assets/mobile-ozon.png';
+import wbLogoMobile from '@assets/mobile-wb.png';
+import yandexLogoMobile from '@assets/mobile-yandex.png';
+import megaLogoMobile from '@assets/mobile-mega.png';
+import ozonLogoMobile from '@assets/mobile-ozon.png';
 import HitOneImg from '@assets/hit-sell-one.svg';
 import { BenefitCardMock, ProductCardMock } from '@shared/types';
-import LampImg from '@assets/lump-icon.svg';
-import ShieldCheckImg from '@assets/sheild-pink.svg';
-import InfinityImg from '@assets/infinityImg.svg';
-import BulbImg from '@assets/bulbImg.svg';
+import LampImg from '@assets/lump-icon.png';
+import ShieldCheckImg from '@assets/sheild-pink.png';
+import InfinityImg from '@assets/infinityImg.png';
+import BulbImg from '@assets/bulbImg.png';
 import ourActions from '@assets/our-actions.png';
 import ourActionsMobile from '@assets/mobile-actions.png';
 
@@ -207,59 +207,56 @@ export const benefitsMock: BenefitCardMock[] = [
   {
     id: 'inspire',
     title: ['Вдохновляет', 'на творчество'],
-    lines: [
-      'Фигурки можно раскрасить, собрать',
-      'в коллекцию или дополнить своими',
-      'идеями — каждая модель становится',
-      'поводом для игры, творчества',
-      'и гордости за результат, созданный',
+    lines:
+      'Фигурки можно раскрасить, собрать' +
+      'в коллекцию или дополнить своими' +
+      'идеями — каждая модель становится' +
+      'поводом для игры, творчества' +
+      'и гордости за результат, созданный' +
       'своими руками',
-    ],
     buttonText: 'Замена гаджетам',
     image: BulbImg,
-    accentClassName: '-top-20 right-0 md:top-20 md:right-5 z-10',
+    accentClassName: '-top-22 right-0 2xl:top-22 xl:top-40 2xl:right-5 xl:top-16 z-10',
   },
   {
     id: 'unlimited',
     title: ['Безграничный'],
-    lines: [
-      'K.Store — это постоянно обновляемая',
-      'коллекция 3D-моделей, созданных',
-      'специально для принтера из набора',
-      '«3D Кретивик», с доступом к покупке',
+    lines:
+      'K.Store — это постоянно обновляемая' +
+      'коллекция 3D-моделей, созданных' +
+      'специально для принтера из набора' +
+      '«3D Кретивик», с доступом к покупке' +
       'по тематическим сериям',
-    ],
     buttonText: 'Рекомендует 9/10 педагогов',
     image: InfinityImg,
-    accentClassName: 'md:top-15 md:rotate-0 md:right-0 -top-15 right-0 z-10 -rotate-30',
+    accentClassName: '2xl:top-17 xl:top-16 2xl:rotate-0 xl:top-40 2xl:right-0 xl:top-16 -top-15 right-0 z-10 -rotate-30 xl:-rotate-10',
   },
   {
     id: 'safe-simple',
     title: ['Простой', 'и безопасный'],
-    lines: [
-      'Принтер запускается одной кнопкой,',
-      'оснащён закрытой камерой,',
-      'компактный и лёгкий. В комплекте — ',
-      'готовые 3D-модели (игрушки, животные,механизмы).',
-    ],
+    lines:
+      'Принтер запускается одной кнопкой,' +
+      'оснащён закрытой камерой,' +
+      'компактный и лёгкий. В комплекте —' +
+      'готовые 3D-модели (игрушки, животные, механизмы).',
     buttonText: 'Рекомендует 9/10 педагогов',
     image: ShieldCheckImg,
-    accentClassName: 'md:top-20 md:-right-2 -top-20 right-0 z-10',
+    accentClassName: '2xl:top-22 xl:top-16 2xl:-right-3 xl:top-40 -top-18 right-0 z-10',
   },
   {
     id: 'useful',
     title: ['Полезный'],
-    lines: [
-      'Развивает мышление и креативность,',
-      'учит основам 3D-печати и дизайну,',
-      'знакомит с технологиями будущего',
+    lines:
+      'Развивает мышление и креативность,' +
+      'учит основам 3D-печати и дизайну,' +
+      'знакомит с технологиями будущего' +
       'и помогает отвлечься от гаджетов',
-    ],
     buttonText: 'Замена гаджетам',
     image: LampImg,
-    accentClassName: 'md:top-20 md:right-2 -top-20 right-0 z-10',
+    accentClassName: '2xl:top-22 xl:top-40 2xl:right-2 xl:right-2 -top-18 right-0 z-10',
   },
 ];
+
 
 export const footerColumns = [
   {

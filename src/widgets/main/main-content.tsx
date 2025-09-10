@@ -8,7 +8,7 @@ import ReelImgBlue from '@assets/blue-reels.svg';
 import GearImg from '@assets/gear-img.png';
 import { useIsMobile } from '@app/hook/useMobile';
 import topIcon from '@assets/top-main-top-icon.svg';
-import mobileBearImg from '@assets/top-mobile-bear.png'
+import mobileBearImg from '@assets/mobile-bear.png'
 
 const MainContent = () => {
 
@@ -29,21 +29,35 @@ const MainContent = () => {
           <TopThree />
         </div>
         {isMobile && (
-          <div className="absolute -top-99 -left-52">
-            <img
-              src={mobileBearImg}
-              alt="bear"
-              className="relative z-10 block max-w-[613px] max-h-[651px]"
-            />
+          <div
+            className="
+      absolute
+      -top-[380px]           /* фикс-позиция по высоте (подбери число) */
+      left-1/2 -translate-x-1/2   /* центр по горизонтали */
+      pointer-events-none    /* чтобы не съедал клики по контенту */
+      z-10
+    "
+          >
+            {/* контейнер медведя */}
+            <div className="relative w-[608px] h-[545px]">
+              <img
+                src={mobileBearImg}
+                alt="bear"
+                className="block w-full h-full object-contain"
+                draggable={false}
+              />
 
-
-            <img
-              src={topIcon}
-              alt='topIcon'
-              className='absolute top-33 -right-8 mb-0 w-[127px] h-[127px] -rotate-16'
-            />
+              {/* розовая «вспышка» */}
+              <img
+                src={topIcon}
+                alt="topIcon"
+                className="absolute top-[132px] right-6 w-[127px] h-[127px] -rotate-16"
+                draggable={false}
+              />
+            </div>
           </div>
         )}
+
 
       </div>
     </>

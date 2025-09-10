@@ -33,7 +33,7 @@ export default function ProductCarousel({
       >
         {items.map((p, i) => (
           <SwiperSlide key={i} className='!h-auto !bg-transparent '>
-            <div className='md:px-3 md:py-1'>
+            <div className='md:px-3 md:py-1 max-md:flex max-md:justify-center'>
               <CardItem
                 image={p.image}
                 title={p.title}
