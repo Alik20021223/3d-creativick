@@ -7,6 +7,7 @@ import { devtools } from 'zustand/middleware';
 type AppState = {
   open: boolean;
   setOpen: (v: boolean) => void;
+  isAuth: boolean;
 };
 
 export const useAppStore = create<AppState>()(
@@ -14,7 +15,8 @@ export const useAppStore = create<AppState>()(
     (set) => ({
       open: false,
       setOpen: (v) => set({ open: v }),
+      isAuth: false,
     }),
-    { name: 'app-store' }
-  )
+    { name: 'app-store' },
+  ),
 );
