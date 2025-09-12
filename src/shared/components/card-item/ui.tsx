@@ -33,25 +33,17 @@ const ExclusiveCard: React.FC<ExclusiveCardProps> = ({
     >
       {/* Топ: картинка с большим скруглением */}
       <div className='px-2.5 pt-2.5'>
-        <div className="exclusive-card relative h-[310px] flex items-center justify-center w-full overflow-hidden rounded-[60px]">
+        <div className='exclusive-card relative flex h-[310px] w-full items-center justify-center overflow-hidden rounded-[60px]'>
           <img
             src={image}
             alt={title}
-            className="
-      absolute inset-x-0 
-      md:inset-0 
-      h-full w-full
-      object-cover object-center
-      max-md:scale-[1]
-    "
+            className='absolute inset-x-0 h-full w-full object-cover object-center max-md:scale-[1] md:inset-0'
           />
 
-          <div className="text-secondary-text absolute top-8 right-8 rounded-full bg-white px-5.5 py-1 text-lg font-normal">
+          <div className='text-secondary-text absolute top-8 right-8 rounded-full bg-white px-5.5 py-1 text-lg font-normal'>
             Хит продаж 🔥
           </div>
         </div>
-
-
       </div>
 
       {/* Контент */}
@@ -69,10 +61,10 @@ const ExclusiveCard: React.FC<ExclusiveCardProps> = ({
         </div>
 
         {/* Кнопка */}
-        <div className='flex gap-4 mt-8 w-full'>
+        <div className='mt-8 flex w-full gap-4'>
           <Button
             variant='default'
-            onClick={() => { }}
+            onClick={() => {}}
             className='h-[56px] flex-1 py-3 text-[22px] text-white'
           >
             В корзину

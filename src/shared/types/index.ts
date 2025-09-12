@@ -25,8 +25,8 @@ export type ProductCardMock = {
 
 export type ColorButtonType = {
   value: string;
-  class: string
-}
+  class: string;
+};
 
 export type ProductCardType = {
   activeColor?: string;
@@ -35,11 +35,11 @@ export type ProductCardType = {
   price: {
     last_price?: number;
     new_price: number;
-  },
+  };
   title: string;
   id: number;
-  image: string[]
-}
+  image: string[];
+};
 
 export type SelectOption = {
   value: number;
@@ -47,12 +47,11 @@ export type SelectOption = {
 };
 
 export type DropdownItem = {
-    value: string;
-    label: string;
-    icon?: React.ReactNode;
-    shortcut?: string;
-    disabled?: boolean;
-    destructive?: boolean;
-    onSelect?: () => void; // индивидуальный обработчик
+  value: string;
+  label: string;
+  icon?: React.ReactNode;
+  shortcut?: string;
+  disabled?: boolean;
+  destructive?: boolean;
+  onSelect?: () => void; // индивидуальный обработчик
 };
-

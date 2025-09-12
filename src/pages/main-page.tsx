@@ -11,7 +11,7 @@ const MainPage = () => {
         <TopMainContent />
         <PopularContent />
         <Catalog3dContent />
-        
+
         {/* <MainContent /> */}
 
         {/* <SwiperContent />

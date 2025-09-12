@@ -111,7 +111,6 @@ export const exclusiveProductsMock: ProductCardMock[] = [
   },
 ];
 
-
 export const footerColumns = [
   {
     title: 'Главная',
@@ -144,32 +143,35 @@ export const footerColumns = [
 ];
 
 export const ourActionsMock: string[] = [ourActions, ourActions, ourActions];
-export const ourActionsMockMobile: string[] = [ourActionsMobile, ourActionsMobile, ourActionsMobile];
-
+export const ourActionsMockMobile: string[] = [
+  ourActionsMobile,
+  ourActionsMobile,
+  ourActionsMobile,
+];
 
 export const colors = [
-  { value: "pink", class: "bg-pink-500" },
-  { value: "blue", class: "bg-sky-500" },
-  { value: "yellow", class: "bg-yellow-400" },
-  { value: "gray", class: "bg-gray-300" },
-  { value: "black", class: "bg-gray-800" },
-  { value: "blue-dark", class: "bg-blue-700" },
+  { value: 'pink', class: 'bg-pink-500' },
+  { value: 'blue', class: 'bg-sky-500' },
+  { value: 'yellow', class: 'bg-yellow-400' },
+  { value: 'gray', class: 'bg-gray-300' },
+  { value: 'black', class: 'bg-gray-800' },
+  { value: 'blue-dark', class: 'bg-blue-700' },
 ];
 
 const baseProducts: ProductCardType[] = [
   {
     id: 1,
-    title: "Принтер голубой",
-    activeColor: "blue",
-    category: ["Космос 🚀", "Эксклюзивы"],
+    title: 'Принтер голубой',
+    activeColor: 'blue',
+    category: ['Космос 🚀', 'Эксклюзивы'],
     price: { last_price: 3900, new_price: 1900 },
     image: [PrinterImg, PrinterImg, PrinterImg],
   },
   {
     id: 2,
-    title: "Катушка",
-    activeColor: "pink",
-    category: ["Эксклюзивы"],
+    title: 'Катушка',
+    activeColor: 'pink',
+    category: ['Эксклюзивы'],
     price: { last_price: 4200, new_price: 2100 },
     image: [CatushkaImg, CatushkaImg],
   },
@@ -181,49 +183,43 @@ const generatedItems: ProductCardType[] = Array.from({ length: 18 }, (_, i) => {
   return {
     id,
     title: `Космический флот ${id - 2}`, // например: Космический флот 1..18
-    description:
-      "Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.",
-    category: ["Космос 🚀"],            // можно поменять на свои теги
+    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
+    category: ['Космос 🚀'], // можно поменять на свои теги
     price: { last_price: 3900, new_price: 1900 }, // как на макете
-    image: [CosmoPersonImg],           // одна картинка для всех 18
+    image: [CosmoPersonImg], // одна картинка для всех 18
   };
 });
 
 // итоговый мок на 20 шт. — принтер, катушка, затем 18 авто-сгенерированных
-export const productCardsMock: ProductCardType[] = [
-  ...baseProducts,
-  ...generatedItems,
-];
-
+export const productCardsMock: ProductCardType[] = [...baseProducts, ...generatedItems];
 
 export const CATEGORIES = [
-  "Акции 🔥",
-  "Эксклюзивы",
-  "Космос 🚀",
-  "Категория 2",
-  "Категория 3", // активная по умолчанию
-  "Категория 4",
-  "Категория 5",
-  "Категория 6",
-  "Категория 7",
-  "Категория 8",
-  "Категория 9",
-  "Категория 10",
-  "Категория 11",
-  "Категория 12",
+  'Акции 🔥',
+  'Эксклюзивы',
+  'Космос 🚀',
+  'Категория 2',
+  'Категория 3', // активная по умолчанию
+  'Категория 4',
+  'Категория 5',
+  'Категория 6',
+  'Категория 7',
+  'Категория 8',
+  'Категория 9',
+  'Категория 10',
+  'Категория 11',
+  'Категория 12',
 ];
 
 export const PerPageSelect: SelectOption[] = [
-  { label: "Показывать по 6", value: 6 },
-  { label: "Показывать по 9", value: 9 },
-  { label: "Показывать по 12", value: 12 },
-  { label: "Показывать по 15", value: 15 },
-  { label: "Показывать по 24", value: 24 },
-]
-
+  { label: 'Показывать по 6', value: 6 },
+  { label: 'Показывать по 9', value: 9 },
+  { label: 'Показывать по 12', value: 12 },
+  { label: 'Показывать по 15', value: 15 },
+  { label: 'Показывать по 24', value: 24 },
+];
 
 export const SortMock: DropdownItem[] = [
-  { value: "price_asc", label: "Сначала дешевле" },
-  { value: "price_desc", label: "Сначала дороже" },
-  { value: "newest", label: "Сначала новые" },
+  { value: 'price_asc', label: 'Сначала дешевле' },
+  { value: 'price_desc', label: 'Сначала дороже' },
+  { value: 'newest', label: 'Сначала новые' },
 ];

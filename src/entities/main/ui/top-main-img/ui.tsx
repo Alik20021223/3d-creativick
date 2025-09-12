@@ -5,25 +5,24 @@ import katushkaImg from '@assets/katushka-main.png';
 
 const TopMainImg = () => {
   return (
-    <div className="relative z-0">
-      <img src={bearImg} alt="bear" className="relative block w-[912px] h-[1217px] z-5" />
+    <div className='relative z-0'>
+      <img src={bearImg} alt='bear' className='relative z-5 block h-[1217px] w-[912px]' />
 
-      <img src={heartImg} alt="heart" className="absolute top-15 left-5 w-[306px] h-[310px] z-0" />
+      <img src={heartImg} alt='heart' className='absolute top-15 left-5 z-0 h-[310px] w-[306px]' />
 
       <img
         src={moscowImg}
-        alt="moscow"
-        className="absolute top-[320px] -right-[300px] w-[780px] h-[780px] z-0"
+        alt='moscow'
+        className='absolute top-[320px] -right-[300px] z-0 h-[780px] w-[780px]'
       />
 
       <img
         src={katushkaImg}
-        alt="machine"
-        className="absolute top-70 -left-[320px] w-[890px] h-[1000px] z-0"
+        alt='machine'
+        className='absolute top-70 -left-[320px] z-0 h-[1000px] w-[890px]'
       />
     </div>
   );
 };
-
 
 export default TopMainImg;
