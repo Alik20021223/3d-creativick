@@ -113,14 +113,14 @@ export default function Header({ menuItems }: HeaderProps) {
                     </div>
 
                     <div className='flex gap-3'>
-                      {isAuth && (
-                        <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
-                          <ShoppingCart className='!h-8 !w-8' />
-                          <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
-                            12
-                          </div>
-                        </Button>
-                      )}
+
+                      <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
+                        <ShoppingCart className='!h-8 !w-8' />
+                        <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
+                          12
+                        </div>
+                      </Button>
+
 
                       <Button
                         variant='pink'

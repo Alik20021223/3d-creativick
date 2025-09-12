@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer className="relative z-5 select-none">
       {/* верхняя светлая зона */}
-      <div className="bg-[#F1F5F9]">
+      <div className="bg-secondary-white">
         <div className="mx-auto container-custom px-4 py-8 md:px-10 md:py-12">
           {/* GRID: mobile-first */}
           <div className="grid grid-cols-12 gap-x-4 gap-y-8">

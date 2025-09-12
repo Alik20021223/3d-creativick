@@ -14,7 +14,7 @@ export default function ProductCarousel({
 }) {
   return (
     // ВНЕШНЯЯ ПЛИТА: белый фон + скругление
-    <div className={`rounded-[60px] bg-white ${className}`}>
+    <div className={`md:mt-10 md:px-10 ${className}`}>
       <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}

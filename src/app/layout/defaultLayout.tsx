@@ -1,13 +1,15 @@
 import { headerMock } from '@/utils/mock';
-import BottomContent from '@widgets/main/bottom-content';
 import Footer from '@feature/footer/ui';
 import Header from '@feature/header';
-import { Outlet, useLocation } from 'react-router-dom';
-import ExclusiveContent from '@widgets/main/exclusive-content';
+import {
+  Outlet,
+  // useLocation
+} from 'react-router-dom';
 
 export default function MainLayout() {
-  const { pathname } = useLocation();
-  const menuItems = pathname === '/' ? headerMock.main : headerMock.shop;
+  // const { pathname } = useLocation();
+  // const menuItems = pathname === '/' ? headerMock.main : headerMock.shop;
+  const menuItems = headerMock.shop;
 
   return (
     <div className='flex min-h-dvh flex-col overflow-x-hidden'>
@@ -18,11 +20,6 @@ export default function MainLayout() {
           <Outlet />
         </main>
       </div>
-      <div className='mt-[90px] rounded-t-[80px] bg-white'>
-        <ExclusiveContent />
-        <BottomContent />
-      </div>
-
       {/* Футер просто последним — без позиционирования */}
       <Footer />
     </div>

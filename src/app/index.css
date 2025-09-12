@@ -76,7 +76,8 @@
     --color-primary-active: #0487d9;
     --color-secondary-active: #F1F5F9;
     --color-dark-blue: #034AA6;
-    --color-secondary-text: #333333
+    --color-secondary-text: #333333;
+    --color-secondary-white: #F1F5F9;
 }
 
 :root {
@@ -319,6 +320,10 @@ body {
   .title-text {
     @apply text-dark-blue md:text-[54px] text-[32px] font-bold leading-[110%];
   }
+
+  .description-text {
+    @apply text-lg font-normal text-secondary-text leading-[130%]
+  }
 }
 
 .button-shadow-blue-active {
@@ -399,4 +404,10 @@ p.no-hyphen {
   background-position: center;  /* центрировать */
   background-repeat: no-repeat;
 }
+
+.color-btn-shadow {
+  box-shadow: 0px 0px 0px 1px #0487D9;
+}
+
+
 

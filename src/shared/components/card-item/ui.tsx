@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import { Button } from '@shadcn/button';
 
-type CardItemProps = {
+type ExclusiveCardProps = {
   image: string;
   title: string;
   rating: number; // например 4.8
@@ -13,7 +13,7 @@ type CardItemProps = {
   className?: string;
 };
 
-const CardItem: React.FC<CardItemProps> = ({
+const ExclusiveCard: React.FC<ExclusiveCardProps> = ({
   image,
   title,
   rating,
@@ -62,24 +62,33 @@ const CardItem: React.FC<CardItemProps> = ({
 
         <div className='mt-4 flex items-center gap-2 text-gray-500'>
           <Star className='h-[35px] w-[35px] fill-[#FFD300] text-[#FFD300]' />
-          <span className='text-lg font-medium text-gray-800'>{rating.toFixed(1)}</span>
+          <span className='description-text'>{rating.toFixed(1)}</span>
           {typeof bought === 'number' && (
             <span className='text-gray-400'>(купили {bought} чел)</span>
           )}
         </div>
 
         {/* Кнопка */}
-        <Button
-          variant='default'
-          onClick={() => navigate(href)}
-          className='mt-8 h-[56px] w-full py-3 text-[22px] text-white'
-        >
-          Подробнее
-          <span className='text-2xl leading-none'>›</span>
-        </Button>
+        <div className='flex gap-4 mt-8 w-full'>
+          <Button
+            variant='default'
+            onClick={() => { }}
+            className='h-[56px] flex-1 py-3 text-[22px] text-white'
+          >
+            В корзину
+          </Button>
+          <Button
+            variant='outline'
+            onClick={() => navigate(href)}
+            className='h-[56px] flex-1 py-3 text-[22px]'
+          >
+            Подробнее
+            <span className='text-2xl leading-none'>›</span>
+          </Button>
+        </div>
       </div>
     </article>
   );
 };
 
-export default CardItem;
+export default ExclusiveCard;

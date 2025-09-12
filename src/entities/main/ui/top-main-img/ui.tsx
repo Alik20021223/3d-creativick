@@ -1,28 +1,29 @@
-import bearImg from '@assets/bear-top-main.png';
-import horseImg from '@assets/main-top-horse.png';
-import dinoImg from '@assets/top-main-dinosaur.png';
-import machineImg from '@assets/main-top-3d-machine.svg';
+import bearImg from '@assets/mini-bear-store.png';
+import heartImg from '@assets/heart-main.png';
+import moscowImg from '@assets/moscow-main.png';
+import katushkaImg from '@assets/katushka-main.png';
 
 const TopMainImg = () => {
   return (
-    <>
-      <div className='relative'>
-        <img src={bearImg} alt='bear' className='relative z-10 block' />
+    <div className="relative z-0">
+      <img src={bearImg} alt="bear" className="relative block w-[912px] h-[1217px] z-5" />
 
-        {/* Лошадь: плавает вверх-вниз (вверх к середине цикла) */}
-        <img src={horseImg} alt='horse' className='float absolute top-[90px] -right-[20px] z-0' />
+      <img src={heartImg} alt="heart" className="absolute top-15 left-5 w-[306px] h-[310px] z-0" />
 
-        {/* Дино: в противофазе (вниз к середине цикла) */}
-        <img
-          src={dinoImg}
-          alt='dino'
-          className='float-rev absolute -top-[415px] -left-[200px] z-0'
-        />
+      <img
+        src={moscowImg}
+        alt="moscow"
+        className="absolute top-[320px] -right-[300px] w-[780px] h-[780px] z-0"
+      />
 
-        <img src={machineImg} alt='machine' className='absolute top-70 -left-[320px] z-0' />
-      </div>
-    </>
+      <img
+        src={katushkaImg}
+        alt="machine"
+        className="absolute top-70 -left-[320px] w-[890px] h-[1000px] z-0"
+      />
+    </div>
   );
 };
+
 
 export default TopMainImg;

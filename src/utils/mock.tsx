@@ -1,17 +1,8 @@
-import wbLogo from '@assets/mobile-wb.png';
-import yandexLogo from '@assets/mobile-yandex.png';
-import megaLogo from '@assets/mobile-mega.png';
-import ozonLogo from '@assets/mobile-ozon.png';
-import wbLogoMobile from '@assets/mobile-wb.png';
-import yandexLogoMobile from '@assets/mobile-yandex.png';
-import megaLogoMobile from '@assets/mobile-mega.png';
-import ozonLogoMobile from '@assets/mobile-ozon.png';
 import HitOneImg from '@assets/hit-sell-one.svg';
-import { BenefitCardMock, ProductCardMock } from '@shared/types';
-import LampImg from '@assets/lump-icon.png';
-import ShieldCheckImg from '@assets/sheild-pink.png';
-import InfinityImg from '@assets/infinityImg.png';
-import BulbImg from '@assets/bulbImg.png';
+import PrinterImg from '@assets/printer-card.png';
+import CatushkaImg from '@assets/katushka-card.png';
+import CosmoPersonImg from '@assets/cosmo-person.png';
+import { DropdownItem, ProductCardMock, ProductCardType, SelectOption } from '@shared/types';
 import ourActions from '@assets/our-actions.png';
 import ourActionsMobile from '@assets/mobile-actions.png';
 
@@ -69,89 +60,6 @@ export const itemsFeedback = [
   },
 ];
 
-export const marketplaces = [
-  {
-    name: 'Wildberries',
-    logo: wbLogo,
-    url: 'https://www.wildberries.ru',
-  },
-  {
-    name: 'Яндекс Маркет',
-    logo: yandexLogo,
-    url: 'https://market.yandex.ru',
-  },
-  {
-    name: 'Мега Маркет',
-    logo: megaLogo,
-    url: 'https://megamarket.ru',
-  },
-  {
-    name: 'Ozon',
-    logo: ozonLogo,
-    url: 'https://ozon.ru',
-  },
-];
-
-export const marketplacesMobile = [
-  {
-    name: 'Wildberries',
-    logo: wbLogoMobile,
-    url: 'https://www.wildberries.ru',
-  },
-  {
-    name: 'Яндекс Маркет',
-    logo: yandexLogoMobile,
-    url: 'https://market.yandex.ru',
-  },
-  {
-    name: 'Мега Маркет',
-    logo: megaLogoMobile,
-    url: 'https://megamarket.ru',
-  },
-  {
-    name: 'Ozon',
-    logo: ozonLogoMobile,
-    url: 'https://ozon.ru',
-  },
-];
-
-// src/utils/mock.ts
-export const topTwoMock = {
-  printer: {
-    title: '3D-принтер',
-    items: [
-      'Простой и удобный',
-      'Безопасный и компактный',
-      'Красочный и бесшумный',
-      'Стабильный и эффективный',
-    ],
-  },
-  store: {
-    title: 'Креативик.Store',
-    items: ['Онлайн покупка', 'Эксклюзивные 3D-модели', 'Новые серии', 'Подписка'],
-  },
-  materials: {
-    title: 'Материалы',
-    items: ['Эксклюзивные филаменты для 3D-печати', 'Безопасный и биоразлагаемый материал'],
-  },
-  service: {
-    title: 'Сервис',
-    items: ['Поддержка', 'Ремонт', 'Гарантия', 'Запчасти'],
-  },
-  kit: {
-    title: 'Комплектация',
-    items: [
-      '3D-принтер',
-      'Филамент 250 г',
-      'Набор инструментов',
-      'USB-накопитель',
-      'Держатель катушки филамента',
-      'Комплект проводов',
-      'Бумажное руководство пользователя',
-    ],
-  },
-};
-
 export const exclusiveProductsMock: ProductCardMock[] = [
   {
     id: 'pla-yellow',
@@ -203,60 +111,6 @@ export const exclusiveProductsMock: ProductCardMock[] = [
   },
 ];
 
-export const benefitsMock: BenefitCardMock[] = [
-  {
-    id: 'inspire',
-    title: ['Вдохновляет', 'на творчество'],
-    lines:
-      'Фигурки можно раскрасить, собрать' +
-      'в коллекцию или дополнить своими' +
-      'идеями — каждая модель становится' +
-      'поводом для игры, творчества' +
-      'и гордости за результат, созданный' +
-      'своими руками',
-    buttonText: 'Замена гаджетам',
-    image: BulbImg,
-    accentClassName: '-top-22 right-0 2xl:top-28 xl:top-50 2xl:right-5 xl:top-16 z-10',
-  },
-  {
-    id: 'unlimited',
-    title: ['Безграничный'],
-    lines:
-      'K.Store — это постоянно обновляемая' +
-      'коллекция 3D-моделей, созданных' +
-      'специально для принтера из набора' +
-      '«3D Кретивик», с доступом к покупке' +
-      'по тематическим сериям',
-    buttonText: 'Рекомендует 9/10 педагогов',
-    image: InfinityImg,
-    accentClassName: '2xl:top-23 xl:top-16 2xl:rotate-0 xl:top-50 2xl:right-0 xl:top-16 -top-15 right-0 z-10 -rotate-30 xl:-rotate-10',
-  },
-  {
-    id: 'safe-simple',
-    title: ['Простой', 'и безопасный'],
-    lines:
-      'Принтер запускается одной кнопкой,' +
-      'оснащён закрытой камерой,' +
-      'компактный и лёгкий. В комплекте —' +
-      'готовые 3D-модели (игрушки, животные, механизмы).',
-    buttonText: 'Рекомендует 9/10 педагогов',
-    image: ShieldCheckImg,
-    accentClassName: '2xl:top-29 xl:top-16 2xl:-right-3 xl:top-50 -top-18 right-0 z-10',
-  },
-  {
-    id: 'useful',
-    title: ['Полезный'],
-    lines:
-      'Развивает мышление и креативность,' +
-      'учит основам 3D-печати и дизайну,' +
-      'знакомит с технологиями будущего' +
-      'и помогает отвлечься от гаджетов',
-    buttonText: 'Замена гаджетам',
-    image: LampImg,
-    accentClassName: '2xl:top-26 xl:top-50 2xl:right-2 xl:right-2 -top-18 right-0 z-10',
-  },
-];
-
 
 export const footerColumns = [
   {
@@ -291,3 +145,85 @@ export const footerColumns = [
 
 export const ourActionsMock: string[] = [ourActions, ourActions, ourActions];
 export const ourActionsMockMobile: string[] = [ourActionsMobile, ourActionsMobile, ourActionsMobile];
+
+
+export const colors = [
+  { value: "pink", class: "bg-pink-500" },
+  { value: "blue", class: "bg-sky-500" },
+  { value: "yellow", class: "bg-yellow-400" },
+  { value: "gray", class: "bg-gray-300" },
+  { value: "black", class: "bg-gray-800" },
+  { value: "blue-dark", class: "bg-blue-700" },
+];
+
+const baseProducts: ProductCardType[] = [
+  {
+    id: 1,
+    title: "Принтер голубой",
+    activeColor: "blue",
+    category: ["Космос 🚀", "Эксклюзивы"],
+    price: { last_price: 3900, new_price: 1900 },
+    image: [PrinterImg, PrinterImg, PrinterImg],
+  },
+  {
+    id: 2,
+    title: "Катушка",
+    activeColor: "pink",
+    category: ["Эксклюзивы"],
+    price: { last_price: 4200, new_price: 2100 },
+    image: [CatushkaImg, CatushkaImg],
+  },
+];
+
+// генерим ещё 18 карточек (id 3..20) с одной картинкой
+const generatedItems: ProductCardType[] = Array.from({ length: 18 }, (_, i) => {
+  const id = i + 3; // 3..20
+  return {
+    id,
+    title: `Космический флот ${id - 2}`, // например: Космический флот 1..18
+    description:
+      "Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.",
+    category: ["Космос 🚀"],            // можно поменять на свои теги
+    price: { last_price: 3900, new_price: 1900 }, // как на макете
+    image: [CosmoPersonImg],           // одна картинка для всех 18
+  };
+});
+
+// итоговый мок на 20 шт. — принтер, катушка, затем 18 авто-сгенерированных
+export const productCardsMock: ProductCardType[] = [
+  ...baseProducts,
+  ...generatedItems,
+];
+
+
+export const CATEGORIES = [
+  "Акции 🔥",
+  "Эксклюзивы",
+  "Космос 🚀",
+  "Категория 2",
+  "Категория 3", // активная по умолчанию
+  "Категория 4",
+  "Категория 5",
+  "Категория 6",
+  "Категория 7",
+  "Категория 8",
+  "Категория 9",
+  "Категория 10",
+  "Категория 11",
+  "Категория 12",
+];
+
+export const PerPageSelect: SelectOption[] = [
+  { label: "Показывать по 6", value: 6 },
+  { label: "Показывать по 9", value: 9 },
+  { label: "Показывать по 12", value: 12 },
+  { label: "Показывать по 15", value: 15 },
+  { label: "Показывать по 24", value: 24 },
+]
+
+
+export const SortMock: DropdownItem[] = [
+  { value: "price_asc", label: "Сначала дешевле" },
+  { value: "price_desc", label: "Сначала дороже" },
+  { value: "newest", label: "Сначала новые" },
+];

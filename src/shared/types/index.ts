@@ -23,11 +23,36 @@ export type ProductCardMock = {
   href: string;
 };
 
-export type BenefitCardMock = {
-  id: string;
-  title: string[];
-  lines: string;
-  buttonText?: string;
-  image?: string;
-  accentClassName?: string;
+export type ColorButtonType = {
+  value: string;
+  class: string
+}
+
+export type ProductCardType = {
+  activeColor?: string;
+  description?: string;
+  category: string[];
+  price: {
+    last_price?: number;
+    new_price: number;
+  },
+  title: string;
+  id: number;
+  image: string[]
+}
+
+export type SelectOption = {
+  value: number;
+  label: string;
 };
+
+export type DropdownItem = {
+    value: string;
+    label: string;
+    icon?: React.ReactNode;
+    shortcut?: string;
+    disabled?: boolean;
+    destructive?: boolean;
+    onSelect?: () => void; // индивидуальный обработчик
+};
+
