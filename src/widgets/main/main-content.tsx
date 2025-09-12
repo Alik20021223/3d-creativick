@@ -17,7 +17,7 @@ const MainContent = () => {
   return (
     <>
       <div className='relative z-5 md:mt-[180px] mt-[378px] w-full md:px-10 px-2.5'>
-        <div className='md:rounded-[80px] rounded-[60px] bg-white md:px-10 px-5 pt-[120px] pb-10'>
+        <div className='md:rounded-[80px] rounded-[60px] bg-white md:px-10 px-5 md:pt-[120px] pt-20 pb-10'>
           <TopOne />
           <TopTwo
             imgPrinter={PrinterImg}

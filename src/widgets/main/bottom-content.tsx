@@ -33,7 +33,7 @@ const BottomContent = () => {
               />}
             </div>
           </div>
-          <div className='flex max-md:flex-col items-center justify-between max-md:space-y-10'>
+          <div className='flex max-md:flex-col items-center justify-between max-md:space-y-10 mt-16'>
             <div className='md:max-w-[455px]'>
               <h2 className='md:text-[54px] text-[32px] leading-[110%] font-bold text-white max-md:text-center'>
                 Где ещё купить набор 3D-Креативик?
