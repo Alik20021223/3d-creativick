@@ -16,7 +16,7 @@ export default function MainLayout() {
       {/* Центрированный контейнер, который РАСТЁТ */}
       <div className='container-custom relative z-10 mx-auto flex w-full grow flex-col md:pt-5'>
         <Header menuItems={menuItems} />
-        <main className='w-full grow'>
+        <main className='w-full grow h-full'>
           <Outlet />
         </main>
       </div>

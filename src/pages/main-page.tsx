@@ -7,7 +7,7 @@ import TopMainContent from '@widgets/main/top-main-content';
 const MainPage = () => {
   return (
     <>
-      <div className='z-10 w-full'>
+      <div className='z-10 w-full h-full'>
         <TopMainContent />
         <PopularContent />
         <Catalog3dContent />
