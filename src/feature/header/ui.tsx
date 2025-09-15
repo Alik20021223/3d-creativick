@@ -31,7 +31,7 @@ export default function Header({ menuItems }: HeaderProps) {
     const active = isHashHref(href) ? hash === href : pathname === href;
     return [
       'inline-flex items-center h-full px-2 transition-colors border-b-2 hover:text-primary hover:border-primary',
-      active ? 'text-primary border-primary' : 'text-gray-500 border-transparent ',
+      active ? 'text-primary border-primary' : 'text-secondary-text border-transparent ',
     ].join(' ');
   };
 

@@ -15,7 +15,7 @@ const BottomContent = () => {
       <div className='bg-feedback mt-[56px] md:grid md:w-screen md:place-items-center rounded-t-[80px]'>
         <div className='md:container-custom md:px-[40px] px-2.5 md:pt-20 pt-15 pb-10'>
           <div className='grid place-items-center'>
-            <div className='relative space-y-12'>
+            <div className='relative md:space-y-12 space-y-10'>
               <div className='md:w-[761px] text-white'>
                 <h1 className='md:text-[54px] font-bold text-[32px] max-md:text-center'>Отзывы о нас</h1>
                 <p className='md:w-[600px] md:text-lg text-base font-normal'>
@@ -26,14 +26,14 @@ const BottomContent = () => {
 
               <FeedbackCarousel items={itemsFeedback} />
 
-              {isMobile && <img
+              {!isMobile && <img
                 src={imgPlane}
                 alt={imgPlane}
                 className='float-rocket absolute -top-20 left-90 z-5'
               />}
             </div>
           </div>
-          <div className='flex max-md:flex-col items-center justify-between max-md:space-y-10 mt-16'>
+          <div className='flex max-md:flex-col items-center justify-between max-md:space-y-10 md:mt-16 mt-10'>
             <div className='md:max-w-[455px]'>
               <h2 className='md:text-[54px] text-[32px] leading-[110%] font-bold text-white max-md:text-center'>
                 Где ещё купить набор 3D-Креативик?

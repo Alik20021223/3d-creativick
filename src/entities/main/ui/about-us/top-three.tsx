@@ -3,7 +3,7 @@ import rosAtomImg from '@assets/rosatom-img.svg';
 const TopThree = () => {
   return (
     <>
-      <div className='flex w-full max-md:flex-col max-md:gap-8 items-center justify-between'>
+      <div className='flex w-full max-md:flex-col md:gap-20 max-md:gap-8 items-center justify-between'>
         <div className=''>
           <h2 className='title-text'>
             При поддержке РОСАТОМ

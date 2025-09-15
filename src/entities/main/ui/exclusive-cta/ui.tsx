@@ -40,7 +40,7 @@ const ExclusiveCta: React.FC<ExclusiveCtaProps> = ({
               <Button
                 variant='default'
                 onClick={() => navigate(href)}
-                className='h-[56px] md:text-[22px] text-base text-white bg-primary max-md:w-full'
+                className='h-[56px] md:text-[22px] text-base text-white max-md:w-full'
               >
                 {buttonText}
               </Button>

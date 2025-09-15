@@ -315,11 +315,20 @@ body {
   }
 }
 
+
+
 @layer components {
   .title-text {
     @apply text-dark-blue md:text-[54px] text-[32px] font-bold leading-[110%];
   }
 }
+
+/* в глобальных стилях (или styled-jsx) */
+.list-pill--narrow-last-two li:nth-last-child(-n+2) { max-width: 85%; }
+@media (min-width: 768px) {
+  .list-pill--narrow-last-two li:nth-last-child(-n+2) { max-width: 65%; }
+}
+
 
 .button-shadow-blue-active {
   box-shadow: 0px 12px 13px 0px #05aff24c;

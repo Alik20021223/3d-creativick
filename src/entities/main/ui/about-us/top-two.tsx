@@ -38,10 +38,8 @@ const TopTwo: React.FC<TopTwoProps> = ({
             <div className='relative flex'>
               <header className='col-span-12 h-full md:px-8 md:col-span-6'>
                 <h3 className='text-2xl font-bold md:text-3xl'>{topTwoMock.printer.title}</h3>
-                <ul className='list-pill'>
-                  {topTwoMock.printer.items.map((text, i) => (
-                    <li key={i}>{text}</li>
-                  ))}
+                <ul className="list-pill list-pill--narrow-last-two">
+                  {topTwoMock.printer.items.map((text, i) => <li key={i}>{text}</li>)}
                 </ul>
               </header>
             </div>
@@ -49,7 +47,7 @@ const TopTwo: React.FC<TopTwoProps> = ({
             {/* Декор: принтер с "подъёмом" при входе в вьюпорт */}
             <div
               className={[
-                'absolute md:-top-[85px] top-[35px] -right-2.5 z-0',
+                'absolute md:-top-[85px] top-[75px] -right-2.5 z-0',
               ]
                 .filter(Boolean)
                 .join(' ')}

@@ -1,6 +1,6 @@
 import wbLogo from '@assets/mobile-wb.png';
 import yandexLogo from '@assets/mobile-yandex.png';
-import megaLogo from '@assets/mobile-mega.png';
+import megaLogo from '@assets/mobile-mega.svg';
 import ozonLogo from '@assets/mobile-ozon.png';
 import wbLogoMobile from '@assets/mobile-wb.png';
 import yandexLogoMobile from '@assets/mobile-yandex.png';
@@ -216,7 +216,7 @@ export const benefitsMock: BenefitCardMock[] = [
       'своими руками',
     buttonText: 'Замена гаджетам',
     image: BulbImg,
-    accentClassName: '-top-22 right-0 2xl:top-28 xl:top-50 2xl:right-5 xl:top-16 z-10',
+    accentClassName: '-top-22 right-0 2xl:top-29 xl:top-50 2xl:right-2 xl:top-16 z-10',
   },
   {
     id: 'unlimited',
@@ -241,7 +241,7 @@ export const benefitsMock: BenefitCardMock[] = [
       'готовые 3D-модели (игрушки, животные, механизмы).',
     buttonText: 'Рекомендует 9/10 педагогов',
     image: ShieldCheckImg,
-    accentClassName: '2xl:top-29 xl:top-16 2xl:-right-3 xl:top-50 -top-18 right-0 z-10',
+    accentClassName: '2xl:top-30 xl:top-16 2xl:-right-3 xl:top-50 -top-18 right-0 z-10',
   },
   {
     id: 'useful',

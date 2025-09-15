@@ -14,12 +14,20 @@ const WhyUsBlock = () => {
     <>
       <section className='pt-15 w-full'>
         <div className=' container-custom flex justify-center'>
-          <div className='mb-[67px] flex flex-col items-center space-y-3 mx-0!'>
-            <h1 className='text-dark-blue md:text-[54px] text-[32px] font-bold'>Играй, учись и создавай!</h1>
+          <div className="mb-[52px] flex flex-col items-center gap-5">
+            <h1 className="text-dark-blue font-bold text-center
+                 text-[28px] leading-[1.1]
+                 md:text-[54px] md:leading-[60px]">
+              Играй, учись
+              <br className="md:hidden" />
+              и создавай!
+            </h1>
+
             <div className='bg-pink-active flex md:h-[68px] h-[63px] md:w-[443px] w-[355px] -rotate-3 items-center justify-center rounded-[44px] md:text-[32px] text-[24px] font-bold text-white'>
               вместе с 3D Кретивик
             </div>
           </div>
+
         </div>
         <div className='relative flex justify-center'>
           <div className='absolute -top-25 max-md:hidden'>
