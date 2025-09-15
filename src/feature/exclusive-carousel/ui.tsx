@@ -21,7 +21,7 @@ export default function ProductCarousel({
         // slidesPerView={1.1}
         spaceBetween={16}
         breakpoints={{
-          640: { slidesPerView: 2, spaceBetween: 20 },
+          1080: { slidesPerView: 2, spaceBetween: 20 },
           1440: { slidesPerView: 3, spaceBetween: 20 },
           1540: { slidesPerView: 3, spaceBetween: 24 },
         }}
@@ -33,14 +33,14 @@ export default function ProductCarousel({
       >
         {items.map((p, i) => (
           <SwiperSlide key={i} className='!h-auto !bg-transparent'>
-            <div className='max-md:flex max-md:justify-center md:px-3 md:py-1'>
+            <div className=' md:px-3 px-2.5 md:py-1 max-md:w-full max-xl:flex max-xl:justify-center'>
               <CardItem
                 image={p.image}
                 title={p.title}
                 rating={p.rating}
                 bought={p.bought}
                 href={p.href}
-                className='w-[476px] max-w-full'
+                className='md:min-w-[436px] min-w-[355px] max-md:w-full'
               />
             </div>
           </SwiperSlide>

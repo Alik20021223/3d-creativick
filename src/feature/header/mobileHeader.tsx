@@ -10,6 +10,8 @@ import { cn } from '@/shared/lib/utils';
 import { ShoppingCart, XIcon } from 'lucide-react';
 import { HeaderType } from '@shared/types';
 import { useAppStore } from '@app/store';
+import TgIcon from '@assets/tg-icon.svg';
+import VkIcon from '@assets/vk-icon.svg';
 
 type MobileHeaderProps = {
   menuItems: HeaderType[]; // передаём массив напрямую
@@ -50,10 +52,10 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
             side='bottom'
             align='end'
             sideOffset={20}
-            className='data-[state=open]:animate-in data-[state=closed]:animate-out w-[300px] rounded-2xl border-none bg-white p-0 p-5 shadow-xl'
+            className='data-[state=open]:animate-in data-[state=closed]:animate-out w-[300px] rounded-2xl border-none bg-secondary-active p-0 p-5 shadow-xl'
             onEscapeKeyDown={() => setOpen(false)}
           >
-            <nav className='mb-15 flex flex-col text-end'>
+            <nav className='mb-10 flex flex-col text-end'>
               {menuItems.map((item) => (
                 <Link key={item.href} to={item.href} className={cn(linkClass(item.href), 'py-2')}>
                   {item.label}
@@ -61,24 +63,61 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
               ))}
             </nav>
 
-            <div className='flex items-center gap-2'>
-              {isAuth ? (
-                <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
-                  <ShoppingCart className='!h-8 !w-8' />
-                  <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
-                    {cartCount}
-                  </div>
-                </Button>
-              ) : (
-                <Button className='flex h-11 w-[169px] text-white'>В магазин</Button>
+            <div className="flex items-center gap-2 w-full mb-10">
+              {isAuth && (
+                <div className="flex-1">
+                  <Button className="w-full h-11 relative bg-primary !p-0 text-white">
+                    <ShoppingCart className="!h-8 !w-8" />
+                    <div className="bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full">
+                      {cartCount}
+                    </div>
+                  </Button>
+                </div>
               )}
 
-              <Button variant='pink' className='flex h-11 w-[83px] justify-center' asChild>
-                <Link to={isAuth ? '/profile' : '/login'}>
-                  <img src={userSrc} alt='user' className='pt-[5px]' />
-                </Link>
-              </Button>
+              <div className="flex-1">
+                <Button variant="pink" asChild className="w-full h-11 justify-center">
+                  <Link to={isAuth ? '/profile' : '/login'}>
+                    <img src={userSrc} alt="user" className="pt-[5px]" />
+                  </Link>
+                </Button>
+              </div>
             </div>
+
+
+            <div className='flex flex-col gap-3'>
+              <div className="flex flex-col items-center md:items-start text-secondary-text space-y-3">
+                {/* размер для мобилки */}
+                <a
+                  href="mailto:info@3dkreativik.ru"
+                  className="text-base md:text-[22px] hover:underline"
+                >
+                  info@3dkreativik.ru
+                </a>
+                <a href="tel:+84959888282" className="text-base md:text-[22px]">
+                  8 (495) 988-82-82
+                </a>
+              </div>
+
+              <div className="flex justify-center md:justify-start gap-3">
+                <a
+                  aria-label="VK"
+                  href="/"
+                  className="inline-flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-white"
+                >
+                  <img src={VkIcon} alt="vk" className="h-5 w-5 md:h-6 md:w-6" />
+                </a>
+                <a
+                  aria-label="Telegram"
+                  href="/"
+                  className="inline-flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-white"
+                >
+                  <img src={TgIcon} alt="tg" className="h-5 w-5 md:h-6 md:w-6" />
+                </a>
+              </div>
+            </div>
+
+
           </PopoverContent>
         </Popover>
       </div>

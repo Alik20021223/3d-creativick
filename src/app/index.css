@@ -328,7 +328,7 @@ body {
   }
 
   .description-text {
-    @apply text-lg font-normal text-secondary-text leading-[130%]
+    @apply md:text-lg text-base font-normal text-secondary-text leading-[130%]
   }
 }
 

@@ -15,7 +15,7 @@ export const useAppStore = create<AppState>()(
     (set) => ({
       open: false,
       setOpen: (v) => set({ open: v }),
-      isAuth: false,
+      isAuth: true,
     }),
     { name: 'app-store' },
   ),

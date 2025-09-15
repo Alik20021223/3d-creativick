@@ -59,7 +59,7 @@ const ProductCarouselImage: React.FC<ProductCarouselImageProps> = ({ images, cat
               <img
                 src={src}
                 alt={src ?? `Фото ${i + 1}`}
-                className='object-fit mx-auto rounded-[60px] bg-white select-none md:h-[310px] md:w-[455px]'
+                className='object-fit mx-auto rounded-[60px] bg-white select-none md:h-[310px] md:w-[455px] h-[240px] w-[335px]'
                 loading='lazy'
                 draggable={false}
               />
