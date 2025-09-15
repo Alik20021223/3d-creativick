@@ -54,7 +54,7 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
           </div>
 
           {/* одна строка с \n — переносим через whitespace-pre-line */}
-          <p className="text-secondary-text mt-4 text-lg leading-[130%] font-normal whitespace-pre-line">
+          <p className="text-secondary-text mt-4 text-lg leading-[130%] font-normal whitespace-pre-line max-xl:mb-4 max-md:mb-0">
             {lines}
           </p>
         </div>
@@ -70,7 +70,7 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
             src={image}
             alt=""
             className={[
-              'pointer-events-none absolute z-5 2xl:h-[330px] 2xl:w-[343px] md:h-[300px] md:w-[310px] w-[160px] h-[160px] select-none',
+              'pointer-events-none absolute z-5 2xl:h-[330px] 2xl:w-[343px] xl:h-[300px] xl:w-[310px] max-md:w-[160px] max-md:h-[160px] max-xl:hidden max-md:block select-none',
               accentClassName,
             ].join(' ')}
           />

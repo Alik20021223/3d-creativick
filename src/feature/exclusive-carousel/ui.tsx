@@ -40,7 +40,7 @@ export default function ProductCarousel({
                 rating={p.rating}
                 bought={p.bought}
                 href={p.href}
-                className='w-[476px] max-w-full'
+                className='w-full max-w-full'
               />
             </div>
           </SwiperSlide>

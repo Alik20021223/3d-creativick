@@ -1,6 +1,6 @@
 import wbLogo from '@assets/mobile-wb.png';
 import yandexLogo from '@assets/mobile-yandex.png';
-import megaLogo from '@assets/mobile-mega.svg';
+import megaLogo from '@assets/mobile-mega.png';
 import ozonLogo from '@assets/mobile-ozon.png';
 import wbLogoMobile from '@assets/mobile-wb.png';
 import yandexLogoMobile from '@assets/mobile-yandex.png';
