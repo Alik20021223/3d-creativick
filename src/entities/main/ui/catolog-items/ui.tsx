@@ -63,7 +63,7 @@ export default function CatalogGrid({ topRef }: CatalogGridProps) {
       </div>
 
       {/* грид карточек */}
-      <div className='grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 max-md:justify-items-center'>
+      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 max-md:justify-items-center'>
         {slice.map((item) => (
           <ProductCard key={item.id} data={item} />
         ))}

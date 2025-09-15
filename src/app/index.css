@@ -253,6 +253,12 @@ body {
   background-repeat: no-repeat;
 }
 
+.bg-catalog { 
+  background-image: url(./assets/bg-catalog.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .exclusive-card {
   background-image: url(./assets/bg-default.png);
   background-size: cover;

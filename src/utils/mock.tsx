@@ -149,29 +149,44 @@ export const ourActionsMockMobile: string[] = [
   ourActionsMobile,
 ];
 
-export const colors = [
-  { value: 'pink', class: 'bg-pink-500' },
-  { value: 'blue', class: 'bg-sky-500' },
-  { value: 'yellow', class: 'bg-yellow-400' },
-  { value: 'gray', class: 'bg-gray-300' },
-  { value: 'black', class: 'bg-gray-800' },
-  { value: 'blue-dark', class: 'bg-blue-700' },
-];
+// colors-palette.ts
+export const COLOR_PALETTE: Record<string, string> = {
+  pink: 'bg-pink-500',
+  red: 'bg-red-500',
+  yellow: 'bg-yellow-400',
+  beige: 'bg-amber-100',
+  black: 'bg-gray-800',
+  gray: 'bg-gray-300',
+  blue: 'bg-sky-500',       // светло-синий
+  blueDark: 'bg-blue-700',  // тёмно-синий
+  green: 'bg-green-600',
+  white: 'bg-white border border-gray-200',
+  orange: 'bg-orange-500',
+};
+
+// доступные наборы цветов по типу товара
+export const COLORS_BY_SET: Record<'printer'|'spool', string[]> = {
+  printer: ['pink', 'blue', 'yellow', 'gray', 'black'], // как на 1-м скрине
+  spool:   ['pink', 'red', 'yellow', 'beige', 'black', 'blueDark', 'green', 'white', 'orange'], // 2-й скрин
+};
+
 
 const baseProducts: ProductCardType[] = [
   {
     id: 1,
     title: 'Принтер голубой',
     activeColor: 'blue',
-    category: ['Космос 🚀', 'Эксклюзивы'],
+    colorSet: 'printer',
+    badges: ['Космос 🚀', 'Эксклюзивы'],
     price: { last_price: 3900, new_price: 1900 },
     image: [PrinterImg, PrinterImg, PrinterImg],
   },
   {
     id: 2,
     title: 'Катушка',
+    colorSet: 'spool',
     activeColor: 'pink',
-    category: ['Эксклюзивы'],
+    badges: ['Эксклюзивы'],
     price: { last_price: 4200, new_price: 2100 },
     image: [CatushkaImg, CatushkaImg],
   },
@@ -184,7 +199,7 @@ const generatedItems: ProductCardType[] = Array.from({ length: 18 }, (_, i) => {
     id,
     title: `Космический флот ${id - 2}`, // например: Космический флот 1..18
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    category: ['Космос 🚀'], // можно поменять на свои теги
+    badges: ['Космос 🚀'], // можно поменять на свои теги
     price: { last_price: 3900, new_price: 1900 }, // как на макете
     image: [CosmoPersonImg], // одна картинка для всех 18
   };

@@ -31,7 +31,8 @@ export type ColorButtonType = {
 export type ProductCardType = {
   activeColor?: string;
   description?: string;
-  category: string[];
+  colorSet?: 'printer'|'spool'; // НОВОЕ: по нему берём набор цветов
+  badges: string[];
   price: {
     last_price?: number;
     new_price: number;

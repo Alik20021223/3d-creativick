@@ -9,7 +9,7 @@ const Catalog3dContent = () => {
   return (
     <section ref={topRef} className='relative bg-white'>
       {/* градиент фона */}
-      <div className='absolute inset-0 rounded-t-[80px] bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-blue-600' />
+      <div className='absolute inset-0 rounded-t-[80px] bg-catalog ' />
       <div className='container-custom relative z-10 w-full md:px-10 py-20 px-2.5'>
         {/* заголовок и подзаголовок */}
         <div className="flex flex-col items-center space-y-4 text-center">
