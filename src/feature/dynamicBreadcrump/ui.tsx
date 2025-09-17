@@ -23,7 +23,7 @@ const DynamicBreadcrumbs: React.FC<DynamicBreadcrumbsProps> = ({ pathMap }) => {
 
   const data = useMemo(() => {
     const first = pathParts[0];
-    return pathMap[first] ?? [];
+    return pathMap[first] ?? pathMap['*'] ?? [];
   }, [pathMap, pathParts]);
 
   const breadcrumbs = useMemo(() => {
@@ -56,12 +56,15 @@ const DynamicBreadcrumbs: React.FC<DynamicBreadcrumbsProps> = ({ pathMap }) => {
 
   const len = breadcrumbs.length;
 
+  console.log(breadcrumbs);
+
+
   return (
     <Breadcrumb className='py-2.5'>
-      <BreadcrumbList className='flex hidden text-xs lg:text-sm'>
+      <BreadcrumbList className='flex text-xs lg:text-sm'>
         <BreadcrumbItem>
-          <NavLink to='/' className='text-sm text-[#c8c8c8]'>
-            Главная
+          <NavLink to='/' className='text-sm text-secondary-text'>
+            Каталог
           </NavLink>
         </BreadcrumbItem>
 

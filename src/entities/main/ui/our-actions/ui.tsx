@@ -11,7 +11,7 @@ const OurActionsContent = () => {
 
   return (
     <>
-      <div className={`mt-30 max-md:my-20`}>
+      <div className={`my-20`}>
         <h1 className='title-text max-md:text-center'>Наши акции</h1>
         <div>
           <Swiper

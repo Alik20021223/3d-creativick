@@ -56,3 +56,12 @@ export type DropdownItem = {
   destructive?: boolean;
   onSelect?: () => void; // индивидуальный обработчик
 };
+
+export type DetailCardType = {
+  description: string;
+  title: string;
+  id: number;
+  image: string[];
+  badges: string[];
+}
+

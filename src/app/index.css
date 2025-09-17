@@ -66,10 +66,6 @@
   50%     { transform: rotate(0deg); }
 }
 
-@keyframes floatRocket {
-  0%, 100% { transform: translateY(-25px); }
-  50%      { transform: translateY(40px); }
-}
 
 @theme {
     --color-pink-active: #F238B1; 
@@ -144,7 +140,6 @@
 .float       { animation: var(--animate-float); }
 .float-slow  { animation: var(--animate-floatSlow); }
 .float-rev   { animation: var(--animate-floatRev); }
-.float-rocket {animation: var(--animate-floatRocket);}
 
 /* Опционально — плавнее и забота о доступности */
 .float, .float-slow, .float-rev {
@@ -191,15 +186,16 @@
 
 
 .header-shadow {
-  box-shadow: -22px 28px 79px 0px #06054a1a;
+  box-shadow: -0.57px 0.35px 3.15px 0px #00175C06;
 
-  box-shadow: -90px 113px 144px 0px #06054a17;
+box-shadow: -2.5px 1.54px 6.52px 0px #00175C0A;
 
-  box-shadow: -202px 254px 195px 0px #06054a0d;
+box-shadow: -6.13px 3.77px 13px 0px #00175C0D;
 
-  box-shadow: -359px 451px 231px 0px #06054a03;
+box-shadow: -11.81px 7.27px 25.48px 0px #00175C0F;
 
-  box-shadow: -561px 705px 250px 0px #06054a00;
+box-shadow: -19.87px 12.23px 46.85px 0px #00175C13;
+
 }
 
 .container-custom {
@@ -248,6 +244,9 @@ body {
   box-sizing: border-box;
   font-family: 'Rosatom';
   position: relative;
+}
+
+.bg-gradient {
   background-image: url(./assets/bg-default.png);
   background-size: cover;
   background-repeat: no-repeat;
@@ -339,13 +338,12 @@ body {
   
 }
 
-.feedback-carousel .swiper-pagination-bullet {
-  background: white;
-  opacity: 0.8;
+.swiper-pagination-bullet {
+  background: #969ca2 !important;
 }
 
-.feedback-carousel .swiper-pagination-bullet-active {
-  background: var(--primary);
+.swiper-pagination-bullet-active {
+  background: var(--primary) !important;
 }
 
 .button-shadow-blue:hover {
@@ -415,5 +413,17 @@ p.no-hyphen {
   box-shadow: 0px 0px 0px 1px #0487D9;
 }
 
+.bg-gradient-badge {
+  background: linear-gradient(93.48deg, #3062E7 -17.77%, #7144D3 59.11%, #87249B 110.54%);
+}
 
+.shadow-card-info {
+box-shadow: -6.13px 3.77px 13px 0px #00175C0D;
+}
 
+.bg-feedback {
+  background-image: url(./assets/feedback.png);
+  background-size: cover;       /* чтобы фон заполнил весь экран */
+  background-position: center;  /* центрировать */
+  background-repeat: no-repeat;
+}

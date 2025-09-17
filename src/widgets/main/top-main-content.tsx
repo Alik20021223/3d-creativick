@@ -25,10 +25,15 @@ const TopMainContent = () => {
           </Button>
         </div>
         {isMobile && (
-          <div className='absolute z-0 -bottom-55'>
-            <img src={bearImg} alt='bear' className='relative z-0 block h-[435px] w-[261px]' />
+          <div className="absolute z-0 -bottom-55 left-[45%] -translate-x-1/2 w-[486px]">
+            <img
+              src={bearImg}
+              alt="bear"
+              className="relative z-0 block h-[435px] w-[486px]"
+            />
           </div>
         )}
+
         {!isMobile && (
           <div className='pointer-events-none absolute -top-[120px] right-0 -z-10'>
             <TopMainImg />

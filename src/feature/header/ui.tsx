@@ -62,7 +62,7 @@ export default function Header({ menuItems }: HeaderProps) {
           className={[
             'h-16 w-full rounded-4xl bg-white p-2.5 pl-[42px] max-sm:px-2.5',
             'transition-shadow duration-300',
-            atTop ? 'shadow-none' : 'shadow-2xl',
+            atTop ? 'shadow-xl' : 'shadow-2xl',
           ].join(' ')}
         >
           <header className='flex justify-center'>
@@ -114,7 +114,7 @@ export default function Header({ menuItems }: HeaderProps) {
                     <div className='flex gap-3'>
                       <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
                         <ShoppingCart className='!h-8 !w-8' />
-                        <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
+                        <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 text-sm items-center justify-center rounded-full'>
                           12
                         </div>
                       </Button>

@@ -9,9 +9,10 @@ const MainPage = () => {
     <>
       <div className='z-10 w-full h-full'>
         <TopMainContent />
-        <PopularContent />
-        <Catalog3dContent />
-
+        <div className='bg-white rounded-t-[80px] md:mt-[241px] relative z-[20]'>
+          <PopularContent />
+          <Catalog3dContent />
+        </div>
         {/* <MainContent /> */}
 
         {/* <SwiperContent />

@@ -1,12 +1,13 @@
 // ProductCard.tsx
 import { JSX, useMemo, useState } from 'react';
-import { ChevronRight, Heart } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import ColorButton from '@shared/components/color-button';
 import { Link } from 'react-router-dom';
 import { COLOR_PALETTE, COLORS_BY_SET } from '@utils/mock';
 import { ProductCardType } from '@shared/types';
 import ProductCarouselImage from './product-carousel';
 import { Button } from '@shadcn/button';
+import ButtonSave from '@feature/button-save';
 
 interface ProductCardProps {
   data: ProductCardType;
@@ -90,13 +91,7 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
           <Button className='flex-1 rounded-full py-3! h-full text-lg font-semibold text-white'>
             В корзину
           </Button>
-          <Button
-            variant="outline"
-            onClick={() => setSave(!isSave)}
-            className='border-primary h-full md:w-[56px] w-[46px] gap-0 text-primary ml-3 rounded-full border p-3'
-          >
-            <Heart className={`md:h-9! md:w-9! h-5.5! w-5.5! ${isSave && 'fill-primary'}`} />
-          </Button>
+          <ButtonSave onSave={() => setSave(!isSave)} status={isSave} />
         </div>
       </div>
     </div>

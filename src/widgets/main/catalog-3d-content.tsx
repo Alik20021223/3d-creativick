@@ -7,7 +7,7 @@ const Catalog3dContent = () => {
   const topRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <section ref={topRef} className='relative bg-white'>
+    <section ref={topRef} className='relative'>
       {/* градиент фона */}
       <div className='absolute inset-0 rounded-t-[80px] bg-catalog ' />
       <div className='container-custom relative z-10 w-full md:px-10 py-20 px-2.5'>

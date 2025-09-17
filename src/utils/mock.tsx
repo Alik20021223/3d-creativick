@@ -1,3 +1,4 @@
+import type { DetailCardType } from '@shared/types';
 import HitOneImg from '@assets/hit-sell-one.svg';
 import PrinterImg from '@assets/printer-card.png';
 import CatushkaImg from '@assets/katushka-card.png';
@@ -5,6 +6,10 @@ import CosmoPersonImg from '@assets/cosmo-person.png';
 import { DropdownItem, ProductCardMock, ProductCardType, SelectOption } from '@shared/types';
 import ourActions from '@assets/our-actions.png';
 import ourActionsMobile from '@assets/mobile-actions.png';
+import wbLogo from '@assets/mobile-wb.png';
+import yandexLogo from '@assets/mobile-yandex.png';
+import megaLogo from '@assets/mobile-mega.png';
+import ozonLogo from '@assets/mobile-ozon.png';
 
 export const headerMock = {
   main: [
@@ -66,7 +71,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка жёлтая',
     rating: 4.8,
     bought: 600,
-    href: '/product/pla-yellow',
+    href: '/pla-yellow',
     image: HitOneImg,
   },
   {
@@ -74,7 +79,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка красная',
     rating: 4.7,
     bought: 410,
-    href: '/product/pla-red',
+    href: '/pla-red',
     image: HitOneImg,
   },
   {
@@ -82,7 +87,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка голубая',
     rating: 4.9,
     bought: 520,
-    href: '/product/pla-blue',
+    href: '/pla-blue',
     image: HitOneImg,
   },
   {
@@ -90,7 +95,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка зелёная',
     rating: 4.6,
     bought: 305,
-    href: '/product/pla-green',
+    href: '/pla-green',
     image: HitOneImg,
   },
   {
@@ -98,7 +103,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка белая',
     rating: 4.8,
     bought: 780,
-    href: '/product/pla-white',
+    href: '/pla-white',
     image: HitOneImg,
   },
   {
@@ -106,7 +111,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка чёрная',
     rating: 4.8,
     bought: 920,
-    href: '/product/pla-black',
+    href: '/pla-black',
     image: HitOneImg,
   },
 ];
@@ -165,9 +170,9 @@ export const COLOR_PALETTE: Record<string, string> = {
 };
 
 // доступные наборы цветов по типу товара
-export const COLORS_BY_SET: Record<'printer'|'spool', string[]> = {
+export const COLORS_BY_SET: Record<'printer' | 'spool', string[]> = {
   printer: ['pink', 'blue', 'yellow', 'gray', 'black'], // как на 1-м скрине
-  spool:   ['pink', 'red', 'yellow', 'beige', 'black', 'blueDark', 'green', 'white', 'orange'], // 2-й скрин
+  spool: ['pink', 'red', 'yellow', 'beige', 'black', 'blueDark', 'green', 'white', 'orange'], // 2-й скрин
 };
 
 
@@ -237,4 +242,111 @@ export const SortMock: DropdownItem[] = [
   { value: 'price_asc', label: 'Сначала дешевле' },
   { value: 'price_desc', label: 'Сначала дороже' },
   { value: 'newest', label: 'Сначала новые' },
+];
+
+// mocks/detail-cards.mock.ts
+
+
+export const DETAILS_MOCK_10: DetailCardType[] = [
+  {
+    id: 1,
+    title: 'Астронавт',
+    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
+    image: [
+      CosmoPersonImg,
+      CosmoPersonImg,
+      CosmoPersonImg,
+    ],
+    badges: ['Космос 🚀', 'Эксклюзивы'],
+  },
+  {
+    id: 2,
+    title: 'Космическая станция',
+    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
+    image: [
+      CosmoPersonImg,
+      CosmoPersonImg,
+      CosmoPersonImg,
+    ],
+    badges: ['Космос 🚀', 'Новинка'],
+  },
+  {
+    id: 3,
+    title: 'Луноход флот',
+    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
+    image: [
+      CosmoPersonImg,
+      CosmoPersonImg,
+      CosmoPersonImg,
+    ],
+    badges: ['Эксклюзивы', 'Хит'],
+  },
+  {
+    id: 4,
+    title: 'Марсоход',
+    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
+    image: [
+      CosmoPersonImg,
+      CosmoPersonImg,
+      CosmoPersonImg,
+    ],
+    badges: ['Космос 🚀', 'Серия 2025'],
+  },
+  {
+    id: 5,
+    title: 'Орбитальный модуль',
+    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
+    image: [
+      CosmoPersonImg,
+      CosmoPersonImg,
+      CosmoPersonImg,
+    ],
+    badges: ['Эксклюзивы', 'PLA'],
+  },
+]
+
+export const marketplaces = [
+  {
+    name: 'Wildberries',
+    logo: wbLogo,
+    url: 'https://www.wildberries.ru',
+  },
+  {
+    name: 'Яндекс Маркет',
+    logo: yandexLogo,
+    url: 'https://market.yandex.ru',
+  },
+  {
+    name: 'Мега Маркет',
+    logo: megaLogo,
+    url: 'https://megamarket.ru',
+  },
+  {
+    name: 'Ozon',
+    logo: ozonLogo,
+    url: 'https://ozon.ru',
+  },
+];
+
+export const marketplacesMobile = [
+  {
+    name: 'Wildberries',
+    logo: wbLogo,
+    url: 'https://www.wildberries.ru',
+  },
+  {
+    name: 'Яндекс Маркет',
+    logo: yandexLogo,
+    url: 'https://market.yandex.ru',
+  },
+  {
+    name: 'Мега Маркет',
+    logo: megaLogo,
+    url: 'https://megamarket.ru',
+  },
+  {
+    name: 'Ozon',
+    logo: ozonLogo,
+    url: 'https://ozon.ru',
+  },
 ];
