@@ -37,10 +37,10 @@ export default function CatalogGrid({ topRef }: CatalogGridProps) {
     <section className='w-full'>
       {/* панель управления */}
       <div className='mt-15 mb-6 flex flex-wrap items-center justify-between gap-4'>
-        <div className='md:w-[484px] w-full'>
+        <div className='w-full md:w-[484px]'>
           <Input placeholder='Поиск' className='!h-10' rightIcon={<Search className='h-3 w-3' />} />
         </div>
-        <div className='flex gap-2 md:w-[336px] w-full'>
+        <div className='flex w-full gap-2 md:w-[336px]'>
           <CustomDropdown
             trigger={<ArrowDownWideNarrow />}
             items={SortMock}
@@ -63,7 +63,7 @@ export default function CatalogGrid({ topRef }: CatalogGridProps) {
       </div>
 
       {/* грид карточек */}
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 max-md:justify-items-center'>
+      <div className='grid grid-cols-1 gap-4 max-md:justify-items-center md:grid-cols-2 xl:grid-cols-3'>
         {slice.map((item) => (
           <ProductCard key={item.id} data={item} />
         ))}

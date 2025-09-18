@@ -9,8 +9,8 @@ const TopMainContent = () => {
 
   return (
     <>
-      <div className='bg-main relative z-10 w-full px-2.5 max-md:flex max-md:flex-col max-md:items-center max-md:gap-8 md:px-[83px]'>
-        <div className='relative z-10 mt-[80px] max-md:mb-75 flex w-[355px] flex-col space-y-[47px] text-white max-md:text-center md:mt-[130px] md:w-[551px]'>
+      <div className='bg-main container-custom relative z-10 w-full px-2.5 max-md:flex max-md:flex-col max-md:items-center max-md:gap-8 md:px-[83px]'>
+        <div className='relative z-10 mt-[80px] flex w-[355px] flex-col space-y-[47px] text-white max-md:mb-75 max-md:text-center md:mt-[130px] md:w-[551px]'>
           <h1 className='font-ros-bold text-[46px] leading-[110%] font-bold tracking-[0px] md:text-7xl'>
             Магазин серий 3D-моделей
           </h1>
@@ -25,12 +25,8 @@ const TopMainContent = () => {
           </Button>
         </div>
         {isMobile && (
-          <div className="absolute z-0 -bottom-55 left-[45%] -translate-x-1/2 w-[486px]">
-            <img
-              src={bearImg}
-              alt="bear"
-              className="relative z-0 block h-[435px] w-[486px]"
-            />
+          <div className='absolute -bottom-55 left-[45%] z-0 w-[486px] -translate-x-1/2'>
+            <img src={bearImg} alt='bear' className='relative z-0 block h-[435px] w-[486px]' />
           </div>
         )}
 

@@ -3,6 +3,7 @@ import Footer from '@feature/footer/ui';
 import Header from '@feature/header';
 import {
   Outlet,
+  ScrollRestoration,
   // useLocation
 } from 'react-router-dom';
 
@@ -12,16 +13,19 @@ export default function DefaultLayout() {
   const menuItems = headerMock.shop;
 
   return (
-    <div className='flex bg-white min-h-dvh flex-col overflow-x-hidden'>
-      {/* Центрированный контейнер, который РАСТЁТ */}
-      <div className='md:max-w-full relative z-10 mx-auto flex w-full grow flex-col md:pt-5'>
-        <Header menuItems={menuItems} />
-        <main className='w-full grow h-full'>
-          <Outlet />
-        </main>
+    <>
+      <div className='flex min-h-dvh flex-col overflow-x-hidden bg-white'>
+        {/* Центрированный контейнер, который РАСТЁТ */}
+        <div className='relative z-10 mx-auto flex w-full grow flex-col md:max-w-full md:pt-5'>
+          <Header menuItems={menuItems} />
+          <main className='h-full w-full grow'>
+            <Outlet />
+          </main>
+        </div>
+        {/* Футер просто последним — без позиционирования */}
+        <Footer />
       </div>
-      {/* Футер просто последним — без позиционирования */}
-      <Footer />
-    </div>
+      <ScrollRestoration />
+    </>
   );
 }

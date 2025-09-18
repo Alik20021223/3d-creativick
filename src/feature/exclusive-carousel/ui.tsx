@@ -14,7 +14,7 @@ export default function ProductCarousel({
 }) {
   return (
     // ВНЕШНЯЯ ПЛИТА: белый фон + скругление
-    <div className={`md:mt-10 md:px-10 ${className}`}>
+    <div className={`md:mt-10 md:px-10 2xl:px-0 ${className}`}>
       <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}
@@ -33,14 +33,14 @@ export default function ProductCarousel({
       >
         {items.map((p, i) => (
           <SwiperSlide key={i} className='!h-auto !bg-transparent'>
-            <div className=' md:px-3 px-2.5 md:py-1 max-md:w-full max-xl:flex max-xl:justify-center'>
+            <div className='px-2.5 max-xl:flex max-xl:justify-center max-md:w-full md:px-3 md:py-1'>
               <CardItem
                 image={p.image}
                 title={p.title}
                 rating={p.rating}
                 bought={p.bought}
                 href={p.href}
-                className='md:min-w-[436px] min-w-[355px] max-md:w-full'
+                className='min-w-[355px] max-md:w-full md:min-w-[436px]'
               />
             </div>
           </SwiperSlide>

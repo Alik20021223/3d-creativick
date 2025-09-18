@@ -31,16 +31,19 @@ export type ColorButtonType = {
 export type ProductCardType = {
   activeColor?: string;
   description?: string;
-  colorSet?: 'printer'|'spool'; // НОВОЕ: по нему берём набор цветов
+  colorSet?: 'printer' | 'spool'; // НОВОЕ: по нему берём набор цветов
   badges: string[];
   price: {
     last_price?: number;
     new_price: number;
   };
+  href: string;
   title: string;
   id: number;
   image: string[];
 };
+
+export type Badge = { icon: React.ReactNode; text: React.ReactNode };
 
 export type SelectOption = {
   value: number;
@@ -63,5 +66,4 @@ export type DetailCardType = {
   id: number;
   image: string[];
   badges: string[];
-}
-
+};

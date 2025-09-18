@@ -114,7 +114,7 @@ export default function Header({ menuItems }: HeaderProps) {
                     <div className='flex gap-3'>
                       <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
                         <ShoppingCart className='!h-8 !w-8' />
-                        <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 text-sm items-center justify-center rounded-full'>
+                        <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm'>
                           12
                         </div>
                       </Button>

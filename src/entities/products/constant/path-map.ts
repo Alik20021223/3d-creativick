@@ -1,10 +1,10 @@
 export const PRODUCT_PATH_MAP = [
   {
-    PATH: "/",
-    BREADCRUMB: "Космос",
+    PATH: '/',
+    BREADCRUMB: 'Космос',
   },
   {
-    PATH: "/pla-yellow",
-    BREADCRUMB: "Катушка желтая",
+    PATH: '/pla-yellow',
+    BREADCRUMB: 'Катушка желтая',
   },
 ];

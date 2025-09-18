@@ -2,7 +2,7 @@
 import { JSX, useMemo, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import ColorButton from '@shared/components/color-button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { COLOR_PALETTE, COLORS_BY_SET } from '@utils/mock';
 import { ProductCardType } from '@shared/types';
 import ProductCarouselImage from './product-carousel';
@@ -21,10 +21,9 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
 
   // 2) подготовка для кнопок
   const uiColors = useMemo(
-    () => availableValues
-      .map(v => ({ value: v, class: COLOR_PALETTE[v] }))
-      .filter(c => !!c.class),
-    [availableValues]
+    () =>
+      availableValues.map((v) => ({ value: v, class: COLOR_PALETTE[v] })).filter((c) => !!c.class),
+    [availableValues],
   );
 
   // 3) стартовый цвет
@@ -36,17 +35,20 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
   const [color, setColor] = useState<string>(initialColor);
   const [isSave, setSave] = useState<boolean>(false);
 
-
+  const navigate = useNavigate();
 
   const { price } = data;
 
   return (
-    <div className='bg-secondary-white relative overflow-hidden rounded-[60px] shadow-lg flex flex-col md:max-h-[618px] max-h-[520px] max-md:max-w-[355px] h-full'>
+    <div
+      onClick={() => navigate(data.href)}
+      className='bg-secondary-white relative flex h-full max-h-[520px] flex-col overflow-hidden rounded-[60px] shadow-lg max-md:max-w-[355px] md:max-h-[618px]'
+    >
       {/* Верх: картинка и теги */}
       <ProductCarouselImage images={data.image} category={data.badges} />
 
       {/* Контент */}
-      <div className="p-5.5 pt-0 mt-auto">
+      <div className='mt-auto p-5.5 pt-0'>
         <h2 className='text-2xl font-bold'>{data.title ?? 'Принтер голубой'}</h2>
 
         {/* Цвета */}
@@ -66,32 +68,54 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
           </div>
         )}
 
-        {data.description && (
+        {data.description && !data.activeColor && (
           <div className='mt-3'>
             <p className='description-text'>{data.description}</p>
           </div>
         )}
-
         {/* Цена */}
-        <div className='mt-5 flex max-md:flex-col md:items-center items-start justify-between max-md:space-y-2'>
+        <div className='mt-5 flex items-start justify-between max-md:flex-col max-md:space-y-2 md:items-center'>
           <Link
-            to='#'
+            to={data.href}
             className='text-secondary-text flex h-4 items-center text-sm hover:underline'
           >
-            Подробнее <ChevronRight className='h-4 w-4' />
+            {data.colorSet === 'printer' || data.colorSet === 'spool'
+              ? 'Подробнее'
+              : 'Посмотреть детали серии'}
+            <ChevronRight className='h-4 w-4' />
           </Link>
-          <div className='text-right flex items-end space-x-2.5'>
-            {price.last_price && <p className='text-[#B4B7C2] line-through text-base text-sm italic'>{price.last_price} ₽</p>}
-            <p className='md:text-[32px] text-2xl font-bold text-dark-blue leading-[110%]'>{price.new_price} ₽</p>
+
+          <div className='flex items-end space-x-2.5 text-right'>
+            {price.last_price && (
+              <p className='text-base text-sm text-[#B4B7C2] italic line-through'>
+                {price.last_price} ₽
+              </p>
+            )}
+            <p className='text-dark-blue text-2xl leading-[110%] font-bold md:text-[32px]'>
+              {price.new_price} ₽
+            </p>
           </div>
         </div>
 
         {/* Кнопки */}
-        <div className='mt-5 flex items-center justify-between md:h-[56px] h-[46px]'>
-          <Button className='flex-1 rounded-full py-3! h-full text-lg font-semibold text-white'>
+        <div className='mt-5 flex h-[46px] items-center justify-between md:h-[56px]'>
+          <Button
+            className='h-full flex-1 rounded-full py-3! text-lg font-semibold text-white'
+            onClick={(e) => {
+              e.stopPropagation(); // <-- предотвращаем переход по карточке
+              console.log('Добавить в корзину', data.id);
+            }}
+          >
             В корзину
           </Button>
-          <ButtonSave onSave={() => setSave(!isSave)} status={isSave} />
+
+          <ButtonSave
+            onSave={(e) => {
+              e.stopPropagation(); // <-- предотвращаем navigate
+              setSave(!isSave);
+            }}
+            status={isSave}
+          />
         </div>
       </div>
     </div>

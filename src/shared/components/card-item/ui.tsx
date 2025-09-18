@@ -26,7 +26,7 @@ const ExclusiveCard: React.FC<ExclusiveCardProps> = ({
   return (
     <article
       className={[
-        'group bg-secondary-active relative h-[543px] max-md:h-[532px] space-y-10 rounded-[60px]',
+        'group bg-secondary-active relative h-[543px] space-y-10 rounded-[60px] max-md:h-[532px]',
         'button-shadow-blue',
         className,
       ].join(' ')}

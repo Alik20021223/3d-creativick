@@ -1,4 +1,5 @@
 import type { DetailCardType } from '@shared/types';
+import { AlarmClock, Atom, FileImage } from 'lucide-react';
 import HitOneImg from '@assets/hit-sell-one.svg';
 import PrinterImg from '@assets/printer-card.png';
 import CatushkaImg from '@assets/katushka-card.png';
@@ -10,6 +11,7 @@ import wbLogo from '@assets/mobile-wb.png';
 import yandexLogo from '@assets/mobile-yandex.png';
 import megaLogo from '@assets/mobile-mega.png';
 import ozonLogo from '@assets/mobile-ozon.png';
+import { slugify } from './constant';
 
 export const headerMock = {
   main: [
@@ -71,7 +73,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка жёлтая',
     rating: 4.8,
     bought: 600,
-    href: '/pla-yellow',
+    href: '/product/pla-yellow',
     image: HitOneImg,
   },
   {
@@ -79,7 +81,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка красная',
     rating: 4.7,
     bought: 410,
-    href: '/pla-red',
+    href: '/product/pla-red',
     image: HitOneImg,
   },
   {
@@ -87,7 +89,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка голубая',
     rating: 4.9,
     bought: 520,
-    href: '/pla-blue',
+    href: '/product/pla-blue',
     image: HitOneImg,
   },
   {
@@ -95,7 +97,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка зелёная',
     rating: 4.6,
     bought: 305,
-    href: '/pla-green',
+    href: '/product/pla-green',
     image: HitOneImg,
   },
   {
@@ -103,7 +105,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка белая',
     rating: 4.8,
     bought: 780,
-    href: '/pla-white',
+    href: '/product/pla-white',
     image: HitOneImg,
   },
   {
@@ -111,7 +113,7 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     title: 'Катушка чёрная',
     rating: 4.8,
     bought: 920,
-    href: '/pla-black',
+    href: '/product/pla-black',
     image: HitOneImg,
   },
 ];
@@ -162,8 +164,8 @@ export const COLOR_PALETTE: Record<string, string> = {
   beige: 'bg-amber-100',
   black: 'bg-gray-800',
   gray: 'bg-gray-300',
-  blue: 'bg-sky-500',       // светло-синий
-  blueDark: 'bg-blue-700',  // тёмно-синий
+  blue: 'bg-sky-500', // светло-синий
+  blueDark: 'bg-blue-700', // тёмно-синий
   green: 'bg-green-600',
   white: 'bg-white border border-gray-200',
   orange: 'bg-orange-500',
@@ -175,14 +177,15 @@ export const COLORS_BY_SET: Record<'printer' | 'spool', string[]> = {
   spool: ['pink', 'red', 'yellow', 'beige', 'black', 'blueDark', 'green', 'white', 'orange'], // 2-й скрин
 };
 
-
 const baseProducts: ProductCardType[] = [
   {
     id: 1,
     title: 'Принтер голубой',
     activeColor: 'blue',
+    href: '/product/printer',
     colorSet: 'printer',
     badges: ['Космос 🚀', 'Эксклюзивы'],
+    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
     price: { last_price: 3900, new_price: 1900 },
     image: [PrinterImg, PrinterImg, PrinterImg],
   },
@@ -190,8 +193,10 @@ const baseProducts: ProductCardType[] = [
     id: 2,
     title: 'Катушка',
     colorSet: 'spool',
+    href: '/product/spool',
     activeColor: 'pink',
     badges: ['Эксклюзивы'],
+    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
     price: { last_price: 4200, new_price: 2100 },
     image: [CatushkaImg, CatushkaImg],
   },
@@ -200,18 +205,50 @@ const baseProducts: ProductCardType[] = [
 // генерим ещё 18 карточек (id 3..20) с одной картинкой
 const generatedItems: ProductCardType[] = Array.from({ length: 18 }, (_, i) => {
   const id = i + 3; // 3..20
+  const title = `Космический флот ${id - 2}`;
   return {
     id,
-    title: `Космический флот ${id - 2}`, // например: Космический флот 1..18
+    title,
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    badges: ['Космос 🚀'], // можно поменять на свои теги
-    price: { last_price: 3900, new_price: 1900 }, // как на макете
-    image: [CosmoPersonImg], // одна картинка для всех 18
+    badges: ['Космос 🚀'],
+    price: { last_price: 3900, new_price: 1900 },
+    image: [CosmoPersonImg],
+    href: `/product/${slugify(title)}`, // 👉 красивый slug
   };
 });
 
 // итоговый мок на 20 шт. — принтер, катушка, затем 18 авто-сгенерированных
 export const productCardsMock: ProductCardType[] = [...baseProducts, ...generatedItems];
+
+export const BadgesMockItems = [
+  {
+    icon: <FileImage className='size-5' />,
+    text: (
+      <div className='flex w-full justify-between'>
+        <span>Размер файла</span>
+        <span className='font-semibold'>10 МБ</span>
+      </div>
+    ),
+  },
+  {
+    icon: <AlarmClock className='size-5' />,
+    text: (
+      <div className='flex w-full justify-between'>
+        <span>Время печати серии</span>
+        <span className='font-semibold'>16 часов</span>
+      </div>
+    ),
+  },
+  {
+    icon: <Atom className='size-5' />,
+    text: (
+      <div className='flex w-full justify-between'>
+        <span>Количество материала</span>
+        <span className='font-semibold'>500 г</span>
+      </div>
+    ),
+  },
+];
 
 export const CATEGORIES = [
   'Акции 🔥',
@@ -246,64 +283,43 @@ export const SortMock: DropdownItem[] = [
 
 // mocks/detail-cards.mock.ts
 
-
 export const DETAILS_MOCK_10: DetailCardType[] = [
   {
     id: 1,
     title: 'Астронавт',
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [
-      CosmoPersonImg,
-      CosmoPersonImg,
-      CosmoPersonImg,
-    ],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
     badges: ['Космос 🚀', 'Эксклюзивы'],
   },
   {
     id: 2,
     title: 'Космическая станция',
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [
-      CosmoPersonImg,
-      CosmoPersonImg,
-      CosmoPersonImg,
-    ],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
     badges: ['Космос 🚀', 'Новинка'],
   },
   {
     id: 3,
     title: 'Луноход флот',
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [
-      CosmoPersonImg,
-      CosmoPersonImg,
-      CosmoPersonImg,
-    ],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
     badges: ['Эксклюзивы', 'Хит'],
   },
   {
     id: 4,
     title: 'Марсоход',
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [
-      CosmoPersonImg,
-      CosmoPersonImg,
-      CosmoPersonImg,
-    ],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
     badges: ['Космос 🚀', 'Серия 2025'],
   },
   {
     id: 5,
     title: 'Орбитальный модуль',
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [
-      CosmoPersonImg,
-      CosmoPersonImg,
-      CosmoPersonImg,
-    ],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
     badges: ['Эксклюзивы', 'PLA'],
   },
-]
+];
 
 export const marketplaces = [
   {

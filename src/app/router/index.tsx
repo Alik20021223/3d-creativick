@@ -3,6 +3,7 @@ import MainLayout from '@app/layout/bgGradientLayout';
 import { MAIN_ROUTES } from '@entities/main/router';
 import DefaultLayout from '@app/layout/defaultLayout';
 import { PRODUCTS_ROUTES } from '@entities/products/router';
+import { PRODUCT_URL } from '@entities/products/constant';
 
 export const router = createBrowserRouter([
   {
@@ -11,8 +12,8 @@ export const router = createBrowserRouter([
     children: MAIN_ROUTES,
   },
   {
-    path: '/:titleId',
+    path: PRODUCT_URL.BASE,
     element: <DefaultLayout />,
     children: PRODUCTS_ROUTES,
-  }
+  },
 ]);

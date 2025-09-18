@@ -1,3 +1,6 @@
 export enum PRODUCT_URL {
-  PREFIX = '/:titleId',
+  BASE = '/product',
+  PRINTER = 'printer', // относительный
+  SPOOL = 'spool', // относительный
+  ITEM = ':titleId', // относительный параметр
 }

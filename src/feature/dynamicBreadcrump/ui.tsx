@@ -58,12 +58,11 @@ const DynamicBreadcrumbs: React.FC<DynamicBreadcrumbsProps> = ({ pathMap }) => {
 
   console.log(breadcrumbs);
 
-
   return (
     <Breadcrumb className='py-2.5'>
       <BreadcrumbList className='flex text-xs lg:text-sm'>
         <BreadcrumbItem>
-          <NavLink to='/' className='text-sm text-secondary-text'>
+          <NavLink to='/' className='text-secondary-text text-sm'>
             Каталог
           </NavLink>
         </BreadcrumbItem>

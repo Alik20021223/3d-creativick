@@ -25,14 +25,14 @@ const OurActionsContent = () => {
             grabCursor
             autoHeight
             // сам Swiper — прозрачный, БЕЗ overflow-hidden
-            className='!bg-transparent max-md:mt-10 max-md:!h-auto max-md:space-y-12 md:!h-[440px]'
+            className='space-y-10 !bg-transparent max-md:mt-10 max-md:!h-auto max-md:space-y-12 md:!h-[calc(100%+100px)]'
           >
             {swiperItems.map((p, i) => (
               <SwiperSlide
                 key={i}
-                className='!h-auto max-md:!flex max-md:!justify-center md:!h-[410px]'
+                className='!h-auto max-md:!flex max-md:!justify-center md:!h-fit'
               >
-                <img src={p} alt={p} />
+                <img src={p} alt={p} className='w-full' />
               </SwiperSlide>
             ))}
           </Swiper>

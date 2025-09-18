@@ -9,40 +9,29 @@ const Catalog3dContent = () => {
   return (
     <section ref={topRef} className='relative'>
       {/* градиент фона */}
-      <div className='absolute inset-0 rounded-t-[80px] bg-catalog ' />
-      <div className='container-custom relative z-10 w-full md:px-10 py-20 px-2.5'>
+      <div className='bg-catalog absolute inset-0 rounded-t-[80px]' />
+      <div className='container-custom relative z-10 w-full px-2.5 py-20 md:px-10 2xl:px-0'>
         {/* заголовок и подзаголовок */}
-        <div className="flex flex-col items-center space-y-4 text-center">
+        <div className='flex flex-col items-center space-y-4 text-center'>
           {/* Десктопный заголовок */}
-          <h1 className="hidden md:block title-text text-white text-[48px] font-extrabold">
+          <h1 className='title-text hidden text-[48px] font-extrabold text-white md:block'>
             Каталог 3D-моделей
           </h1>
 
           {/* Мобильный заголовок */}
-          <h1 className="md:hidden text-white font-extrabold text-[32px] leading-tight">
+          <h1 className='text-[32px] leading-tight font-extrabold text-white md:hidden'>
             Каталог <br />
-            <span >3D-моделей</span>
+            <span>3D-моделей</span>
           </h1>
 
-          <p className="max-w-[902px] text-white text-base md:text-lg leading-relaxed">
-            В частности, разбавленное изрядной долей эмпатии, рациональное мышление
-            предоставляет широкие возможности для экспериментов, поражающих по своей
-            масштабности и грандиозности
+          <p className='max-w-[902px] text-base leading-relaxed text-white md:text-lg'>
+            В частности, разбавленное изрядной долей эмпатии, рациональное мышление предоставляет
+            широкие возможности для экспериментов, поражающих по своей масштабности и грандиозности
           </p>
         </div>
 
-
         {/* чипы-категории */}
-        <div
-          className="
-            mx-auto mt-6 
-            max-w-[902px] 
-            items-center justify-center 
-            gap-3 md:mt-8 md:gap-4
-            grid grid-cols-2
-            md:flex md:flex-wrap
-          "
-        >
+        <div className='mx-auto mt-6 grid max-w-[902px] grid-cols-2 items-center justify-center gap-3 md:mt-8 md:flex md:flex-wrap md:gap-4'>
           {CATEGORIES.map((name) => {
             const isActive = name === active;
             return (
@@ -51,7 +40,7 @@ const Catalog3dContent = () => {
                   key={name}
                   onClick={() => setActive(name)}
                   className={[
-                    'cursor-pointer rounded-[12px] text-sm leading-[130%] select-none px-5.5 md:py-[8.5px] md:text-lg py-[9.5px]',
+                    'cursor-pointer rounded-[12px] px-5.5 py-[9.5px] text-sm leading-[130%] select-none md:py-[8.5px] md:text-lg',
                     'transition-colors duration-200',
                     isActive ? 'bg-primary-active text-white' : 'text-secondary-text bg-white',
                   ].join(' ')}
@@ -62,7 +51,6 @@ const Catalog3dContent = () => {
             );
           })}
         </div>
-
 
         <CatalogGrid topRef={topRef} />
       </div>

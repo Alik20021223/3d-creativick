@@ -37,7 +37,10 @@ const ProductCarouselImage: React.FC<ProductCarouselImageProps> = ({ images, cat
         {/* Теги справа сверху */}
         <div className='absolute top-9 right-9 z-10 flex flex-col gap-2'>
           {category.map((item) => (
-            <span className='bg-secondary-white rounded-full px-3 py-1 text-center text-sm shadow'>
+            <span
+              key={item}
+              className='bg-secondary-white rounded-full px-3 py-1 text-center text-sm shadow'
+            >
               {item}
             </span>
           ))}
@@ -59,7 +62,7 @@ const ProductCarouselImage: React.FC<ProductCarouselImageProps> = ({ images, cat
               <img
                 src={src}
                 alt={src ?? `Фото ${i + 1}`}
-                className='object-fit mx-auto rounded-[60px] bg-white select-none md:h-[310px] md:w-[455px] h-[240px] w-[335px]'
+                className='object-fit mx-auto h-[310px] w-full rounded-[60px] bg-white select-none md:w-[455px]'
                 loading='lazy'
                 draggable={false}
               />
