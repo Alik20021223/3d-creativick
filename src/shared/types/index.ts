@@ -64,6 +64,7 @@ export type DetailCardType = {
   description: string;
   title: string;
   id: number;
+  href: string;
   image: string[];
   badges: string[];
 };

@@ -15,6 +15,7 @@ export type ItemStatistic = {
 
 export type InfoBlockData = {
   title?: string;
+  subtitle?: string;
   badges?: Badge[];
   description?: string;
   price?: number;
@@ -29,4 +30,20 @@ export type InfoBlockData = {
   initialColor?: string;
   weights?: number[]; // напр. [250, 500, 750]
   initialWeight?: number;
+};
+
+export type SeriesCardData = {
+    title: string;
+    description?: string;
+    prices: {
+        current: number;
+        old?: number | null;
+        currencySymbol?: string; // по умолчанию '₽'
+        locale?: string;         // по умолчанию 'ru-RU'
+    };
+    labels?: {
+        addToCart?: string;
+        savedAriaOn?: string;
+        savedAriaOff?: string;
+    };
 };

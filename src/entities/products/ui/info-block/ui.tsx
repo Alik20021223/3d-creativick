@@ -18,6 +18,7 @@ type Props = {
 const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange }) => {
   const {
     title = '',
+    subtitle = '',
     badges = [],
     description = '',
     price = 1900,
@@ -51,11 +52,18 @@ const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange
   return (
     <div className='flex w-full flex-col md:w-1/2'>
       <section className='bg-secondary-white shadow-card-info relative rounded-[28px] p-6 md:p-8'>
-        {title && (
-          <h2 className='text-2xl leading-tight font-semibold text-slate-900 md:text-[28px]'>
-            {title}
-          </h2>
-        )}
+        <div className='flex'>
+          {title && (
+            <h2 className='text-2xl leading-tight font-semibold text-slate-900 md:text-[28px]'>
+              {title}
+            </h2>
+          )}
+          {subtitle && (
+            <p className='text-[22px] leading-[130%] underline text-secondary-text'>
+              {subtitle}
+            </p>
+          )}
+        </div>
 
         {/* Бейджи */}
         {!!badges?.length && (

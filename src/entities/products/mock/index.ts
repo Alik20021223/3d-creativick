@@ -40,6 +40,17 @@ export const infoSeries = {
   showWeights: false,
 };
 
+export const infoDetail = {
+  title: 'Астронавт',
+  badges: BadgesMockItems,
+  subtitle: 'Модель из Серии Космический флот',
+  description:
+    'Приятно, граждане, наблюдать, как акционеры крупнейших компаний преданы социально-демократической анафеме. Современные технологии достигли такого уровня, что сплочённость команды профессионалов обеспечивает актуальность поставленных обществом задач.',
+  showColors: false,
+  showWeights: false,
+};
+
+
 export const ImagesItems = [
   { src: KatushkaImg, alt: 'Катушка жёлтая — вид 1' },
   { src: CosmoPersom, alt: 'Катушка жёлтая — вид 2' },

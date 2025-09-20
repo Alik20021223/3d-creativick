@@ -3,4 +3,5 @@ export enum PRODUCT_URL {
   PRINTER = 'printer', // относительный
   SPOOL = 'spool', // относительный
   ITEM = ':titleId', // относительный параметр
+  DETAIL = ':titleId/:detailId',
 }

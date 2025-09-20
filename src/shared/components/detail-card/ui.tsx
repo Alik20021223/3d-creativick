@@ -3,12 +3,16 @@ import React from 'react';
 import ProductCarouselImage from '@shared/components/product-card/product-carousel';
 import { ChevronRight } from 'lucide-react';
 import { DetailCardType, ProductCardType } from '@shared/types';
+import { useNavigate } from 'react-router-dom';
 
 interface DetailCardProps {
   data: DetailCardType | ProductCardType;
 }
 
 const DetailCard: React.FC<DetailCardProps> = ({ data }) => {
+
+  const navigate = useNavigate()
+
   return (
     <>
       <div className='bg-secondary-white relative flex h-full max-h-[520px] flex-col overflow-hidden rounded-[60px] shadow-lg max-md:max-w-full md:max-h-[618px]'>
@@ -27,7 +31,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ data }) => {
 
           {/* Кнопки */}
           <div className='mt-5 flex h-[46px] items-center md:h-[56px]'>
-            <Button className='h-full flex-1 rounded-full py-3! text-lg font-semibold text-white'>
+            <Button onClick={() => navigate(data.href)} className='h-full flex-1 rounded-full py-3! text-lg font-semibold text-white'>
               Подробнее <ChevronRight className='h-4 w-4' />
             </Button>
           </div>
