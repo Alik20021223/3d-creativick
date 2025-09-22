@@ -47,3 +47,7 @@ export function slugify(text: string): string {
     .replace(/\s+/g, '-') // пробелы → тире
     .replace(/-+/g, '-'); // несколько тире → одно
 }
+
+export function getRandomItems<T>(arr: T[], count: number): T[] {
+    return arr.slice().sort(() => 0.5 - Math.random()).slice(0, count);
+}

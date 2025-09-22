@@ -1,6 +1,6 @@
-import MainContent from "@widgets/support-content/main-content"
-import BottomFormContent from "@widgets/support-content/bottom-form-content"
-import TopMainContent from "@widgets/support-content/top-main-content"
+import MainContent from "@/widgets/support-content/main/main-content"
+import BottomFormContent from "@/widgets/support-content/main/bottom-form-content"
+import TopMainContent from "@/widgets/support-content/main/top-main-content"
 
 
 const SupportPage = () => {
