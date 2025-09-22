@@ -40,7 +40,7 @@ const ExclusiveCard: React.FC<ExclusiveCardProps> = ({
             className='absolute inset-x-0 h-full w-full object-cover object-center max-md:scale-[1] md:inset-0'
           />
 
-          <div className='text-secondary-text absolute top-8 right-8 rounded-full bg-white px-5.5 py-1 text-lg font-normal'>
+          <div className='description-text absolute top-8 right-8 rounded-full bg-white px-5.5 py-1'>
             Хит продаж 🔥
           </div>
         </div>

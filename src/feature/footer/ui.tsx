@@ -83,8 +83,8 @@ const Footer = () => {
 
                 <div className='space-y-2 text-[13px] leading-5 text-zinc-600 md:space-y-3 md:text-sm'>
                   <div className='text-secondary-text'>ООО «Росатом Аддитивные технологии»</div>
-                  <div className='text-[#B4B7C2]'>ОГРН 5177746230547</div>
-                  <div className='text-[#B4B7C2]'>
+                  <div className='text-secondary-gray'>ОГРН 5177746230547</div>
+                  <div className='text-secondary-gray'>
                     Юр. адрес / Для корреспонденции:
                     <br />
                     115409, г. Москва, вн. тер. г. муниципальный округ Москворечье-Сабурово,

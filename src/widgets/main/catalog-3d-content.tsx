@@ -24,7 +24,7 @@ const Catalog3dContent = () => {
             <span>3D-моделей</span>
           </h1>
 
-          <p className='max-w-[902px] text-base leading-relaxed text-white md:text-lg'>
+          <p className='max-w-[902px] description-text leading-relaxed text-white '>
             В частности, разбавленное изрядной долей эмпатии, рациональное мышление предоставляет
             широкие возможности для экспериментов, поражающих по своей масштабности и грандиозности
           </p>

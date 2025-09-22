@@ -57,6 +57,16 @@
     to   { opacity: 1; transform: translateY(0)     scale(1); }
   }
 
+@keyframes fade-in-up {
+  from  { opacity: 0; transform: translateY(8px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+
+@keyframes fade-out-down {
+    from  { opacity: 1; transform: translateY(0) }
+    to   { opacity: 0; transform: translateY(8px) }
+  }
+
 @keyframes float-y {
   0%,100% { transform: translateY(0); }
   50%     { transform: translateY(-6px); }
@@ -74,6 +84,7 @@
     --color-dark-blue: #034AA6;
     --color-secondary-text: #333333;
     --color-secondary-white: #F1F5F9;
+    --color-secondary-gray: #B4B7C2;
 }
 
 :root {
@@ -125,13 +136,14 @@
   --thumb-height: 32px;
 
   --animate-float: floatY 4s ease-in-out infinite;
-    --animate-floatSlow: floatY 6s ease-in-out infinite;
-    --animate-floatRev: floatYrev 5s ease-in-out infinite;
-    --animate-floatRocket: floatRocket 3s ease-in-out infinite;
-    --animate-fade-up: fade-up 3s cubic-bezier(.16,1,.3,1) both;
-    --animate-float-y: float-y 4s ease-in-out infinite; 
-    --animate-clip-wiggle: clip-wiggle 2.4s ease-in-out infinite;
+  --animate-floatSlow: floatY 6s ease-in-out infinite;
+  --animate-floatRev: floatYrev 5s ease-in-out infinite;
+  --animate-floatRocket: floatRocket 3s ease-in-out infinite;
+  --animate-fade-up: fade-up 3s cubic-bezier(.16,1,.3,1) both;
+  --animate-float-y: float-y 4s ease-in-out infinite; 
+  --animate-clip-wiggle: clip-wiggle 2.4s ease-in-out infinite;
 }
+
 
 .animate-fade-up { animation: var(--animate-fade-up)}
 .animate-float-y { animation: var(--animate-float-y)}
@@ -148,6 +160,10 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .float, .float-slow, .float-rev { animation: none; }
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up .35s ease-out .05s both;
 }
 
 .dark {
@@ -332,7 +348,7 @@ body {
 }
 
 .button-shadow-blue-active {
-  box-shadow: 0px 12px 13px 0px #05aff24c;
+  box-shadow: 50px 12px 200px 0px #05aff24c;
   transform: scale(1.02);
   transition: 0.3s all ease-in-out;
   
@@ -347,7 +363,7 @@ body {
 }
 
 .button-shadow-blue:hover {
-  box-shadow: 0px 12px 13px 0px #05aff24c;
+  box-shadow: 0px 20px 13px 0px #05aff28d;
   transform: scale(1.02);
   transition: 0.3s all ease-in-out;
   

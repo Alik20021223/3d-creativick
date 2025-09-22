@@ -51,8 +51,8 @@ const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange
 
   return (
     <div className='flex w-full flex-col md:w-1/2'>
-      <section className='bg-secondary-white shadow-card-info relative rounded-[28px] p-6 md:p-8'>
-        <div className='flex'>
+      <section className='bg-secondary-white shadow-card-info max-md:shadow-2xl! relative rounded-[28px] p-6 md:p-8'>
+        <div className='flex items-center gap-5'>
           {title && (
             <h2 className='text-2xl leading-tight font-semibold text-slate-900 md:text-[28px]'>
               {title}

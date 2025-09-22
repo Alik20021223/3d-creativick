@@ -31,7 +31,7 @@ const BottomContent: React.FC<BottomContentProps> = ({ interesringBlock = true }
         <div className='bg-feedback z-0 mt-[56px] rounded-t-[80px] px-2.5 py-15 md:px-10 md:pb-5 2xl:px-0'>
           <div className='container-custom mt-10 flex items-center justify-between pb-15 max-md:flex-col max-md:space-y-10 md:mt-16 md:mb-7 md:pb-0'>
             <div className='md:max-w-[455px]'>
-              <h2 className='text-[32px] leading-[110%] font-bold text-white max-md:text-center md:text-[54px]'>
+              <h2 className='title-text text-white max-md:text-center '>
                 Где ещё купить набор 3D-Креативик?
               </h2>
             </div>

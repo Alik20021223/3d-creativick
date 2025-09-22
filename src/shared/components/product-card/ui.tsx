@@ -87,7 +87,7 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
 
           <div className='flex items-end space-x-2.5 text-right'>
             {price.last_price && (
-              <p className='text-base text-sm text-[#B4B7C2] italic line-through'>
+              <p className='text-base text-sm text-secondary-gray italic line-through'>
                 {price.last_price} ₽
               </p>
             )}
