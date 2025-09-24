@@ -19,20 +19,33 @@ const ProductCarouselImage: React.FC<ProductCarouselImageProps> = ({ images, cat
       <div className='relative p-2.5'>
         {/* Кастомные стрелки */}
         <button
-          onClick={() => swiperRef.current?.slidePrev()}
-          className='bg-secondary-white absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-md p-2 shadow-md'
-          aria-label='Назад'
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            swiperRef.current?.slidePrev();
+          }}
+          onTouchStart={(e) => e.stopPropagation()}
+          className="bg-secondary-white absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-md p-2 shadow-md"
+          aria-label="Назад"
         >
-          <ChevronLeft className='h-4 w-4 text-[#034AA6]' />
+          <ChevronLeft className="h-4 w-4 text-[#034AA6]" />
         </button>
 
         <button
-          onClick={() => swiperRef.current?.slideNext()}
-          className='bg-secondary-white absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-md p-2 shadow-md'
-          aria-label='Вперёд'
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            swiperRef.current?.slideNext();
+          }}
+          onTouchStart={(e) => e.stopPropagation()}
+          className="bg-secondary-white absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-md p-2 shadow-md"
+          aria-label="Вперёд"
         >
-          <ChevronRight className='h-4 w-4 text-[#034AA6]' />
+          <ChevronRight className="h-4 w-4 text-[#034AA6]" />
         </button>
+
 
         {/* Теги справа сверху */}
         <div className='absolute top-9 right-9 z-10 flex flex-col gap-2'>
@@ -62,7 +75,7 @@ const ProductCarouselImage: React.FC<ProductCarouselImageProps> = ({ images, cat
               <img
                 src={src}
                 alt={src ?? `Фото ${i + 1}`}
-                className='object-fit mx-auto h-[310px] w-full rounded-[60px] bg-white select-none md:w-[455px]'
+                className='object-cover mx-auto h-[310px] w-full rounded-[60px] bg-white select-none md:w-[455px]'
                 loading='lazy'
                 draggable={false}
               />

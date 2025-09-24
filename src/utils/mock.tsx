@@ -4,6 +4,7 @@ import HitOneImg from '@assets/hit-sell-one.svg';
 import PrinterImg from '@assets/printer-card.png';
 import CatushkaImg from '@assets/katushka-card.png';
 import CosmoPersonImg from '@assets/cosmo-person.png';
+import JupiterImg from '@assets/Юпитер.png';
 import { DropdownItem, ProductCardMock, ProductCardType, SelectOption } from '@shared/types';
 import ourActions from '@assets/our-actions.png';
 import ourActionsMobile from '@assets/mobile-actions.png';
@@ -187,7 +188,7 @@ const baseProducts: ProductCardType[] = [
     badges: ['Космос 🚀', 'Эксклюзивы'],
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
     price: { last_price: 3900, new_price: 1900 },
-    image: [PrinterImg, PrinterImg, PrinterImg],
+    image: [PrinterImg, PrinterImg, PrinterImg, JupiterImg],
   },
   {
     id: 2,
@@ -198,7 +199,7 @@ const baseProducts: ProductCardType[] = [
     badges: ['Эксклюзивы'],
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
     price: { last_price: 4200, new_price: 2100 },
-    image: [CatushkaImg, CatushkaImg],
+    image: [CatushkaImg, CatushkaImg, JupiterImg],
   },
 ];
 
@@ -212,7 +213,7 @@ const generatedItems: ProductCardType[] = Array.from({ length: 18 }, (_, i) => {
     description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
     badges: ['Космос 🚀'],
     price: { last_price: 3900, new_price: 1900 },
-    image: [CosmoPersonImg],
+    image: [CosmoPersonImg, JupiterImg],
     href: `/product/${slugify(title)}`, // 👉 красивый slug
   };
 });
@@ -290,7 +291,7 @@ export const DETAILS_MOCK_10: DetailCardType[] = [
     href: `${slugify('Астронавт')}`,
     description:
       'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
     badges: ['Космос 🚀', 'Эксклюзивы'],
   },
   {
@@ -299,7 +300,7 @@ export const DETAILS_MOCK_10: DetailCardType[] = [
     href: `${slugify('Космическая станция')}`,
     description:
       'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
     badges: ['Космос 🚀', 'Новинка'],
   },
   {
@@ -308,7 +309,7 @@ export const DETAILS_MOCK_10: DetailCardType[] = [
     href: `${slugify('Луноход флот')}`,
     description:
       'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
     badges: ['Эксклюзивы', 'Хит'],
   },
   {
@@ -317,7 +318,7 @@ export const DETAILS_MOCK_10: DetailCardType[] = [
     href: `${slugify('Марсоход')}`,
     description:
       'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
     badges: ['Космос 🚀', 'Серия 2025'],
   },
   {
@@ -326,7 +327,7 @@ export const DETAILS_MOCK_10: DetailCardType[] = [
     href: `${slugify('Орбитальный модуль')}`,
     description:
       'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg],
+    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
     badges: ['Эксклюзивы', 'PLA'],
   },
 ];

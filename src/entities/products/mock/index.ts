@@ -1,6 +1,7 @@
 import KatushkaImg from '@assets/katushka-card.png';
 import CosmoPersom from '@assets/cosmo-person.png';
 import PrinterCard from '@assets/test-photo.png';
+import JupiterImg from '@assets/Юпитер.png';
 import { BadgesMockItems } from '@utils/mock';
 
 export const infoPrinter = {
@@ -57,4 +58,5 @@ export const ImagesItems = [
   { src: PrinterCard, alt: 'Катушка жёлтая — вид 3' },
   { src: KatushkaImg, alt: 'Катушка жёлтая — вид 4' },
   { src: CosmoPersom, alt: 'Катушка жёлтая — вид 5' },
+  { src: JupiterImg, alt: 'Катушка жёлтая — вид 5' },
 ];
