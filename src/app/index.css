@@ -363,11 +363,17 @@ body {
 }
 
 .button-shadow-blue:hover {
-  box-shadow: 0px 20px 13px 0px #05aff28d;
+  box-shadow: 0px 12px 13px 0px #05aff28d;
   transform: scale(1.02);
   transition: 0.3s all ease-in-out;
-  
 }
+
+.button-shadow-blue-sm:hover {
+  box-shadow: 0px 5px 13px 0px #05aff28d;
+  transform: scale(1.02);
+  transition: 0.3s all ease-in-out;
+}
+
 
 
 .button-shadow-pink:hover {
@@ -435,6 +441,11 @@ p.no-hyphen {
 
 .shadow-card-info {
   box-shadow: -6.13px 3.77px 13px 0px #00175C0D;
+}
+
+.shadow-button:hover {
+  box-shadow: 0px 0px 15px 0px #05AFF240;
+  box-shadow: 2px 2px 8px 0px #05AFF240;
 }
 
 .bg-feedback {

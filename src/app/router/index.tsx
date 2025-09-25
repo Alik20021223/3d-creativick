@@ -5,6 +5,12 @@ import DefaultLayout from '@app/layout/defaultLayout';
 import { PRODUCTS_ROUTES } from '@entities/products/router';
 import { PRODUCT_URL } from '@entities/products/constant';
 import { SUPPORT_ROUTES } from '@entities/support/router';
+import { PROFILE_URL } from '@entities/profile/constant';
+import { PROFILE_ROUTES } from '@entities/profile/router';
+import { lazy } from 'react';
+
+
+const ShoppingCartPage = lazy(() => import('@pages/shopping-cart-page'));
 
 export const router = createBrowserRouter([
   {
@@ -18,8 +24,23 @@ export const router = createBrowserRouter([
     children: SUPPORT_ROUTES,
   },
   {
+    path: '/',
+    element: <DefaultLayout />,
+    children: [
+      {
+        path: '/shopping-cart',
+        element: <ShoppingCartPage />
+      }
+    ]
+  },
+  {
     path: PRODUCT_URL.BASE,
     element: <DefaultLayout />,
     children: PRODUCTS_ROUTES,
+  },
+  {
+    path: PROFILE_URL.BASE,
+    element: <DefaultLayout />,
+    children: PROFILE_ROUTES,
   },
 ]);

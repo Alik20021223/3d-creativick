@@ -14,7 +14,7 @@ export default function DefaultLayout() {
 
   return (
     <>
-      <div className='flex min-h-dvh flex-col overflow-x-hidden bg-white'>
+      <div className='flex min-h-dvh flex-col overflow-x-hidden bg-secondary-white'>
         {/* Центрированный контейнер, который РАСТЁТ */}
         <div className='relative z-10 mx-auto flex w-full grow flex-col md:max-w-full md:pt-5'>
           <Header menuItems={menuItems} />

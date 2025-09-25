@@ -34,10 +34,6 @@ const FAQCard: React.FC<FAQCardProps> = ({ title, img, href = 'support-1' }) => 
                     <ArrowUpRight className="size-10" />
                 </span>
             </div>
-
-
-            {/* мягкая подсветка снизу слева как на скрине */}
-            <div className="pointer-events-none absolute -bottom-5 -left-5 h-16 w-16 rounded-3xl bg-[#cde7ff] blur-2xl opacity-60" />
         </article>
     );
 };

@@ -75,7 +75,7 @@ const ProductCarouselImage: React.FC<ProductCarouselImageProps> = ({ images, cat
               <img
                 src={src}
                 alt={src ?? `Фото ${i + 1}`}
-                className='object-cover mx-auto h-[310px] w-full rounded-[60px] bg-white select-none md:w-[455px]'
+                className='object-contain h-[310px] w-full rounded-[60px] bg-white select-none md:w-[455px]'
                 loading='lazy'
                 draggable={false}
               />

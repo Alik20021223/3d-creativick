@@ -1,5 +1,5 @@
 import { Button } from '@shadcn/button';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoSrc from '@assets/logo-3d.svg';
 import userSrc from '@assets/user-profile.svg';
 import { ShoppingCart } from 'lucide-react';
@@ -17,6 +17,8 @@ export default function Header({ menuItems }: HeaderProps) {
   const { pathname, hash } = useLocation();
   const isMobile = useIsMobile();
   const { open, setOpen, isAuth } = useAppStore();
+
+  const navigate = useNavigate()
 
   // 👇 скрываем при скролле вниз, показываем при скролле вверх
   const { hidden, atTop, setHidden } = useHideOnScroll({
@@ -112,7 +114,7 @@ export default function Header({ menuItems }: HeaderProps) {
                     </div>
 
                     <div className='flex gap-3'>
-                      <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
+                      <Button onClick={() => navigate('/shopping-cart')} className='bg-primary relative flex h-11 w-[70px] !p-0 text-white button-shadow-blue-sm'>
                         <ShoppingCart className='!h-8 !w-8' />
                         <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm'>
                           12
