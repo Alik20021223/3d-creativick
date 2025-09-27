@@ -14,7 +14,7 @@ const ShoppingCartContent = () => {
 
     return (
         <>
-            <article className="flex flex-col">
+            <article className="flex flex-col md:px-10 px-2.5 py-15">
                 <div className="flex max-md:flex-col justify-between w-full">
                     <div className="md:w-[70%] max-md:mb-10">
                         <h1 className="title-text max-md:text-center">В корзине 3 товара</h1>
@@ -31,7 +31,7 @@ const ShoppingCartContent = () => {
                             {cards.map((item, idx) => (
                                 <ShopCard
                                     key={idx}
-                                    {...item}
+                                    data={item}
                                     onRemove={() => alert(`remove ${item.title}`)}
                                 />
                             ))}

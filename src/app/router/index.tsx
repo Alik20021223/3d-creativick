@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <DefaultLayout />,
+    element: <DefaultLayout className='bg-secondary-white' />,
     children: [
       {
         path: '/shopping-cart',

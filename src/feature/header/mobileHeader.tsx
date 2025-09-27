@@ -18,6 +18,7 @@ type MobileHeaderProps = {
   cartCount: number; // количество в корзине
   linkClass: (href: string) => string;
   setOpen: (v: boolean) => void;
+  onClickCart: () => void;
   open: boolean;
 };
 
@@ -27,6 +28,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
   cartCount = 0,
   setOpen,
   open,
+  onClickCart,
 }) => {
   const { isAuth } = useAppStore();
 
@@ -66,9 +68,9 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
             <div className='mb-10 flex w-full items-center gap-2'>
               {isAuth && (
                 <div className='flex-1'>
-                  <Button className='bg-primary relative h-11 w-full !p-0 text-white'>
+                  <Button onClick={onClickCart} className='bg-primary relative h-11 w-full !p-0 text-white'>
                     <ShoppingCart className='!h-8 !w-8' />
-                    <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
+                    <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm'>
                       {cartCount}
                     </div>
                   </Button>

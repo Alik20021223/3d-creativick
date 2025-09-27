@@ -1,35 +1,23 @@
 import { Button } from "@shadcn/button";
 import { formatPrice } from "@/utils/constant";
-import { Trash2 } from "lucide-react";
+import { Image, Trash2 } from "lucide-react";
+import { CartItem } from '@entities/profile/types';
 
-
-export type ShopCardProps = {
-    title: string;
-    description?: string;
-    href?: string;
-    imageUrl?: string;
-    price: number;
-    oldPrice?: number | null;
+type ShopCardProps = {
+    data: CartItem,
     currency?: string; // default: ₽
     onRemove?: () => void;
     className?: string;
 };
 
-/**
- * Responsive, accessible card inspired by the screenshot.
- * TailwindCSS required.
- */
 export default function ShopCard({
-    title,
-    description,
-    href = "#",
-    imageUrl,
-    price,
-    oldPrice,
+    data,
     currency = "₽",
     onRemove,
     className = "",
 }: ShopCardProps) {
+
+    const { href, title, imageUrl, description, oldPrice, price } = data
 
     return (
         <article
@@ -56,18 +44,7 @@ export default function ShopCard({
                 ) : (
                     <div className="flex h-full w-full items-center justify-center">
                         {/* image placeholder */}
-                        <svg
-                            width="56"
-                            height="56"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="opacity-50"
-                        >
-                            <rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                            <path d="M7 13l3-3 6 6" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                            <circle cx="9" cy="8" r="1.5" fill="currentColor" />
-                        </svg>
+                        <Image />
                     </div>
                 )}
             </a>

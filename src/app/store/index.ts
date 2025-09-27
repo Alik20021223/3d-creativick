@@ -5,16 +5,25 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 type AppState = {
-  open: boolean;
-  setOpen: (v: boolean) => void;
+  openMenu: boolean;
+  setOpenMenu: (v: boolean) => void;
+
+  openShoppingCart: boolean;
+  setOpenShoppingCart: (v: boolean) => void;
+
   isAuth: boolean;
 };
 
 export const useAppStore = create<AppState>()(
   devtools(
     (set) => ({
-      open: false,
-      setOpen: (v) => set({ open: v }),
+
+      openMenu: false,
+      setOpenMenu: (v) => set({ openMenu: v, openShoppingCart: false }),
+
+      openShoppingCart: false,
+      setOpenShoppingCart: (v) => set({ openShoppingCart: v, openMenu: false }),
+
       isAuth: true,
     }),
     { name: 'app-store' },

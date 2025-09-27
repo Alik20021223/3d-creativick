@@ -1,5 +1,8 @@
 import { Button } from '@shadcn/button';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Link, useLocation,
+  // useNavigate
+} from 'react-router-dom';
 import logoSrc from '@assets/logo-3d.svg';
 import userSrc from '@assets/user-profile.svg';
 import { ShoppingCart } from 'lucide-react';
@@ -16,16 +19,16 @@ type HeaderProps = { menuItems: HeaderType[] };
 export default function Header({ menuItems }: HeaderProps) {
   const { pathname, hash } = useLocation();
   const isMobile = useIsMobile();
-  const { open, setOpen, isAuth } = useAppStore();
+  const { openMenu, setOpenMenu, isAuth, setOpenShoppingCart, openShoppingCart } = useAppStore();
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   // 👇 скрываем при скролле вниз, показываем при скролле вверх
   const { hidden, atTop, setHidden } = useHideOnScroll({
     threshold: 80,
     delta: 6,
     revealOnIdleMs: 250, // автопоказ после остановки прокрутки
-    disabled: open,
+    disabled: openMenu,
   });
 
   const isHashHref = (href: string) => href.startsWith('#');
@@ -39,22 +42,22 @@ export default function Header({ menuItems }: HeaderProps) {
 
   useEffect(() => {
     const { style } = document.documentElement;
-    if (open) {
+    if (openMenu) {
       const prev = style.overflow;
       style.overflow = 'hidden';
       return () => {
         style.overflow = prev;
       };
     }
-  }, [open]);
+  }, [openMenu]);
 
   return (
     <>
       {/* fixed-хедер с анимацией появления/скрытия */}
       <div
         className={[
-          'fixed inset-x-0 z-50 px-[38px] max-md:px-2.5',
-          'top-5 max-md:top-[20px]', // оставляем твой отступ сверху
+          'fixed inset-x-0 z-[60] px-10 max-md:px-2.5',
+          openShoppingCart ? 'md:top-0 max-md:top-5' : 'top-5', // оставляем твой отступ сверху
           'transition-transform duration-300 will-change-transform',
           hidden ? '-translate-y-[120%] max-md:-translate-y-[180%]' : 'translate-y-0',
         ].join(' ')}
@@ -62,7 +65,8 @@ export default function Header({ menuItems }: HeaderProps) {
       >
         <div
           className={[
-            'h-16 w-full rounded-4xl bg-white p-2.5 pl-[42px] max-sm:px-2.5',
+            'h-16 w-full  bg-white p-2.5 pl-[42px] max-sm:px-2.5',
+            openShoppingCart ? 'md:rounded-b-4xl max-md:rounded-4xl' : 'rounded-4xl',
             'transition-shadow duration-300',
             atTop ? 'shadow-xl' : 'shadow-2xl',
           ].join(' ')}
@@ -78,9 +82,10 @@ export default function Header({ menuItems }: HeaderProps) {
               {isMobile ? (
                 <MobileHeader
                   menuItems={menuItems}
-                  open={open}
-                  setOpen={setOpen}
+                  open={openMenu}
+                  setOpen={setOpenMenu}
                   linkClass={linkClass}
+                  onClickCart={() => setOpenShoppingCart(true)}
                   cartCount={12}
                 />
               ) : (
@@ -114,7 +119,8 @@ export default function Header({ menuItems }: HeaderProps) {
                     </div>
 
                     <div className='flex gap-3'>
-                      <Button onClick={() => navigate('/shopping-cart')} className='bg-primary relative flex h-11 w-[70px] !p-0 text-white button-shadow-blue-sm'>
+                      <Button onClick={() => setOpenShoppingCart(true)}
+                        className='bg-primary relative flex h-11 w-[70px] !p-0 text-white button-shadow-blue-sm'>
                         <ShoppingCart className='!h-8 !w-8' />
                         <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm'>
                           12
@@ -139,11 +145,11 @@ export default function Header({ menuItems }: HeaderProps) {
         </div>
       </div>
 
-      {open && (
+      {openMenu && (
         <button
           type='button'
           aria-label='Закрыть меню'
-          onClick={() => setOpen(false)}
+          onClick={() => setOpenMenu(false)}
           className='fixed inset-0 z-40 bg-black/30 backdrop-blur-md'
         />
       )}
