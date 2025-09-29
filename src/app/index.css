@@ -353,6 +353,11 @@ body {
   
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+
 
 .button-shadow-pink:hover {
   box-shadow: 0px 12px 60px 0px #8800FF66;

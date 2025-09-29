@@ -8,7 +8,7 @@ import { footerColumns } from '@utils/mock';
 
 const Footer = () => {
   return (
-    <footer className="relative z-5 select-none">
+    <footer id='contacts' className="relative z-5 select-none">
       {/* верхняя светлая зона */}
       <div className="bg-[#F1F5F9]">
         <div className="mx-auto container-custom px-4 py-8 md:px-10 md:py-12">

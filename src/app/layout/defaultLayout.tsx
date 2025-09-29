@@ -4,6 +4,7 @@ import Footer from '@feature/footer/ui';
 import Header from '@feature/header';
 import { Outlet, useLocation } from 'react-router-dom';
 import ExclusiveContent from '@widgets/main/exclusive-content';
+import FloatingButtons from '@feature/floatingButton';
 
 export default function MainLayout() {
   const { pathname } = useLocation();
@@ -22,6 +23,10 @@ export default function MainLayout() {
         <ExclusiveContent />
         <BottomContent />
       </div>
+
+      <FloatingButtons
+        showAt={200} // когда показывать кнопку «вверх»
+      />
 
       {/* Футер просто последним — без позиционирования */}
       <Footer />
