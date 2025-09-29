@@ -229,7 +229,8 @@ export const benefitsMock: BenefitCardMock[] = [
       'по тематическим сериям',
     buttonText: 'Рекомендует 9/10 педагогов',
     image: InfinityImg,
-    accentClassName: '2xl:top-23 xl:top-16 2xl:rotate-0 xl:top-50 2xl:right-0 xl:top-16 -top-15 right-0 z-10 -rotate-30 xl:-rotate-10',
+    accentClassName:
+      '2xl:top-23 xl:top-16 2xl:rotate-0 xl:top-50 2xl:right-0 xl:top-16 -top-15 right-0 z-10 -rotate-30 xl:-rotate-10',
   },
   {
     id: 'safe-simple',
@@ -256,7 +257,6 @@ export const benefitsMock: BenefitCardMock[] = [
     accentClassName: '2xl:top-26 xl:top-50 2xl:right-2 xl:right-2 -top-18 right-0 z-10',
   },
 ];
-
 
 export const footerColumns = [
   {
@@ -290,4 +290,8 @@ export const footerColumns = [
 ];
 
 export const ourActionsMock: string[] = [ourActions, ourActions, ourActions];
-export const ourActionsMockMobile: string[] = [ourActionsMobile, ourActionsMobile, ourActionsMobile];
+export const ourActionsMockMobile: string[] = [
+  ourActionsMobile,
+  ourActionsMobile,
+  ourActionsMobile,
+];

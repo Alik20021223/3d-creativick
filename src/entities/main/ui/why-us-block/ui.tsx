@@ -12,28 +12,24 @@ const CARD_CLASSES = [
 const WhyUsBlock = () => {
   return (
     <>
-      <section className='pt-15 w-full'>
-        <div className=' container-custom flex justify-center'>
-          <div className="mb-[52px] flex flex-col items-center gap-5">
-            <h1 className="text-dark-blue font-bold text-center
-                 text-[28px] leading-[1.1]
-                 md:text-[54px] md:leading-[60px]">
+      <section className='w-full pt-15'>
+        <div className='container-custom flex justify-center'>
+          <div className='mb-[52px] flex flex-col items-center gap-5'>
+            <h1 className='text-dark-blue text-center text-[28px] leading-[1.1] font-bold md:text-[54px] md:leading-[60px]'>
               Играй, учись
-              <br className="md:hidden" />
-              и создавай!
+              <br className='md:hidden' />и создавай!
             </h1>
 
-            <div className='bg-pink-active flex md:h-[68px] h-[63px] md:w-[443px] w-[355px] -rotate-3 items-center justify-center rounded-[44px] md:text-[32px] text-[24px] font-bold text-white'>
+            <div className='bg-pink-active flex h-[63px] w-[355px] -rotate-3 items-center justify-center rounded-[44px] text-[24px] font-bold text-white md:h-[68px] md:w-[443px] md:text-[32px]'>
               вместе с 3D Кретивик
             </div>
           </div>
-
         </div>
         <div className='relative flex justify-center'>
           <div className='absolute -top-25 max-md:hidden'>
             <img src={DotImg} alt={DotImg} className='' />
           </div>
-          <div className='flex max-md:flex-col 2xl:gap-4 xl:gap-12 gap-5 md:px-10 px-2.5'>
+          <div className='flex gap-5 px-2.5 max-md:flex-col md:px-10 xl:gap-12 2xl:gap-4'>
             {benefitsMock.map((b, i) => (
               <BenefitCard
                 key={b.id}

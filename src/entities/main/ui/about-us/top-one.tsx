@@ -1,10 +1,12 @@
 const TopOne = () => {
   return (
     <>
-      <div className='flex max-md:flex-col max-md:gap-10 items-start justify-between'>
+      <div className='flex items-start justify-between max-md:flex-col max-md:gap-10'>
         <div className=''>
-          <h2 className='text-dark-blue md:text-[54px] text-[32px] font-bold'>3D Креативик — это:</h2>
-          <p className='font-rosatom md:max-w-[700px] max-w-full pt-5.5 md:text-lg text-base leading-[130%] font-normal text-secondary-text'>
+          <h2 className='text-dark-blue text-[32px] font-bold md:text-[54px]'>
+            3D Креативик — это:
+          </h2>
+          <p className='font-rosatom text-secondary-text max-w-full pt-5.5 text-base leading-[130%] font-normal md:max-w-[700px] md:text-lg'>
             Приятно, граждане, наблюдать, как акционеры крупнейших компаний преданы
             социально-демократической анафеме. Современные технологии достигли такого уровня, что
             сплочённость команды профессионалов обеспечивает актуальность поставленных обществом
@@ -13,19 +15,23 @@ const TopOne = () => {
         </div>
         <div className='flex space-x-10'>
           <div>
-            <p className='number-about-text text-dark-blue md:text-8xl text-[54px] font-bold'>
+            <p className='number-about-text text-dark-blue text-[54px] font-bold md:text-8xl'>
               &gt;
               <span className='text-secondary-text'>500</span>
             </p>
-            <p className='md:font-semibold font-normal md:text-2xl text-base text-[#7D8891]'>Готовых моделей</p>
+            <p className='text-base font-normal text-[#7D8891] md:text-2xl md:font-semibold'>
+              Готовых моделей
+            </p>
           </div>
 
           <div>
-            <p className='number-about-text text-dark-blue md:text-8xl text-[54px] font-bold'>
+            <p className='number-about-text text-dark-blue text-[54px] font-bold md:text-8xl'>
               &gt;
               <span className='text-secondary-text'>16</span>
             </p>
-            <p className='md:font-semibold font-normal md:text-2xl text-base text-[#7D8891]'>Различных серий</p>
+            <p className='text-base font-normal text-[#7D8891] md:text-2xl md:font-semibold'>
+              Различных серий
+            </p>
           </div>
         </div>
       </div>

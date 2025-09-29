@@ -8,8 +8,8 @@ const ExclusiveContent = () => {
     <>
       <div id='series' className='relative z-5'>
         <WhyUsBlock />
-        <div className='w-full container-custom'>
-          <div className='md:pb-10 max-2xl:mx-0! px-2.5 md:px-10'>
+        <div className='container-custom w-full'>
+          <div className='px-2.5 max-2xl:mx-0! md:px-10 md:pb-10'>
             <ExclusiveBlock />
             <ExclusiveCta href='#' />
             <OurActionsContent />

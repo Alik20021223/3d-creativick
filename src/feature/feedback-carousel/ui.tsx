@@ -16,12 +16,7 @@ type Item = {
   avatarUrl?: string;
 };
 
-export default function FeedbackCarousel({
-  items,
-}: {
-  items: Item[];
-  className?: string;
-}) {
+export default function FeedbackCarousel({ items }: { items: Item[]; className?: string }) {
   const isMobile = useIsMobile();
   const swiperRef = useRef<SwiperType | null>(null);
 
@@ -32,15 +27,15 @@ export default function FeedbackCarousel({
   // const swiperModules = isMobile ? [Pagination, Autoplay] : [Navigation, Autoplay];
 
   return (
-    <div className="relative mx-auto max-w-[calc(100%-120px)]">
+    <div className='relative mx-auto max-w-[calc(100%-120px)]'>
       {/* стрелки */}
       <PrevButton
         swiperRef={swiperRef}
-        className="hidden md:block md:absolute md:top-1/2 md:-left-[60px] md:z-30 md:-translate-y-1/2"
+        className='hidden md:absolute md:top-1/2 md:-left-[60px] md:z-30 md:block md:-translate-y-1/2'
       />
       <NextButton
         swiperRef={swiperRef}
-        className="hidden md:block md:absolute md:top-1/2 md:-right-[60px] md:z-30 md:-translate-y-1/2"
+        className='hidden md:absolute md:top-1/2 md:-right-[60px] md:z-30 md:block md:-translate-y-1/2'
       />
 
       <Swiper
@@ -57,22 +52,21 @@ export default function FeedbackCarousel({
           1440: { slidesPerView: 3, spaceBetween: 24 },
         }}
         pagination={isMobile && { clickable: true }}
-        className="feedback-carousel"
+        className='feedback-carousel'
       >
         {items.map((it, i) => (
-          <SwiperSlide key={i} className="!h-auto">
+          <SwiperSlide key={i} className='!h-auto'>
             <FeedBackBlock
               rating={Math.round(it.rating)}
               text={it.text}
               authorName={it.authorName}
               authorRole={it.authorRole}
               avatarUrl={it.avatarUrl}
-              className="h-full w-full"
+              className='h-full w-full'
             />
           </SwiperSlide>
         ))}
       </Swiper>
     </div>
-
   );
 }

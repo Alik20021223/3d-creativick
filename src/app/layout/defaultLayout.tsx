@@ -13,7 +13,7 @@ export default function MainLayout() {
   return (
     <div className='flex min-h-dvh flex-col overflow-x-hidden'>
       {/* Центрированный контейнер, который РАСТЁТ */}
-      <div className='relative z-10 mx-auto flex w-full container-custom grow flex-col md:pt-5'>
+      <div className='container-custom relative z-10 mx-auto flex w-full grow flex-col md:pt-5'>
         <Header menuItems={menuItems} />
         <main className='w-full grow'>
           <Outlet />

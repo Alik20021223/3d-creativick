@@ -7,9 +7,7 @@ type FloatingButtonsProps = {
   showAt?: number; // порог показа кнопки "вверх" по скроллу
 };
 
-export default function FloatingButtons({
-  showAt = 200,
-}: FloatingButtonsProps) {
+export default function FloatingButtons({ showAt = 200 }: FloatingButtonsProps) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

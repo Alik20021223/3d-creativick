@@ -23,7 +23,7 @@ const ExclusiveCta: React.FC<ExclusiveCtaProps> = ({
   return (
     <section className={`w-full ${className}`}>
       <div className='relative rounded-[40px] bg-[#EEF5FB] p-5 md:px-10 md:py-8'>
-        <div className='flex max-md:flex-col  items-center justify-between gap-6'>
+        <div className='flex items-center justify-between gap-6 max-md:flex-col'>
           {/* Левый заголовок */}
 
           <h3 className='text-dark-blue text-[32px] leading-[110%] font-bold md:whitespace-pre-line'>
@@ -36,14 +36,14 @@ const ExclusiveCta: React.FC<ExclusiveCtaProps> = ({
           </div>
 
           {/* Кнопка */}
-          <div className='flex md:justify-end max-md:w-full'>
-              <Button
-                variant='default'
-                onClick={() => navigate(href)}
-                className='h-[56px] md:text-[22px] text-base text-white max-md:w-full'
-              >
-                {buttonText}
-              </Button>
+          <div className='flex max-md:w-full md:justify-end'>
+            <Button
+              variant='default'
+              onClick={() => navigate(href)}
+              className='h-[56px] text-base text-white max-md:w-full md:text-[22px]'
+            >
+              {buttonText}
+            </Button>
           </div>
         </div>
       </div>

@@ -5,10 +5,9 @@ import { ourActionsMock, ourActionsMockMobile } from '@utils/mock';
 import { useIsMobile } from '@app/hook/useMobile';
 
 const OurActionsContent = () => {
+  const isMobile = useIsMobile();
 
-  const isMobile = useIsMobile()
-
-  const swiperItems = isMobile ? ourActionsMockMobile : ourActionsMock
+  const swiperItems = isMobile ? ourActionsMockMobile : ourActionsMock;
 
   return (
     <>
@@ -26,10 +25,13 @@ const OurActionsContent = () => {
             grabCursor
             autoHeight
             // сам Swiper — прозрачный, БЕЗ overflow-hidden
-            className='md:!h-[440px] 2xl:!h-[480px] max-md:!h-auto max-md:space-y-12 !bg-transparent max-md:mt-10'
+            className='!bg-transparent max-md:mt-10 max-md:!h-auto max-md:space-y-12 md:!h-[440px] 2xl:!h-[480px]'
           >
             {swiperItems.map((p, i) => (
-              <SwiperSlide key={i} className='md:!h-[410px] !h-auto max-md:!flex max-md:!justify-center'>
+              <SwiperSlide
+                key={i}
+                className='!h-auto max-md:!flex max-md:!justify-center md:!h-[410px]'
+              >
                 <img src={p} alt={p} />
               </SwiperSlide>
             ))}

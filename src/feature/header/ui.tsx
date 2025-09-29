@@ -66,7 +66,7 @@ export default function Header({ menuItems }: HeaderProps) {
           ].join(' ')}
         >
           <header className='flex justify-center'>
-            <div className='flex w-full container-custom items-center justify-between'>
+            <div className='container-custom flex w-full items-center justify-between'>
               <div className='flex items-center max-md:pl-2.5'>
                 <Link to='/' aria-label='На главную'>
                   <img src={logoSrc} alt='logo' />
@@ -96,17 +96,16 @@ export default function Header({ menuItems }: HeaderProps) {
                   </nav>
 
                   <div className='flex gap-20'>
-
                     <div className='flex flex-col items-center'>
                       <a
                         href='mailto:info@3dkreativik.ru'
-                        className='text-lg font-normal text-dark-blue leading-[130%]'
+                        className='text-dark-blue text-lg leading-[130%] font-normal'
                       >
                         info@3dkreativik.ru
                       </a>
                       <a
-                        href="tel:+84959888282"
-                        className='text-lg font-normal text-dark-blue leading-[130%]'
+                        href='tel:+84959888282'
+                        className='text-dark-blue text-lg leading-[130%] font-normal'
                       >
                         8 (495) 988-82-82
                       </a>

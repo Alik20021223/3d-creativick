@@ -3,12 +3,10 @@ import rosAtomImg from '@assets/rosatom-img.svg';
 const TopThree = () => {
   return (
     <>
-      <div className='flex w-full max-md:flex-col md:gap-20 max-md:gap-8 items-center justify-between'>
+      <div className='flex w-full items-center justify-between max-md:flex-col max-md:gap-8 md:gap-20'>
         <div className=''>
-          <h2 className='title-text'>
-            При поддержке РОСАТОМ
-          </h2>
-          <p className='font-rosatom md:max-w-[700px] pt-5.5 md:text-lg text-base leading-[130%] font-normal'>
+          <h2 className='title-text'>При поддержке РОСАТОМ</h2>
+          <p className='font-rosatom pt-5.5 text-base leading-[130%] font-normal md:max-w-[700px] md:text-lg'>
             Приятно, граждане, наблюдать, как акционеры крупнейших компаний преданы
             социально-демократической анафеме. Современные технологии достигли такого уровня, что
             сплочённость команды профессионалов обеспечивает актуальность поставленных обществом
