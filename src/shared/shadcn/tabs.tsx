@@ -24,7 +24,7 @@ function TabsList({
       data-slot="tabs-list"
       className={cn(
         // пилюля по всей ширине контейнера
-        "inline-flex w-full items-center justify-between rounded-full bg-secondary-white p-1",
+        "inline-flex w-full items-center justify-between md:rounded-full rounded-md bg-secondary-white",
         className
       )}
       {...props}
@@ -41,7 +41,7 @@ function TabsTrigger({
       data-slot="tabs-trigger"
       className={cn(
         // плавные цвета/фон/тень
-        "inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-medium whitespace-nowrap",
+        "inline-flex flex-1 items-center justify-center gap-2 md:rounded-full rounded-md px-5 py-2 text-sm font-medium whitespace-nowrap",
         "transition-[background-color,color,box-shadow,transform] duration-300 ease-out",
         // обычное состояние
         "text-foreground",

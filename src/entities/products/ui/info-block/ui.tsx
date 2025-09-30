@@ -6,6 +6,7 @@ import { useSharedStore } from '@shared/store';
 import TextInstructionBlock from './TextInstructionBlock';
 import ColorButton from '@shared/components/color-button';
 import { InfoBlockData } from '@entities/products/types';
+import BadgeInfo from '@feature/badge-info';
 
 type Props = {
   data: InfoBlockData;
@@ -69,13 +70,7 @@ const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange
         {!!badges?.length && (
           <div className='mt-4 flex flex-wrap gap-3'>
             {badges.map((b, i) => (
-              <span
-                key={i}
-                className='bg-gradient-badge inline-flex items-center gap-2 rounded-[8px] px-3 py-2 text-xs text-white max-md:w-full md:text-sm'
-              >
-                {b.icon}
-                <div className='flex-1 text-sm'>{b.text}</div>
-              </span>
+              <BadgeInfo data={b} key={i} />
             ))}
           </div>
         )}

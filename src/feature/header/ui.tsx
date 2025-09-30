@@ -31,12 +31,20 @@ export default function Header({ menuItems }: HeaderProps) {
     disabled: openMenu,
   });
 
-  const isHashHref = (href: string) => href.startsWith('#');
+  const isHash = (href: string) => href.startsWith('#');
   const linkClass = (href: string) => {
-    const active = isHashHref(href) ? hash === href : pathname === href;
+    const hasHashNow = !!hash; // true, когда, например, '#contacts'
+
+    const active =
+      isHash(href)
+        ? hash === href                      // активен только точный якорь
+        : hasHashNow
+          ? false                            // если есть хеш — роутовые ссылки неактивны
+          : pathname === href;               // иначе подсвечиваем по pathname
+
     return [
       'inline-flex items-center h-full px-2 transition-colors border-b-2 hover:text-primary hover:border-primary',
-      active ? 'text-primary border-primary' : 'text-gray-500 border-transparent ',
+      active ? 'text-primary border-primary' : 'text-gray-500 border-transparent',
     ].join(' ');
   };
 
@@ -68,7 +76,7 @@ export default function Header({ menuItems }: HeaderProps) {
             'h-16 w-full  bg-white p-2.5 pl-[42px] max-sm:px-2.5',
             openShoppingCart ? 'md:rounded-b-4xl max-md:rounded-4xl' : 'rounded-4xl',
             'transition-shadow duration-300',
-            atTop ? 'shadow-xl' : 'shadow-2xl',
+            atTop ? 'shadow-xl' : 'header-shadow',
           ].join(' ')}
         >
           <header className='flex justify-center'>
@@ -153,9 +161,6 @@ export default function Header({ menuItems }: HeaderProps) {
           className='fixed inset-0 z-40 bg-black/30 backdrop-blur-md'
         />
       )}
-
-      {/* Прокладка под фиксированный хедер (его высота = h-16 = 64px) */}
-      <div className='h-16' />
     </>
   );
 }

@@ -2,7 +2,7 @@ import KatushkaImg from '@assets/katushka-card.png';
 import CosmoPersom from '@assets/cosmo-person.png';
 import PrinterCard from '@assets/test-photo.png';
 import JupiterImg from '@assets/Юпитер.png';
-import { BadgesMockItems } from '@utils/mock';
+import { BadgesMockItems } from '@utils/badge-mock-items';
 
 export const infoPrinter = {
   title: 'Принтер',

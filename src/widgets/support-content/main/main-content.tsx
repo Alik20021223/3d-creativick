@@ -4,11 +4,15 @@ import { SupportCards, SupportTabs } from "@utils/mock"
 import { Button } from "@shadcn/button"
 import { ChevronRight, Search } from "lucide-react"
 import { cn } from "@lib/utils"
+import { useNavigate } from "react-router-dom"
 
 const MainContent = () => {
+
+    const navigate = useNavigate()
+
     return (
         <>
-            <section className="py-20 md:px-10 px-2.5 bg-white rounded-[80px]">
+            <section id="faq" className="py-20 md:px-10 px-2.5 bg-white rounded-[80px] container-custom">
                 <aside className="w-full flex max-md:flex-col items-start">
                     <div className="space-y-11 md:w-[59%]">
                         <h1 className="title-text max-md:text-center">Часто задаваемые вопросы</h1>
@@ -17,7 +21,7 @@ const MainContent = () => {
                         </p>
                     </div>
                     <div className="flex justify-end flex-1 max-md:w-full mt-[50px]">
-                        <Button variant="link" className="border-secondary-text max-md:w-full text-secondary-text bg-white border">
+                        <Button onClick={() => navigate('/support#have-questions')} variant="link" className="border-secondary-text max-md:w-full text-secondary-text bg-white border button-shadow-blue hover:text-primary hover:border-primary">
                             <Search />
                             Остались вопросы
                             <ChevronRight />
@@ -31,8 +35,8 @@ const MainContent = () => {
                             <TabsList
                                 className={cn(
                                     // mobile: горизонтальный скролл
-                                    "md:mb-8 md:h-12",
-                                    "flex gap-2 rounded-full bg-secondary-white p-1",
+                                    "md:mb-8 md:h-14",
+                                    "flex md:gap-2 md:rounded-full bg-secondary-white",
                                     "overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth md:overflow-visible",
                                     "no-scrollbar md:w-full md:justify-between"
                                 )}
@@ -43,12 +47,12 @@ const MainContent = () => {
                                         value={t.id}
                                         className={cn(
                                             // фиксированная высота + перенос запретить
-                                            "h-10 px-5 whitespace-nowrap",
+                                            "md:h-14 h-10.5 md:px-5 px-3 whitespace-nowrap md:text-[22px] text-sm",
                                             // не даём сжиматься и прилипание к началу «щелчком»
                                             "shrink-0 snap-start",
                                             // твои актив/hover стили
                                             "transition-[background-color,color,box-shadow] duration-300",
-                                            "data-[state=active]:bg-primary-active data-[state=active]:text-white rounded-full"
+                                            "data-[state=active]:bg-primary-active data-[state=active]:text-white md:rounded-full rounded-md"
                                         )}
                                     >
                                         {t.label}
@@ -67,8 +71,6 @@ const MainContent = () => {
                             </TabsContent>
                         ))}
                     </Tabs>
-
-
                 </aside>
             </section>
         </>

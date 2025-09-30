@@ -18,6 +18,7 @@ type CustomInputProps<T extends FieldValues> = {
     rules?: RegisterOptions<T, Path<T>>;
     label?: string;
     helperText?: string;
+    inputClassName?: string;
     containerClassName?: string;
     labelClassName?: string;
     errorClassName?: string;
@@ -30,6 +31,7 @@ export function CustomInput<T extends FieldValues>({
     label,
     helperText,
     containerClassName,
+    inputClassName,
     labelClassName,
     errorClassName,
     type = 'text',
@@ -52,9 +54,9 @@ export function CustomInput<T extends FieldValues>({
             control={ctl}
             rules={rules}
             render={({ field, fieldState }) => (
-                <div className={cn('space-y-1', containerClassName)}>
+                <div className={cn('space-y-2', containerClassName)}>
                     {label && (
-                        <label htmlFor={field.name} className={cn('text-sm font-medium pb-2.5', labelClassName)}>
+                        <label htmlFor={field.name} className={cn('text-sm font-medium', labelClassName)}>
                             {label}
                         </label>
                     )}

@@ -20,7 +20,7 @@ const ShoppingCartContent = () => {
                         <h1 className="title-text max-md:text-center">В корзине 3 товара</h1>
                         <p className="description-text mt-[22px]">В частности, разбавленное изрядной долей эмпатии, рациональное мышление предоставляет широкие возможности для экспериментов, поражающих по своей масштабности и грандиозности.</p>
                     </div>
-                    <Button variant="link" className="border-secondary-text text-[22px] leading-[130%] max-md:w-full text-secondary-text bg-white border h-14 w-[298px]">
+                    <Button variant="link" className="border-secondary-text text-[22px] leading-[130%] max-md:w-full text-secondary-text bg-white border h-14 w-[298px] button-shadow-blue hover:text-primary hover:border-primary">
                         Очистить корзину
                         <Trash2 />
                     </Button>

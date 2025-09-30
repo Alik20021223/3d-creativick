@@ -1,5 +1,4 @@
 import type { DetailCardType } from '@shared/types';
-import { AlarmClock, Atom, FileImage } from 'lucide-react';
 import HitOneImg from '@assets/hit-sell-one.svg';
 import PrinterImg from '@assets/printer-card.png';
 import CatushkaImg from '@assets/katushka-card.png';
@@ -143,8 +142,8 @@ export const footerColumns = [
     links: [
       { to: '/software', label: 'Программное обеспечение' },
       { to: '/manuals', label: 'Руководство пользователя' },
-      { to: '/faq', label: 'Часто задаваемые вопросы' },
-      { to: '/contacts', label: 'Остались вопросы?' },
+      { to: '/support#faq', label: 'Часто задаваемые вопросы' },
+      { to: '/support#have-questions', label: 'Остались вопросы?' },
     ],
     colSpan: 'col-span-12 md:col-span-2',
   },
@@ -220,36 +219,6 @@ const generatedItems: ProductCardType[] = Array.from({ length: 18 }, (_, i) => {
 
 // итоговый мок на 20 шт. — принтер, катушка, затем 18 авто-сгенерированных
 export const productCardsMock: ProductCardType[] = [...baseProducts, ...generatedItems];
-
-export const BadgesMockItems = [
-  {
-    icon: <FileImage className='size-5' />,
-    text: (
-      <div className='flex w-full justify-between'>
-        <span>Размер файла</span>
-        <span className='font-semibold'>10 МБ</span>
-      </div>
-    ),
-  },
-  {
-    icon: <AlarmClock className='size-5' />,
-    text: (
-      <div className='flex w-full justify-between'>
-        <span>Время печати серии</span>
-        <span className='font-semibold'>16 часов</span>
-      </div>
-    ),
-  },
-  {
-    icon: <Atom className='size-5' />,
-    text: (
-      <div className='flex w-full justify-between'>
-        <span>Количество материала</span>
-        <span className='font-semibold'>500 г</span>
-      </div>
-    ),
-  },
-];
 
 export const CATEGORIES = [
   'Акции 🔥',
@@ -383,6 +352,14 @@ export const SupportTabs = [
   { id: "troubleshoot", label: "Поиск и устранение неполадок" },
   { id: "slicer", label: "Слайсер" },
 ] as const;
+
+export const ProfileTabs = [
+  { id: "orders", label: "Заказы" },
+  { id: "favorites", label: "Избранное" },
+  { id: "personal-info", label: "Персональный данные" },
+] as const;
+
+export type TabId = typeof ProfileTabs[number]["id"];
 
 export const SupportCards: Record<(typeof SupportTabs)[number]["id"], string[]> = {
   service: [

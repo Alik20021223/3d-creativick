@@ -44,7 +44,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     // базовый класс инпута
     const inputCls = cn(
       'file:text-foreground placeholder:text-muted-foreground selection:text-primary-foreground',
-      'border-secondary-gray flex h-9 w-full min-w-0 rounded-[12px] bg-white px-3 py-1 text-base shadow-xs focus-visible:border-primary  focus-visible:ring-primary hover:border-primary-active border',
+      'border-secondary-gray flex h-9 w-full min-w-0 rounded-full bg-white px-3 py-1 text-base shadow-xs focus-visible:border-primary  focus-visible:ring-primary hover:border-primary-active border',
       'transition-[color,box-shadow] outline-none',
       'file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium',
       'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
@@ -55,7 +55,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     );
 
     return (
-      <div className="relative w-full">
+      <div className="relative w-full h-full">
         {/* Левый икон */}
         {leftIcon && (
           <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-2 flex items-center">

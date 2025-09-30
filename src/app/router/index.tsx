@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
   },
   {
     path: PROFILE_URL.BASE,
-    element: <DefaultLayout />,
+    element: <MainLayout />,
     children: PROFILE_ROUTES,
   },
 ]);

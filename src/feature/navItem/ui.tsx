@@ -7,24 +7,16 @@ interface NavItemProps {
   href: string;
   linkClass: (href: string) => string;
   pathname: string;
+  onHashClick?: () => void; // чтобы закрывать меню и т.п.
 }
 
-const NavItem: React.FC<NavItemProps> = ({ label, href, pathname, linkClass }) => {
+const NavItem: React.FC<NavItemProps> = ({ label, href, linkClass, onHashClick }) => {
   if (isHashHref(href)) {
-    if (pathname === '/') {
-      // На главной: обычный якорь
-
-      return (
-        <a href={href} className={linkClass(href)}>
-          {label}
-        </a>
-      );
-    }
-    // Не на главной: ведём на главную с хешем (/#about)
+    // Якорь: всегда внутри текущей страницы
     return (
-      <Link to={`/${href}`} className={linkClass(href)}>
+      <a href={href} className={linkClass(href)} onClick={onHashClick}>
         {label}
-      </Link>
+      </a>
     );
   }
   // Обычный роут

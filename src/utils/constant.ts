@@ -1,3 +1,5 @@
+import { LEVELS } from "@entities/profile/mock";
+
 export const isHashHref = (href: string) => href.startsWith('#');
 
 export function slugify(text: string): string {
@@ -66,3 +68,13 @@ export function plural(n: number, forms: [string, string, string]) {
     return forms[2];
 }
 
+export const getLevelIndex = (currentTotal: number) =>
+  LEVELS.reduce((idx, lvl, i) => (currentTotal >= lvl.threshold ? i : idx), 0);
+
+
+
+export const splitDateTime = (dt?: string) => {
+  if (!dt) return { date: "", time: "" };
+  const [date, , time] = dt.split(" ");
+  return { date, time };
+};

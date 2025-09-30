@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ArrowUp, MessageCircle } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { Button } from '@shadcn/button';
 
 type FloatingButtonsProps = {
-  chatHref?: string; // например, ссылка на Telegram/WhatsApp/чат
   showAt?: number; // порог показа кнопки "вверх" по скроллу
 };
 
 export default function FloatingButtons({
-  chatHref = 'https://t.me/your_support_bot',
   showAt = 200,
 }: FloatingButtonsProps) {
   const [visible, setVisible] = useState(false);
@@ -32,18 +30,7 @@ export default function FloatingButtons({
         className={`transition-all ${visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'} grid h-12 w-12 place-items-center rounded-full bg-[#F1F5F9] hover:brightness-110 active:scale-95`}
       >
         <ArrowUp size={24} strokeWidth={2} className='h-6! w-6!' />
-      </Button>
-
-      {/* Кнопка Чат/Поддержка */}
-      <a
-        href={chatHref}
-        target='_blank'
-        rel='noreferrer'
-        aria-label='Открыть чат поддержки'
-        className='grid h-12 w-12 place-items-center rounded-full bg-[#0A84FF] text-white shadow-lg shadow-black/20 hover:brightness-110 active:scale-95'
-      >
-        <MessageCircle size={20} strokeWidth={2.5} />
-      </a>
+      </Button>      
     </div>
   );
 }

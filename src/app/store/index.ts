@@ -12,6 +12,8 @@ type AppState = {
   setOpenShoppingCart: (v: boolean) => void;
 
   isAuth: boolean;
+
+  closeAll: () => void;
 };
 
 export const useAppStore = create<AppState>()(
@@ -25,6 +27,11 @@ export const useAppStore = create<AppState>()(
       setOpenShoppingCart: (v) => set({ openShoppingCart: v, openMenu: false }),
 
       isAuth: true,
+
+      closeAll: () => set({
+        openMenu: false,
+        openShoppingCart: false,
+      }),
     }),
     { name: 'app-store' },
   ),
