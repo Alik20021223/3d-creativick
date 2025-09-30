@@ -38,7 +38,6 @@ export default function ProductCarousel({
                 image={p.image}
                 title={p.title}
                 rating={p.rating}
-                bought={p.bought}
                 href={p.href}
                 className='w-full max-w-full'
               />

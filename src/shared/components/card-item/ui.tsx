@@ -8,19 +8,11 @@ type CardItemProps = {
   image: string;
   title: string;
   rating: number; // например 4.8
-  bought?: number; // например 600
   href: string; // если задано — кнопка будет <Link to={href}>
   className?: string;
 };
 
-const CardItem: React.FC<CardItemProps> = ({
-  image,
-  title,
-  rating,
-  bought,
-  href,
-  className = '',
-}) => {
+const CardItem: React.FC<CardItemProps> = ({ image, title, rating, href, className = '' }) => {
   const navigate = useNavigate();
 
   return (
@@ -55,9 +47,6 @@ const CardItem: React.FC<CardItemProps> = ({
         <div className='mt-4 flex items-center gap-2 text-gray-500'>
           <Star className='h-[35px] w-[35px] fill-[#FFD300] text-[#FFD300]' />
           <span className='text-lg font-medium text-gray-800'>{rating.toFixed(1)}</span>
-          {typeof bought === 'number' && (
-            <span className='text-gray-400'>(купили {bought} чел)</span>
-          )}
         </div>
 
         {/* Кнопка */}

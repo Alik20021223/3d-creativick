@@ -19,7 +19,6 @@ export type ProductCardMock = {
   image: string;
   title: string;
   rating: number;
-  bought: number;
   href: string;
 };
 

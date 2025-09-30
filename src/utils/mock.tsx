@@ -120,10 +120,12 @@ export const topTwoMock = {
   printer: {
     title: '3D-принтер',
     items: [
-      'Простой и удобный',
-      'Безопасный и компактный',
-      'Красочный и бесшумный',
-      'Стабильный и эффективный',
+      'Безопасный',
+      'Компактный',
+      'Бесшумный',
+      'Яркая цветовая индикация',
+      'Простой в управлении',
+      'Идеален для детей',
     ],
   },
   store: {
@@ -157,7 +159,6 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     id: 'pla-yellow',
     title: 'Катушка жёлтая',
     rating: 4.8,
-    bought: 600,
     href: '/product/pla-yellow',
     image: HitOneImg,
   },
@@ -165,7 +166,6 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     id: 'pla-red',
     title: 'Катушка красная',
     rating: 4.7,
-    bought: 410,
     href: '/product/pla-red',
     image: HitOneImg,
   },
@@ -173,7 +173,6 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     id: 'pla-blue',
     title: 'Катушка голубая',
     rating: 4.9,
-    bought: 520,
     href: '/product/pla-blue',
     image: HitOneImg,
   },
@@ -181,7 +180,6 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     id: 'pla-green',
     title: 'Катушка зелёная',
     rating: 4.6,
-    bought: 305,
     href: '/product/pla-green',
     image: HitOneImg,
   },
@@ -189,7 +187,6 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     id: 'pla-white',
     title: 'Катушка белая',
     rating: 4.8,
-    bought: 780,
     href: '/product/pla-white',
     image: HitOneImg,
   },
@@ -197,7 +194,6 @@ export const exclusiveProductsMock: ProductCardMock[] = [
     id: 'pla-black',
     title: 'Катушка чёрная',
     rating: 4.8,
-    bought: 920,
     href: '/product/pla-black',
     image: HitOneImg,
   },
@@ -222,12 +218,10 @@ export const benefitsMock: BenefitCardMock[] = [
     id: 'unlimited',
     title: ['Безграничный'],
     lines:
-      'K.Store — это постоянно обновляемая' +
-      'коллекция 3D-моделей, созданных' +
-      'специально для принтера из набора' +
-      '«3D Кретивик», с доступом к покупке' +
-      'по тематическим сериям',
-    buttonText: 'Рекомендует 9/10 педагогов',
+      'Креативик Store — это постоянно пополняемая коллекция 3D-моделей,' +
+      ' созданных специально для набора «3D Креативик»,' +
+      ' с удобным доступом к покупке по тематическим сериям',
+    buttonText: 'Большой выбор моделей',
     image: InfinityImg,
     accentClassName:
       '2xl:top-23 xl:top-16 2xl:rotate-0 xl:top-50 2xl:right-0 xl:top-16 -top-15 right-0 z-10 -rotate-30 xl:-rotate-10',
@@ -240,7 +234,7 @@ export const benefitsMock: BenefitCardMock[] = [
       'оснащён закрытой камерой,' +
       'компактный и лёгкий. В комплекте —' +
       'готовые 3D-модели (игрушки, животные, механизмы).',
-    buttonText: 'Рекомендует 9/10 педагогов',
+    buttonText: 'Проверено нами/Проверено Росатомом',
     image: ShieldCheckImg,
     accentClassName: '2xl:top-30 xl:top-16 2xl:-right-3 xl:top-50 -top-18 right-0 z-10',
   },
@@ -248,10 +242,10 @@ export const benefitsMock: BenefitCardMock[] = [
     id: 'useful',
     title: ['Полезный'],
     lines:
-      'Развивает мышление и креативность,' +
-      'учит основам 3D-печати и дизайну,' +
-      'знакомит с технологиями будущего' +
-      'и помогает отвлечься от гаджетов',
+      'Развивает пространственное и инженерное мышление,' +
+      ' учит основам 3D-печати, креативности и творческому подходу,' +
+      ' знакомит с технологиями будущего',
+
     buttonText: 'Замена гаджетам',
     image: LampImg,
     accentClassName: '2xl:top-26 xl:top-50 2xl:right-2 xl:right-2 -top-18 right-0 z-10',

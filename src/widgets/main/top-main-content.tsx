@@ -22,7 +22,7 @@ const TopMainContent = () => {
             variant='pink'
             className={cn('h-[68px] w-full text-2xl font-bold md:w-[461px] md:text-[32px]')}
           >
-            Начать моделировать
+            В мир 3D творчества!
           </Button>
 
           <img
