@@ -1,122 +1,155 @@
-'use client';
-
 import { Button } from '@shadcn/button';
 import { Link, useLocation } from 'react-router-dom';
-import logoSrc from '@assets/logo-3d.svg'
-import userSrc from '@assets/user-profile.svg'
-import { headerMock } from '@utils/mock';
+import logoSrc from '@assets/logo-3d.svg';
+import userSrc from '@assets/user-profile.svg';
 import { ShoppingCart } from 'lucide-react';
 import { useIsMobile } from '@app/hook/useMobile';
 import MobileHeader from './mobileHeader';
 import { useAppStore } from '@app/store';
 import { useEffect } from 'react';
+import { HeaderType } from '@shared/types';
+import NavItem from '../navItem/ui';
+import { useHideOnScroll } from '@app/hook/useHideOnScroll';
 
-type HeaderProps = {
-  isAuth?: boolean; // прокидывай из сессии/стора
-};
+type HeaderProps = { menuItems: HeaderType[] };
 
-export default function Header({ isAuth = false }: HeaderProps) {
-  const location = useLocation();
-  const pathname = location.pathname;
-  const menuItems = isAuth ? headerMock.auth : headerMock.guest;
+export default function Header({ menuItems }: HeaderProps) {
+  const { pathname, hash } = useLocation();
+  const isMobile = useIsMobile();
+  const { open, setOpen, isAuth } = useAppStore();
 
-  const isMobile = useIsMobile()
+  // 👇 скрываем при скролле вниз, показываем при скролле вверх
+  const { hidden, atTop, setHidden } = useHideOnScroll({
+    threshold: 80,
+    delta: 6,
+    revealOnIdleMs: 250, // автопоказ после остановки прокрутки
+    disabled: open,
+  });
 
-  const { open, setOpen } = useAppStore()
-
+  const isHashHref = (href: string) => href.startsWith('#');
   const linkClass = (href: string) => {
-    const isActive = pathname === href;
+    const active = isHashHref(href) ? hash === href : pathname === href;
     return [
-      "inline-flex items-center h-full px-2 transition-colors border-b-2",
-      isActive
-        ? "text-primary border-primary"
-        : "text-gray-500 border-transparent ",
-    ].join(" ");
+      'inline-flex items-center h-full px-2 transition-colors border-b-2 hover:text-primary hover:border-primary',
+      active ? 'text-primary border-primary' : 'text-secondary-text border-transparent ',
+    ].join(' ');
   };
 
   useEffect(() => {
-    const { style } = document.documentElement; // или document.body
+    const { style } = document.documentElement;
     if (open) {
       const prev = style.overflow;
       style.overflow = 'hidden';
-      return () => { style.overflow = prev; };
+      return () => {
+        style.overflow = prev;
+      };
     }
   }, [open]);
 
   return (
     <>
-      {/* Фиксированный wrapper на ширину экрана */}
-      <div className="fixed  inset-x-0 top-5 z-50">
-        {/* Контейнер ограничивает ширину */}
-        <div className="px-[38px] max-sm:px-2.5 max-w-[1456px] mx-auto">
-          <header className="h-16 header-shadow flex bg-white p-2.5 rounded-4xl justify-between items-center">
-            {/* Лого */}
-            <div className="flex items-center">
-              <Link to="/" aria-label="На главную">
-                <img src={logoSrc} alt="logo" />
-              </Link>
+      {/* fixed-хедер с анимацией появления/скрытия */}
+      <div
+        className={[
+          'fixed inset-x-0 z-50 px-[38px] max-md:px-2.5',
+          'top-5 max-md:top-[20px]', // оставляем твой отступ сверху
+          'transition-transform duration-300 will-change-transform',
+          hidden ? '-translate-y-[120%] max-md:-translate-y-[180%]' : 'translate-y-0',
+        ].join(' ')}
+        onMouseEnter={() => setHidden(false)}
+      >
+        <div
+          className={[
+            'h-16 w-full rounded-4xl bg-white p-2.5 pl-[42px] max-sm:px-2.5',
+            'transition-shadow duration-300',
+            atTop ? 'shadow-none' : 'shadow-2xl',
+          ].join(' ')}
+        >
+          <header className='flex justify-center'>
+            <div className='container-custom flex w-full items-center justify-between'>
+              <div className='flex items-center max-md:pl-2.5'>
+                <Link to='/' aria-label='На главную'>
+                  <img src={logoSrc} alt='logo' />
+                </Link>
+              </div>
+
+              {isMobile ? (
+                <MobileHeader
+                  menuItems={menuItems}
+                  open={open}
+                  setOpen={setOpen}
+                  linkClass={linkClass}
+                  cartCount={12}
+                />
+              ) : (
+                <>
+                  <nav className='hidden h-11 gap-6 md:flex'>
+                    {menuItems.map((item) => (
+                      <NavItem
+                        pathname={pathname}
+                        linkClass={linkClass}
+                        key={item.href}
+                        label={item.label}
+                        href={item.href}
+                      />
+                    ))}
+                  </nav>
+
+                  <div className='flex gap-20'>
+                    <div className='flex flex-col items-center'>
+                      <a
+                        href='mailto:info@3dkreativik.ru'
+                        className='text-dark-blue text-lg leading-[130%] font-normal'
+                      >
+                        info@3dkreativik.ru
+                      </a>
+                      <a
+                        href='tel:+84959888282'
+                        className='text-dark-blue text-lg leading-[130%] font-normal'
+                      >
+                        8 (495) 988-82-82
+                      </a>
+                    </div>
+
+                    <div className='flex gap-3'>
+                      {isAuth && (
+                        <Button className='bg-primary relative flex h-11 w-[70px] !p-0 text-white'>
+                          <ShoppingCart className='!h-8 !w-8' />
+                          <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full'>
+                            12
+                          </div>
+                        </Button>
+                      )}
+
+                      <Button
+                        variant='pink'
+                        className='bg-pink-active flex h-11 w-[83px] justify-center'
+                        asChild
+                      >
+                        <Link to={isAuth ? '/profile' : '/login'}>
+                          <img src={userSrc} alt='user' className='pt-[5px]' />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-
-            {isMobile ?
-              <MobileHeader
-                isAuth={isAuth}
-                open={open}
-                setOpen={setOpen}
-                linkClass={linkClass}
-                cartCount={12}
-              /> :
-              <>
-                <nav className="hidden md:flex gap-6 h-11">
-                  {menuItems.map((item) => (
-                    <Link key={item.href} to={item.href} className={linkClass(item.href)}>
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-
-                {/* Правый блок */}
-                <div className="flex gap-2">
-                  {isAuth ? (
-                    <Button className="relative flex h-11 w-[70px] !p-0 text-white bg-primary">
-                      <ShoppingCart className="!w-8 !h-8" />
-                      <div className="absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-pink-active">
-                        12
-                      </div>
-                    </Button>
-                  ) : (
-
-                    <Button className="flex h-11 text-white w-[189px]">В магазин</Button>
-                  )}
-
-                  <Button
-                    className="flex h-11 w-[83px] justify-center bg-pink-active"
-                    asChild
-                  >
-                    <Link to={isAuth ? '/profile' : '/login'}>
-                      <img src={userSrc} alt="user" className="pt-[5px]" />
-                    </Link>
-                  </Button>
-                </div>
-
-              </>
-            }
-
           </header>
-        </div >
-      </div >
+        </div>
+      </div>
 
-      {/* Глобальный блюр-вейл под хедером, поверх контента */}
       {open && (
         <button
-          type="button"
-          aria-label="Закрыть меню"
+          type='button'
+          aria-label='Закрыть меню'
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-md"
+          className='fixed inset-0 z-40 bg-black/30 backdrop-blur-md'
         />
       )}
 
-      {/* Спейсер под фиксированным хедером */}
-      < div className="h-20" />
+      {/* Прокладка под фиксированный хедер (его высота = h-16 = 64px) */}
+      <div className='h-16' />
     </>
   );
 }
