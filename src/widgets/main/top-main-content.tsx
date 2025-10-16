@@ -13,16 +13,16 @@ const TopMainContent = () => {
       <div className='bg-main relative w-full px-2.5 max-md:flex max-md:flex-col max-md:items-center max-md:gap-8 md:px-[83px]'>
         <div className='relative z-10 mt-[80px] flex w-[355px] flex-col space-y-[47px] text-white max-md:text-center md:mt-[245px] md:w-[551px]'>
           <h1 className='font-ros-bold text-[46px] leading-[110%] font-bold tracking-[0px] md:text-7xl'>
-            Сделай первый шаг в мир 3D!
+            Сделай первый шаг в мир 3D-печати!
           </h1>
           <h3 className='text-2xl leading-[120%] font-normal md:text-[32px]'>
-            Играй, учись и создавай — вместе с Креативиком
+            Играй. Учись и создавай - Вместе с набором для творчества
           </h3>
           <Button
             variant='pink'
             className={cn('h-[68px] w-full text-2xl font-bold md:w-[461px] md:text-[32px]')}
           >
-            В мир 3D творчества!
+            3D Креативик
           </Button>
 
           <img

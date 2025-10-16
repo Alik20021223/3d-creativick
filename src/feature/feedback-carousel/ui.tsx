@@ -51,11 +51,11 @@ export default function FeedbackCarousel({ items }: { items: Item[]; className?:
           1080: { slidesPerView: 2, spaceBetween: 20 },
           1440: { slidesPerView: 3, spaceBetween: 24 },
         }}
-        pagination={isMobile && { clickable: true }}
+        pagination={isMobile ? { el: '.feedback-pagination', clickable: true } : false}
         className='feedback-carousel'
       >
         {items.map((it, i) => (
-          <SwiperSlide key={i} className='!h-auto'>
+          <SwiperSlide key={i} className='max-md:!h-full max-md:max-h-[400px] md:!h-full'>
             <FeedBackBlock
               rating={Math.round(it.rating)}
               text={it.text}
@@ -67,6 +67,7 @@ export default function FeedbackCarousel({ items }: { items: Item[]; className?:
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className='feedback-pagination mt-3 flex justify-center md:hidden' />
     </div>
   );
 }

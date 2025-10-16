@@ -37,6 +37,7 @@ export default function FeedBackBlock({
       className={[
         'relative rounded-4xl',
         'p-5 md:p-8',
+        'flex flex-col h-full',
         "before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:content-['']",
         'bg-white',
         className,

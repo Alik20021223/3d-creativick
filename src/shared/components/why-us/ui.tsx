@@ -66,7 +66,7 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
         </div>
 
         {buttonText && !isMobile && (
-          <div className='text-secondary-text z-15 w-fit rounded-[22px] bg-white px-4.5 py-2 text-sm font-normal'>
+          <div className='text-secondary-text z-15 w-fit rounded-[22px] bg-white px-4.5 py-2 text-sm font-normal whitespace-pre-line'>
             {buttonText}
           </div>
         )}

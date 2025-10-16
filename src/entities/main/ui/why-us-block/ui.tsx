@@ -17,7 +17,7 @@ const WhyUsBlock = () => {
           <div className='mb-[52px] flex flex-col items-center gap-5'>
             <h1 className='text-dark-blue text-center text-[28px] leading-[1.1] font-bold md:text-[54px] md:leading-[60px]'>
               Играй, учись
-              <br className='md:hidden' />и создавай!
+              <br className='md:hidden' /> и создавай!
             </h1>
 
             <div className='bg-pink-active flex h-[63px] w-[355px] -rotate-3 items-center justify-center rounded-[44px] text-[24px] font-bold text-white md:h-[68px] md:w-[443px] md:text-[32px]'>
