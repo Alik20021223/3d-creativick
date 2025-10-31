@@ -240,11 +240,13 @@
   }
 }
 
+*/
+
 @media (min-width: 1440px) {
   .container-custom {
     max-width: 1440px;
   }
-} */
+} 
 
 @media (min-width: 1540px) {
   .container-custom {
@@ -270,11 +272,6 @@ body {
   background-repeat: no-repeat;
 }
 
-.exclusive-card {
-  background-image: url(./assets/bg-default.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 
 .pink-block {
   background-color: var(--color-primary-active);
@@ -464,4 +461,26 @@ p.no-hyphen {
               -30.66px 18.87px 80px 0px #00175C1A;
 }
 
+div[style*="z-index: 2000000000"],
+div[style*="z-index: 2000000000"] * {
+  pointer-events: auto !important;
+  z-index: 2147483647 !important; /* на всякий случай выше всего остального */
+}
+
 html { scroll-behavior: smooth; }
+
+.bg-contact-form {
+  background-image: url(./assets/bg-support-form.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.shadow-card-info {
+  box-shadow:
+  -0.57px 0.35px 3.15px 0px #00175C06,
+  -2.5px 1.54px 6.52px 0px #00175C0A,
+  -6.13px 3.77px 13px 0px #00175C0D,
+  -11.81px 7.27px 25.48px 0px #00175C0F,
+  -19.87px 12.23px 46.85px 0px #00175C13,
+  -30.66px 18.87px 80px 0px #00175C1A;
+}

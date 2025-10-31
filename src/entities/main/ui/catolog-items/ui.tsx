@@ -1,25 +1,44 @@
 // pages/catalog/CatalogGrid.tsx
-import { useMemo, useState, useEffect } from 'react';
-import { PerPageSelect, productCardsMock, SortMock } from '@utils/mock';
+import { useEffect, useState } from 'react';
+import { PerPageSelect, SortMock } from '@utils/mock';
 import ProductCard from '@shared/components/product-card';
 import PaginationCustom from '@shared/components/pagination';
 import CustomSelect from '@feature/custom-select';
 import { Input } from '@shadcn/input';
 import { ArrowDownWideNarrow, Search } from 'lucide-react';
 import CustomDropdown from '@feature/custom-dropdown';
+import { useMainStore } from '../../store';
+import { ProductCardType } from '@shared/types';
 
 type CatalogGridProps = {
-  topRef?: React.RefObject<HTMLDivElement | null>; // или React.MutableRefObject<HTMLDivElement | null>
+  topRef?: React.RefObject<HTMLDivElement | null>;
+  products?: ProductCardType[];
 };
 
-export default function CatalogGrid({ topRef }: CatalogGridProps) {
-  const [perPage, setPerPage] = useState<number>(9);
-  const [page, setPage] = useState<number>(1);
-  const [sort, setSort] = useState<string>('price_asc');
+export default function CatalogGrid({ topRef, products }: CatalogGridProps) {
+  const {
+    perPage,
+    setPerPage,
+    page,
+    setPage,
+    sort,
+    setSort,
+    search: searchStore,
+    setSearch: setSearchStore,
+    total,
+  } = useMainStore();
+
+  // Локальное значение поля ввода (для мгновенного UI-апдейта)
+  const [searchValue, setSearchValue] = useState<string>(searchStore ?? '');
+
+  // Дебаунс: после паузы обновляем значение в сторе
+  useEffect(() => {
+    const t = setTimeout(() => setSearchStore(searchValue.trim()), 400);
+    return () => clearTimeout(t);
+  }, [searchValue, setSearchStore]);
 
   const scrollToTop = () => topRef?.current?.scrollIntoView({ behavior: 'smooth' });
 
-  const total = productCardsMock.length;
   const totalPages = Math.max(1, Math.ceil(total / perPage));
 
   // если пользователь уменьшил perPage и текущая страница стала “пустой”
@@ -27,18 +46,17 @@ export default function CatalogGrid({ topRef }: CatalogGridProps) {
     if (page > totalPages) setPage(totalPages);
   }, [perPage, totalPages, page]);
 
-  const slice = useMemo(() => {
-    const start = (page - 1) * perPage;
-    const end = start + perPage;
-    return productCardsMock.slice(start, end);
-  }, [page, perPage]);
-
   return (
     <section className='w-full'>
       {/* панель управления */}
       <div className='mt-15 mb-6 flex flex-wrap items-center justify-between gap-4'>
         <div className='w-full md:w-[484px]'>
-          <Input placeholder='Поиск' className='!h-10' rightIcon={<Search className='h-3 w-3' />} />
+          <Input
+            placeholder='Поиск'
+            onChange={(e) => setSearchValue(e.target.value)}
+            className='!h-10'
+            rightIcon={<Search className='h-3 w-3' />}
+          />
         </div>
         <div className='flex w-full gap-2 md:w-[336px]'>
           <CustomDropdown
@@ -64,7 +82,7 @@ export default function CatalogGrid({ topRef }: CatalogGridProps) {
 
       {/* грид карточек */}
       <div className='grid grid-cols-1 gap-4 max-md:justify-items-center md:grid-cols-2 xl:grid-cols-3'>
-        {slice.map((item) => (
+        {products?.map((item) => (
           <ProductCard key={item.id} data={item} />
         ))}
       </div>

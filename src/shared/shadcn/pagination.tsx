@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ArrowLeft, ArrowRight, MoreHorizontalIcon } from 'lucide-react';
 
 import { cn } from '@lib/utils';
-import { Button, buttonVariants } from '@/shared/shadcn/button';
+import { Button, buttonVariants } from '@shared/shadcn/button';
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (

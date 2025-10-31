@@ -5,8 +5,8 @@ import { Button } from '@shadcn/button';
 import MenuIcon from '@assets/menu-icon.svg';
 import { Popover, PopoverTrigger, PopoverContent } from '@shadcn/popover';
 import userSrc from '@assets/user-profile.svg';
-import { Link } from 'react-router-dom';
-import { cn } from '@/shared/lib/utils';
+import { Link, useNavigate } from 'react-router-dom';
+import { cn } from '@shared/lib/utils';
 import { ShoppingCart, XIcon } from 'lucide-react';
 import { HeaderType } from '@shared/types';
 import { useAppStore } from '@app/store';
@@ -30,7 +30,17 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
   open,
   onClickCart,
 }) => {
-  const { isAuth } = useAppStore();
+  const { isAuth, setOpenLkModal } = useAppStore();
+
+  const navigate = useNavigate();
+
+  const handleClickProfile = () => {
+    if (isAuth) {
+      navigate('/profile');
+    } else {
+      setOpenLkModal(true);
+    }
+  };
 
   return (
     <>
@@ -68,7 +78,10 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
             <div className='mb-10 flex w-full items-center gap-2'>
               {isAuth && (
                 <div className='flex-1'>
-                  <Button onClick={onClickCart} className='bg-primary relative h-11 w-full !p-0 text-white'>
+                  <Button
+                    onClick={onClickCart}
+                    className='bg-primary relative h-11 w-full !p-0 text-white'
+                  >
                     <ShoppingCart className='!h-8 !w-8' />
                     <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm'>
                       {cartCount}
@@ -78,10 +91,13 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
               )}
 
               <div className='flex-1'>
-                <Button variant='pink' asChild className='h-11 w-full justify-center'>
-                  <Link to={isAuth ? '/profile' : '/login'}>
-                    <img src={userSrc} alt='user' className='pt-[5px]' />
-                  </Link>
+                <Button
+                  onClick={handleClickProfile}
+                  variant='pink'
+                  asChild
+                  className='h-11 w-full justify-center'
+                >
+                  <img src={userSrc} alt='user' className='pt-[5px]' />
                 </Button>
               </div>
             </div>

@@ -9,10 +9,10 @@ type InputProps = React.ComponentProps<'input'> & {
   rightIcon?: React.ReactNode;
 
   // Новые пропсы очистки
-  clearable?: boolean;                  // вкл/выкл кнопку очистки
-  onClear?: () => void;                 // обработчик очистки
-  clearIcon?: React.ReactNode;          // иконка крестика (если не передать — используем ×)
-  clearAriaLabel?: string;              // aria-label для доступности
+  clearable?: boolean; // вкл/выкл кнопку очистки
+  onClear?: () => void; // обработчик очистки
+  clearIcon?: React.ReactNode; // иконка крестика (если не передать — используем ×)
+  clearAriaLabel?: string; // aria-label для доступности
 };
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -55,10 +55,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     );
 
     return (
-      <div className="relative w-full h-full">
+      <div className='relative h-full w-full'>
         {/* Левый икон */}
         {leftIcon && (
-          <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-2 flex items-center">
+          <div className='text-muted-foreground pointer-events-none absolute inset-y-0 left-2 flex items-center'>
             {leftIcon}
           </div>
         )}
@@ -66,25 +66,25 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           type={isPassword && show ? 'text' : type}
-          data-slot="input"
+          data-slot='input'
           className={inputCls}
           {...props}
         />
 
         {/* Контейнер правых контролов: Иконка справа, тогглер пароля, крестик очистки */}
         {(rightIcon || isPassword || clearable) && (
-          <div className="absolute inset-y-0 right-2 flex items-center gap-1">
+          <div className='absolute inset-y-0 right-2 flex items-center gap-1'>
             {rightIcon && (
-              <div className="text-muted-foreground pointer-events-none flex items-center">
+              <div className='text-muted-foreground pointer-events-none flex items-center'>
                 {rightIcon}
               </div>
             )}
 
             {isPassword && toggleVisibilityIcon && (
               <button
-                type="button"
+                type='button'
                 onClick={() => setShow(!show)}
-                className="text-muted-foreground flex h-6 w-6 items-center justify-center rounded-md hover:bg-black/5"
+                className='text-muted-foreground flex h-6 w-6 items-center justify-center rounded-md hover:bg-black/5'
                 tabIndex={-1}
               >
                 {toggleVisibilityIcon}
@@ -93,12 +93,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
             {clearable && props.value?.toString() && (
               <button
-                type="button"
+                type='button'
                 onClick={onClear}
                 aria-label={clearAriaLabel}
-                className="text-muted-foreground flex h-6 w-6 items-center justify-center rounded-md hover:bg-black/5"
+                className='text-muted-foreground flex h-6 w-6 items-center justify-center rounded-md hover:bg-black/5'
               >
-                {clearIcon ?? <span className="text-sm leading-none">×</span>}
+                {clearIcon ?? <span className='text-sm leading-none'>×</span>}
               </button>
             )}
           </div>

@@ -1,23 +1,21 @@
-import EmptyState from "@feature/empty-content"
-import OrderEmptyImg from '@assets/empty-loop.svg'
-import { Link } from "react-router-dom"
+import EmptyState from '@feature/empty-content';
+import OrderEmptyImg from '@assets/empty-loop.svg';
 
 const EmptyFavoriteContent = () => {
-    return (
-        <>
-            <EmptyState
-                title="Здесь пока ещё ничего нет"
-                description="В частности, разбавленное изрядной долей эмпатии, рациональное мышление предоставляет широкие возможности для экспериментов, поражающих по своей масштабности и грандиозности."
-                imageSrc={OrderEmptyImg}
-                wrapperClassName="md:px-0!"
-                imageAlt="empty-favorites"
-                ctaText="В каталог"
-                to="/catalog"
-                LinkComponent={Link}
-                align="left"
-            />
-        </>
-    )
-}
+  return (
+    <>
+      <EmptyState
+        title='Здесь будут отображаться ваши любимые товары.'
+        description='Добавьте понравившиеся модели в избранное — и они всегда будут под рукой!'
+        imageSrc={OrderEmptyImg}
+        wrapperClassName='md:px-0!'
+        imageAlt='empty-favorites'
+        ctaText='В каталог'
+        to='/#shop'
+        align='left'
+      />
+    </>
+  );
+};
 
-export default EmptyFavoriteContent
+export default EmptyFavoriteContent;

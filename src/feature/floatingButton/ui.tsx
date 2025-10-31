@@ -6,9 +6,7 @@ type FloatingButtonsProps = {
   showAt?: number; // порог показа кнопки "вверх" по скроллу
 };
 
-export default function FloatingButtons({
-  showAt = 200,
-}: FloatingButtonsProps) {
+export default function FloatingButtons({ showAt = 200 }: FloatingButtonsProps) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -30,7 +28,7 @@ export default function FloatingButtons({
         className={`transition-all ${visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'} grid h-12 w-12 place-items-center rounded-full bg-[#F1F5F9] hover:brightness-110 active:scale-95`}
       >
         <ArrowUp size={24} strokeWidth={2} className='h-6! w-6!' />
-      </Button>      
+      </Button>
     </div>
   );
 }

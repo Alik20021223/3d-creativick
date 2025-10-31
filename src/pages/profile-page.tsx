@@ -1,13 +1,13 @@
-import ProfileContent from "@widgets/profile/profile/profile-content"
+import ProfileContent from '@widgets/profile/profile/profile-content';
 
 const ProfilePage = () => {
-    return (
-        <>
-            <section className='bg-white rounded-t-[80px] md:py-20 h-full md:mt-15 mt-37 grow py-15'>
-                <ProfileContent />
-            </section>
-        </>
-    )
-}
+  return (
+    <>
+      <section className='mt-37 h-full grow rounded-t-[80px] bg-white py-15 md:mt-15 md:py-20'>
+        <ProfileContent />
+      </section>
+    </>
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

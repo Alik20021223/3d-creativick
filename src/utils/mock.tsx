@@ -1,17 +1,12 @@
-import type { DetailCardType } from '@shared/types';
-import HitOneImg from '@assets/hit-sell-one.svg';
-import PrinterImg from '@assets/printer-card.png';
-import CatushkaImg from '@assets/katushka-card.png';
-import CosmoPersonImg from '@assets/cosmo-person.png';
-import JupiterImg from '@assets/Юпитер.png';
-import { DropdownItem, ProductCardMock, ProductCardType, SelectOption } from '@shared/types';
+import { DropdownItem, SelectOption } from '@shared/types';
 import ourActions from '@assets/our-actions.png';
 import ourActionsMobile from '@assets/mobile-actions.png';
 import wbLogo from '@assets/mobile-wb.png';
 import yandexLogo from '@assets/mobile-yandex.png';
 import megaLogo from '@assets/mobile-mega.png';
 import ozonLogo from '@assets/mobile-ozon.png';
-import { slugify } from './constant';
+import AtomLogo from '@assets/atom-store.png';
+// import { slugify } from './constant';
 
 export const headerMock = {
   main: [
@@ -22,7 +17,7 @@ export const headerMock = {
   ],
   shop: [
     { label: 'Главная', href: '/' },
-    { label: 'Каталог', href: '/shop' },
+    { label: 'Каталог', href: '/#shop' },
     { label: 'Контакты', href: '#contacts' },
     { label: 'Поддержка', href: '/support' },
   ],
@@ -66,58 +61,6 @@ export const itemsFeedback = [
     authorRole: 'Родитель',
   },
 ];
-
-export const exclusiveProductsMock: ProductCardMock[] = [
-  {
-    id: 'pla-yellow',
-    title: 'Катушка жёлтая',
-    rating: 4.8,
-    bought: 600,
-    href: '/product/pla-yellow',
-    image: HitOneImg,
-  },
-  {
-    id: 'pla-red',
-    title: 'Катушка красная',
-    rating: 4.7,
-    bought: 410,
-    href: '/product/pla-red',
-    image: HitOneImg,
-  },
-  {
-    id: 'pla-blue',
-    title: 'Катушка голубая',
-    rating: 4.9,
-    bought: 520,
-    href: '/product/pla-blue',
-    image: HitOneImg,
-  },
-  {
-    id: 'pla-green',
-    title: 'Катушка зелёная',
-    rating: 4.6,
-    bought: 305,
-    href: '/product/pla-green',
-    image: HitOneImg,
-  },
-  {
-    id: 'pla-white',
-    title: 'Катушка белая',
-    rating: 4.8,
-    bought: 780,
-    href: '/product/pla-white',
-    image: HitOneImg,
-  },
-  {
-    id: 'pla-black',
-    title: 'Катушка чёрная',
-    rating: 4.8,
-    bought: 920,
-    href: '/product/pla-black',
-    image: HitOneImg,
-  },
-];
-
 export const footerColumns = [
   {
     title: 'Главная',
@@ -156,87 +99,6 @@ export const ourActionsMockMobile: string[] = [
   ourActionsMobile,
 ];
 
-// colors-palette.ts
-export const COLOR_PALETTE: Record<string, string> = {
-  pink: 'bg-pink-500',
-  red: 'bg-red-500',
-  yellow: 'bg-yellow-400',
-  beige: 'bg-amber-100',
-  black: 'bg-gray-800',
-  gray: 'bg-gray-300',
-  blue: 'bg-sky-500', // светло-синий
-  blueDark: 'bg-blue-700', // тёмно-синий
-  green: 'bg-green-600',
-  white: 'bg-white border border-gray-200',
-  orange: 'bg-orange-500',
-};
-
-// доступные наборы цветов по типу товара
-export const COLORS_BY_SET: Record<'printer' | 'spool', string[]> = {
-  printer: ['pink', 'blue', 'yellow', 'gray', 'black'], // как на 1-м скрине
-  spool: ['pink', 'red', 'yellow', 'beige', 'black', 'blueDark', 'green', 'white', 'orange'], // 2-й скрин
-};
-
-const baseProducts: ProductCardType[] = [
-  {
-    id: 1,
-    title: 'Принтер голубой',
-    activeColor: 'blue',
-    href: '/product/printer',
-    colorSet: 'printer',
-    badges: ['Космос 🚀', 'Эксклюзивы'],
-    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    price: { last_price: 3900, new_price: 1900 },
-    image: [PrinterImg, PrinterImg, PrinterImg, JupiterImg],
-  },
-  {
-    id: 2,
-    title: 'Катушка',
-    colorSet: 'spool',
-    href: '/product/spool',
-    activeColor: 'pink',
-    badges: ['Эксклюзивы'],
-    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    price: { last_price: 4200, new_price: 2100 },
-    image: [CatushkaImg, CatushkaImg, JupiterImg],
-  },
-];
-
-// генерим ещё 18 карточек (id 3..20) с одной картинкой
-const generatedItems: ProductCardType[] = Array.from({ length: 18 }, (_, i) => {
-  const id = i + 3; // 3..20
-  const title = `Космический флот ${id - 2}`;
-  return {
-    id,
-    title,
-    description: 'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    badges: ['Космос 🚀'],
-    price: { last_price: 3900, new_price: 1900 },
-    image: [CosmoPersonImg, JupiterImg],
-    href: `/product/${slugify(title)}`, // 👉 красивый slug
-  };
-});
-
-// итоговый мок на 20 шт. — принтер, катушка, затем 18 авто-сгенерированных
-export const productCardsMock: ProductCardType[] = [...baseProducts, ...generatedItems];
-
-export const CATEGORIES = [
-  'Акции 🔥',
-  'Эксклюзивы',
-  'Космос 🚀',
-  'Категория 2',
-  'Категория 3', // активная по умолчанию
-  'Категория 4',
-  'Категория 5',
-  'Категория 6',
-  'Категория 7',
-  'Категория 8',
-  'Категория 9',
-  'Категория 10',
-  'Категория 11',
-  'Категория 12',
-];
-
 export const PerPageSelect: SelectOption[] = [
   { label: 'Показывать по 6', value: 6 },
   { label: 'Показывать по 9', value: 9 },
@@ -251,57 +113,12 @@ export const SortMock: DropdownItem[] = [
   { value: 'newest', label: 'Сначала новые' },
 ];
 
-// mocks/detail-cards.mock.ts
-
-export const DETAILS_MOCK_10: DetailCardType[] = [
-  {
-    id: 1,
-    title: 'Астронавт',
-    href: `${slugify('Астронавт')}`,
-    description:
-      'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
-    badges: ['Космос 🚀', 'Эксклюзивы'],
-  },
-  {
-    id: 2,
-    title: 'Космическая станция',
-    href: `${slugify('Космическая станция')}`,
-    description:
-      'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
-    badges: ['Космос 🚀', 'Новинка'],
-  },
-  {
-    id: 3,
-    title: 'Луноход флот',
-    href: `${slugify('Луноход флот')}`,
-    description:
-      'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
-    badges: ['Эксклюзивы', 'Хит'],
-  },
-  {
-    id: 4,
-    title: 'Марсоход',
-    href: `${slugify('Марсоход')}`,
-    description:
-      'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
-    badges: ['Космос 🚀', 'Серия 2025'],
-  },
-  {
-    id: 5,
-    title: 'Орбитальный модуль',
-    href: `${slugify('Орбитальный модуль')}`,
-    description:
-      'Каждый из нас понимает очевидную вещь: синтетическое тестирование способствует.',
-    image: [CosmoPersonImg, CosmoPersonImg, CosmoPersonImg, JupiterImg],
-    badges: ['Эксклюзивы', 'PLA'],
-  },
-];
-
 export const marketplaces = [
+  {
+    name: 'Atom',
+    logo: AtomLogo,
+    url: 'https://atomstore.ru',
+  },
   {
     name: 'Wildberries',
     logo: wbLogo,
@@ -326,6 +143,11 @@ export const marketplaces = [
 
 export const marketplacesMobile = [
   {
+    name: 'Atom',
+    logo: AtomLogo,
+    url: 'https://atomstore.ru',
+  },
+  {
     name: 'Wildberries',
     logo: wbLogo,
     url: 'https://www.wildberries.ru',
@@ -348,38 +170,34 @@ export const marketplacesMobile = [
 ];
 
 export const SupportTabs = [
-  { id: "service", label: "Обслуживание" },
-  { id: "troubleshoot", label: "Поиск и устранение неполадок" },
-  { id: "slicer", label: "Слайсер" },
+  { id: 'service', label: 'Обслуживание' },
+  { id: 'troubleshoot', label: 'Поиск и устранение неполадок' },
+  { id: 'slicer', label: 'Слайсер' },
 ] as const;
 
 export const ProfileTabs = [
-  { id: "orders", label: "Заказы" },
-  { id: "favorites", label: "Избранное" },
-  { id: "personal-info", label: "Персональный данные" },
+  { id: 'orders', label: 'Заказы' },
+  { id: 'favorites', label: 'Избранное' },
+  { id: 'personal-info', label: 'Персональный данные' },
 ] as const;
 
-export type TabId = typeof ProfileTabs[number]["id"];
+export type TabId = (typeof ProfileTabs)[number]['id'];
 
-export const SupportCards: Record<(typeof SupportTabs)[number]["id"], string[]> = {
+export const SupportCards: Record<(typeof SupportTabs)[number]['id'], string[]> = {
   service: [
-    "Короткий вопрос",
-    "Извлечение и замена шестерней подачи пластика",
-    "Еще какое-то очень длинное название статьи про обслуживание",
-    "Короткий вопрос",
-    "Извлечение и замена шестерней подачи пластика",
+    'Короткий вопрос',
+    'Извлечение и замена шестерней подачи пластика',
+    'Еще какое-то очень длинное название статьи про обслуживание',
+    'Короткий вопрос',
+    'Извлечение и замена шестерней подачи пластика',
   ],
   troubleshoot: [
-    "Короткий вопрос",
-    "Извлечение и замена шестерней подачи пластика",
-    "Еще какое-то очень длинное название статьи про поиск и устранение неполадок",
-    "Еще какое-то очень длинное название статьи про поиск и устранение неполадок",
-    "Короткий вопрос",
-    "Извлечение и замена шестерней подачи пластика",
+    'Короткий вопрос',
+    'Извлечение и замена шестерней подачи пластика',
+    'Еще какое-то очень длинное название статьи про поиск и устранение неполадок',
+    'Еще какое-то очень длинное название статьи про поиск и устранение неполадок',
+    'Короткий вопрос',
+    'Извлечение и замена шестерней подачи пластика',
   ],
-  slicer: [
-    "Быстрые пресеты для PLA",
-    "Профили ретракта",
-    "Артефакты на периметрах: как убрать",
-  ],
+  slicer: ['Быстрые пресеты для PLA', 'Профили ретракта', 'Артефакты на периметрах: как убрать'],
 };

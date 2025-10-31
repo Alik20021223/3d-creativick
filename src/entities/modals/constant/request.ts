@@ -1,0 +1,6 @@
+export enum REQUEST_URL {
+  LK_LOGIN = '/auth/register',
+  AUTH_CHECK = '/auth/check',
+  AUTH_VERIFY = '/auth/verify',
+  AUTH_REGISTER = '/auth/after-verify',
+}

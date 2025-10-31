@@ -5,27 +5,38 @@ import { Heart } from 'lucide-react';
 interface ButtonSaveProps {
   onSave: React.MouseEventHandler<HTMLButtonElement>;
   status: boolean;
-  className?: string
-  active?: boolean
+  className?: string;
+  disabled?: boolean;
+  active?: boolean;
 }
 
-const ButtonSave: React.FC<ButtonSaveProps> = ({ onSave, status, className, active = false }) => {
+const ButtonSave: React.FC<ButtonSaveProps> = ({
+  onSave,
+  status,
+  className,
+  active = false,
+  disabled,
+}) => {
   return (
     <>
       <Button
+        disabled={disabled}
         variant='outline'
         onClick={onSave}
-        className={cn(' ml-3 h-full w-[46px] gap-0 rounded-full border p-3 md:w-[56px]',
+        className={cn(
+          'ml-3 h-full w-[46px] gap-0 rounded-full border p-3 md:w-[56px]',
           active ? 'border-primary-active text-primary-active' : 'border-primary text-primary',
-          className
+          className,
         )}
       >
-        <Heart className={cn('h-5.5! w-5.5! md:h-9! md:w-9!',
-          status ? 'fill-primary' : 'fill-transparent',
-          (status && active) && 'fill-primary-active',
-        )}
+        <Heart
+          className={cn(
+            'h-5.5! w-5.5! md:h-9! md:w-9!',
+            status ? 'fill-primary' : 'fill-transparent',
+            status && active && 'fill-primary-active',
+          )}
         />
-      </Button >
+      </Button>
     </>
   );
 };

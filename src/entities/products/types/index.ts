@@ -33,17 +33,16 @@ export type InfoBlockData = {
 };
 
 export type SeriesCardData = {
-    title: string;
-    description?: string;
-    prices: {
-        current: number;
-        old?: number | null;
-        currencySymbol?: string; // по умолчанию '₽'
-        locale?: string;         // по умолчанию 'ru-RU'
-    };
-    labels?: {
-        addToCart?: string;
-        savedAriaOn?: string;
-        savedAriaOff?: string;
-    };
+  title: string;
+  prices: {
+    current: number;
+    old?: number | null;
+    currencySymbol?: string; // по умолчанию '₽'
+    locale?: string; // по умолчанию 'ru-RU'
+  };
+  labels?: {
+    addToCart?: string;
+    savedAriaOn?: string;
+    savedAriaOff?: string;
+  };
 };

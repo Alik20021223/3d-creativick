@@ -19,7 +19,6 @@ export type ProductCardMock = {
   image: string;
   title: string;
   rating: number;
-  bought: number;
   href: string;
 };
 
@@ -28,19 +27,50 @@ export type ColorButtonType = {
   class: string;
 };
 
-export type ProductCardType = {
-  activeColor?: string;
-  description?: string;
-  colorSet?: 'printer' | 'spool'; // НОВОЕ: по нему берём набор цветов
-  badges: string[];
-  price: {
-    last_price?: number;
-    new_price: number;
-  };
-  href: string;
-  title: string;
+export type GalleriesType = {
   id: number;
-  image: string[];
+  title: string;
+  type: string;
+  loadable_id: number;
+  path: string;
+  base_path: string;
+};
+
+export type ProductCardType = {
+  id: number;
+  uuid: string;
+  category_id: number;
+  active: boolean;
+  discounts: {
+    price: number;
+  }[];
+
+  img: string;
+
+  galleries: GalleriesType[];
+
+  /** Цены */
+  net_price: number;
+  sell_price: number;
+
+  /** Перевод (локализация) */
+  translation: {
+    id: number;
+    locale: string;
+    title: string;
+    description?: string | null;
+  };
+
+  /** Остатки по складам / цветам / размерам */
+  stock_balances: {
+    id: number;
+    color?: string | null;
+    size?: string | null;
+  }[];
+};
+
+export type ProductCardTypeById = {
+  data: ProductCardType;
 };
 
 export type Badge = { icon: React.ReactNode; text: React.ReactNode };
@@ -68,3 +98,5 @@ export type DetailCardType = {
   image: string[];
   badges: string[];
 };
+
+export type Option = { label: string; value: string };

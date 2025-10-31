@@ -1,4 +1,4 @@
-import { LEVELS } from "@entities/profile/mock";
+import { LEVELS } from '@entities/profile/mock';
 
 export const isHashHref = (href: string) => href.startsWith('#');
 
@@ -51,30 +51,41 @@ export function slugify(text: string): string {
 }
 
 export function getRandomItems<T>(arr: T[], count: number): T[] {
-    return arr.slice().sort(() => 0.5 - Math.random()).slice(0, count);
+  return arr
+    .slice()
+    .sort(() => 0.5 - Math.random())
+    .slice(0, count);
 }
 
-export const formatPrice = (n?: number | null) =>
-    typeof n === "number"
-        ? n.toLocaleString("ru-RU")
-        : "";
+export const formattedBirthDate = (date: Date) => {
+  return new Date(date).toISOString().split('T')[0];
+};
 
-        // маленький helper для русских окончаний
+export const formatDateYYYYMMDD = (d?: Date | null) => {
+  if (!d || Number.isNaN(+d)) return undefined;
+  const y = d.getFullYear();
+  const m = `${d.getMonth() + 1}`.padStart(2, '0');
+  const day = `${d.getDate()}`.padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+
+export const formatPrice = (n?: number | null) =>
+  typeof n === 'number' ? n.toLocaleString('ru-RU') : '';
+
+// маленький helper для русских окончаний
 export function plural(n: number, forms: [string, string, string]) {
-    const mod10 = n % 10;
-    const mod100 = n % 100;
-    if (mod10 === 1 && mod100 !== 11) return forms[0];
-    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return forms[1];
-    return forms[2];
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return forms[0];
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return forms[1];
+  return forms[2];
 }
 
 export const getLevelIndex = (currentTotal: number) =>
   LEVELS.reduce((idx, lvl, i) => (currentTotal >= lvl.threshold ? i : idx), 0);
 
-
-
 export const splitDateTime = (dt?: string) => {
-  if (!dt) return { date: "", time: "" };
-  const [date, , time] = dt.split(" ");
+  if (!dt) return { date: '', time: '' };
+  const [date, , time] = dt.split(' ');
   return { date, time };
 };

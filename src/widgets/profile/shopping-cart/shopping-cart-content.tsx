@@ -1,54 +1,71 @@
-
-
-import { cards } from "@entities/profile/mock"
-import ShopCard from "@entities/profile/ui/shop-card"
-import ShopCardPriceBlock from "@entities/profile/ui/shop-card-price-block"
-import { Button } from "@shared/shadcn/button"
-import { Trash2 } from "lucide-react"
-import { Link } from "react-router-dom"
+import ShopCard from '@entities/profile/ui/shop-card';
+import { useAppStore } from '@app/store';
+import ShopCardPriceBlock from '@entities/profile/ui/shop-card-price-block';
+import { Button } from '@shared/shadcn/button';
+import { Trash2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { plural } from '@utils/constant';
+import { useDeleteAllShoppingCart } from '@entities/profile/hooks/deleteAllShoppingCarts';
+import { useDeleteShoppingCart } from '@entities/profile/hooks/deleteShoppingCart';
 
 const ShoppingCartContent = () => {
+  const { cartItems, cartItemsCount } = useAppStore();
 
+  const { mutateAsync: deleteAllCart } = useDeleteAllShoppingCart();
+  const { mutateAsync: deleteCart } = useDeleteShoppingCart();
 
+  const handleDeleteAllCart = async () => {
+    if (!cartItems) return;
+    const ids = cartItems.user_carts[0].cart_id;
+    await deleteAllCart({ ids: [ids] });
+  };
 
+  const handleDeleteCart = async (id: number) => {
+    await deleteCart({ ids: [id] });
+  };
 
-    return (
-        <>
-            <article className="flex flex-col md:px-10 px-2.5 py-15">
-                <div className="flex max-md:flex-col justify-between w-full">
-                    <div className="md:w-[70%] max-md:mb-10">
-                        <h1 className="title-text max-md:text-center">В корзине 3 товара</h1>
-                        <p className="description-text mt-[22px]">В частности, разбавленное изрядной долей эмпатии, рациональное мышление предоставляет широкие возможности для экспериментов, поражающих по своей масштабности и грандиозности.</p>
-                    </div>
-                    <Button variant="link" className="border-secondary-text text-[22px] leading-[130%] max-md:w-full text-secondary-text bg-white border h-14 w-[298px] button-shadow-blue hover:text-primary hover:border-primary">
-                        Очистить корзину
-                        <Trash2 />
-                    </Button>
-                </div>
-                <div className="flex max-md:flex-col gap-5 w-full mt-10">
-                    <div className="md:w-[70%] max-md:mb-10">
-                        <div className="flex flex-col gap-4">
-                            {cards.map((item, idx) => (
-                                <ShopCard
-                                    key={idx}
-                                    data={item}
-                                    onRemove={() => alert(`remove ${item.title}`)}
-                                />
-                            ))}
-                        </div>
-                        <div className="w-full flex justify-center md:justify-end py-3.5 mt-6">
-                            <Link to="/" className="text-[22px] leading-[130%] underline text-primary">
-                                В магазин
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="md:w-[calc(100%-70%)]">
-                        <ShopCardPriceBlock />
-                    </div>
-                </div >
-            </article >
-        </>
-    )
-}
+  return (
+    <>
+      <article className='flex flex-col px-2.5 py-10 md:px-10'>
+        <div className='flex w-full justify-between max-md:flex-col'>
+          <div className='max-md:mb-10 md:w-[70%]'>
+            <h1 className='title-text max-md:text-center'>
+              В корзине {cartItemsCount} товар{plural(cartItemsCount, ['', 'а', 'ов'])}
+            </h1>
+            <p className='description-text mt-[22px]'>
+              Проверьте содержимое корзины, чтобы убедиться, что все нужные вам товары в ней, и
+              смело приступайте к оформлению заказа!
+            </p>
+          </div>
+          <Button
+            variant='link'
+            onClick={handleDeleteAllCart}
+            className='border-secondary-text text-secondary-text button-shadow-blue hover:text-primary hover:border-primary h-14 w-[298px] border bg-white text-[22px] leading-[130%] max-md:w-full'
+          >
+            Очистить корзину
+            <Trash2 />
+          </Button>
+        </div>
+        <div className='mt-10 flex w-full gap-5 max-md:flex-col'>
+          <div className='max-md:mb-10 md:w-[70%]'>
+            <div className='flex flex-col gap-4'>
+              {cartItems?.user_carts[0].cartDetails.map((item, idx) => (
+                <ShopCard key={idx} data={item} onRemove={() => handleDeleteCart(item.id)} />
+              ))}
+            </div>
+            <div className='mt-6 flex w-full justify-center py-3.5 md:justify-end'>
+              <Link to='/#shop' className='text-primary text-[22px] leading-[130%] underline'>
+                В магазин
+              </Link>
+            </div>
+          </div>
+          <div className='md:w-[calc(100%-70%)]'>
+            <ShopCardPriceBlock items={cartItems} />
+          </div>
+        </div>
+      </article>
+    </>
+  );
+};
 
-export default ShoppingCartContent
+export default ShoppingCartContent;

@@ -1,44 +1,73 @@
-// src/widgets/product/InfoBlock.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@shadcn/button';
 import ButtonSave from '@feature/button-save';
 import { useSharedStore } from '@shared/store';
 import TextInstructionBlock from './TextInstructionBlock';
 import ColorButton from '@shared/components/color-button';
-import { InfoBlockData } from '@entities/products/types';
-import BadgeInfo from '@feature/badge-info';
+// import BadgeInfo from '@feature/badge-info';
+import { ProductCardType } from '@shared/types';
+import { useProductInfoBlock } from '@shared/hooks/useProductInfoBlock';
+import { useDependentVariants } from '@shared/hooks/useDependentVariants';
 
 type Props = {
-  data: InfoBlockData;
-  /** коллбеки (оставляем отдельными) */
-  onAdd?: () => void;
+  data: ProductCardType;
+  textInstructions?: boolean;
+  onAdd?: (id: number) => void;
+  onRemove?: () => void; // ← NEW
+  isInCart?: boolean; // ← NEW
   onColorChange?: (value: string) => void;
   onWeightChange?: (value: number) => void;
 };
 
-const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange }) => {
+const rub = new Intl.NumberFormat('ru-RU');
+
+const InfoBlock: React.FC<Props> = ({
+  data,
+  onAdd,
+  onRemove,
+  isInCart = false, // ← дефолт
+  onColorChange,
+  onWeightChange,
+  textInstructions,
+}) => {
   const {
-    title = '',
-    subtitle = '',
-    badges = [],
-    description = '',
-    price = 1900,
-    oldPrice = 3900,
-
-    showColors = false,
-    showWeights = false,
-
-    colors,
+    title,
+    description,
+    price,
+    oldPrice,
+    showColors,
+    showWeights,
     initialColor,
-    weights = [250, 500, 750],
     initialWeight,
-  } = data || {};
+  } = useProductInfoBlock(data);
 
-  const { isSave, setSave } = useSharedStore();
+  // Локальные состояния выбора
+  const [color, setColor] = useState<string>(initialColor ?? '');
+  const [weight, setWeight] = useState<number>(initialWeight ?? 0);
 
-  // локальные состояния выбора
-  const [color, setColor] = useState<string>(initialColor ?? (colors && colors[0]?.value) ?? '');
-  const [weight, setWeight] = useState<number>(initialWeight ?? weights[0]);
+  // ✅ зависимые доступные опции
+  const { availableColors, availableWeights, isValidCombo, corrected, selectedStockId } =
+    useDependentVariants(data, color, weight);
+
+  // ✅ если пришёл другой товар — синхронизируем стартовые значения
+  useEffect(() => {
+    setColor(initialColor ?? '');
+    setWeight(initialWeight ?? 0);
+  }, [initialColor, initialWeight, data?.uuid]);
+
+  // ✅ если выбрана невалидная комбинация — мягко корректируем
+  useEffect(() => {
+    if (!isValidCombo) {
+      if (corrected.color && corrected.color !== color) setColor(corrected.color);
+      if (
+        typeof corrected.weight === 'number' &&
+        Number.isFinite(corrected.weight) &&
+        corrected.weight !== weight
+      ) {
+        setWeight(corrected.weight);
+      }
+    }
+  }, [isValidCombo, corrected, color, weight]);
 
   const handlePickColor = (v: string) => {
     setColor(v);
@@ -50,30 +79,27 @@ const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange
     onWeightChange?.(v);
   };
 
+  const { isSave, setSave } = useSharedStore();
+
   return (
     <div className='flex w-full flex-col md:w-1/2'>
-      <section className='bg-secondary-white shadow-card-info max-md:shadow-2xl! relative rounded-[28px] p-6 md:p-8'>
+      <section className='bg-secondary-white shadow-card-info relative rounded-[28px] p-6 max-md:shadow-2xl! md:p-8'>
         <div className='flex items-center gap-5'>
           {title && (
             <h2 className='text-2xl leading-tight font-semibold text-slate-900 md:text-[28px]'>
               {title}
             </h2>
           )}
-          {subtitle && (
-            <p className='text-[22px] leading-[130%] underline text-secondary-text'>
-              {subtitle}
-            </p>
-          )}
         </div>
 
         {/* Бейджи */}
-        {!!badges?.length && (
+        {/* {!!badges.length && (
           <div className='mt-4 flex flex-wrap gap-3'>
             {badges.map((b, i) => (
               <BadgeInfo data={b} key={i} />
             ))}
           </div>
-        )}
+        )} */}
 
         {/* Описание */}
         {description && (
@@ -81,11 +107,11 @@ const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange
         )}
 
         {/* Выбор цвета */}
-        {showColors && !!colors?.length && (
+        {showColors && (
           <div className='mt-5'>
             <p className='mb-2 text-sm text-gray-500'>Выберите цвет:</p>
             <div className='flex flex-wrap gap-2'>
-              {colors.map((c) => (
+              {availableColors.map((c) => (
                 <ColorButton
                   key={c.value}
                   data={c}
@@ -98,11 +124,11 @@ const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange
         )}
 
         {/* Выбор граммовки */}
-        {showWeights && !!weights?.length && (
+        {showWeights && (
           <div className='mt-5'>
             <p className='mb-2 text-sm text-gray-500'>Выберите граммовку:</p>
             <div className='flex flex-wrap gap-2'>
-              {weights.map((w) => {
+              {availableWeights.map((w) => {
                 const active = w === weight;
                 return (
                   <button
@@ -127,17 +153,32 @@ const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange
         {/* Цена + кнопки */}
         <div className='mt-5 flex flex-col gap-4 md:justify-between'>
           <div className='flex items-end gap-3'>
-            <div className='text-primary-active text-[34px] leading-none font-extrabold md:text-[38px]'>
-              {price.toLocaleString('ru-RU')} <span className='text-[22px] font-bold'>₽</span>
+            {/* (заметь: обычно тут показывают текущую цену, а не oldPrice - price) */}
+            <div className='text-dark-blue text-[34px] leading-none font-extrabold md:text-[38px]'>
+              {rub.format(oldPrice! - price)} <span className='text-[22px] font-bold'>₽</span>
             </div>
-            <div className='mb-1 text-slate-400 italic line-through'>
-              {oldPrice.toLocaleString('ru-RU')}₽
-            </div>
+            {typeof oldPrice === 'number' && oldPrice > price && (
+              <div className='mb-1 text-slate-400 italic line-through'>{rub.format(oldPrice)}₽</div>
+            )}
           </div>
 
           <div className='flex h-[56px] w-full items-center gap-3'>
-            <Button onClick={onAdd} className='h-full w-full flex-1 rounded-full text-white'>
-              В корзину
+            <Button
+              onClick={() => {
+                if (!selectedStockId) return;
+                if (isInCart) {
+                  onRemove?.(); // ← если уже в корзине — удаляем
+                } else {
+                  onAdd?.(selectedStockId); // ← иначе добавляем
+                }
+              }}
+              disabled={!selectedStockId}
+              // если у твоего <Button> есть вариант 'destructive' — можно подсветить удаление
+              variant={isInCart ? 'destructive' : undefined}
+              className='h-full w-full flex-1 rounded-full text-white'
+              aria-label={isInCart ? 'Удалить из корзины' : 'Добавить в корзину'}
+            >
+              {isInCart ? 'Удалить из корзины' : 'В корзину'} {/* ← динамический текст */}
             </Button>
 
             <ButtonSave
@@ -152,7 +193,7 @@ const InfoBlock: React.FC<Props> = ({ data, onAdd, onColorChange, onWeightChange
         </div>
       </section>
 
-      <TextInstructionBlock />
+      {!textInstructions && <TextInstructionBlock />}
     </div>
   );
 };

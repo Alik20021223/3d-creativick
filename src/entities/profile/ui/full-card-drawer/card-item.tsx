@@ -1,77 +1,108 @@
-"use client";
-import React from "react";
-import { Trash2, Image as ImageIcon } from "lucide-react";
-import { formatPrice } from "@utils/constant";
-import type { CartItem as TCartItem } from "@entities/profile/types";
+'use client';
+import React, { useMemo } from 'react';
+import { Trash2, Image as ImageIcon } from 'lucide-react';
+import { formatPrice } from '@utils/constant';
+import { CartDetail } from '../../types/cart';
+import { getDetailPathByVariant } from '@utils/product-variants';
 
 export type CardItemProps = {
-    item: TCartItem;
-    currency?: string;               // default: ₽
-    onRemove?: (id: TCartItem["id"]) => void;
+  item: CartDetail;
+  currency?: string; // default: ₽
+  onRemove?: (id: number) => void;
 };
 
-const CardItem: React.FC<CardItemProps> = ({ item, currency = "₽", onRemove }) => {
-    const { id, title, href, imageUrl, price, oldPrice } = item;
+const CardItem: React.FC<CardItemProps> = ({ item, currency = '₽', onRemove }) => {
+  const { id, stock } = item;
 
-    return (
-        <li
-            className="relative flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-3"
+  const detailPath = getDetailPathByVariant(stock.product.uuid, stock.color, stock.size);
+
+  // бейдж вариации без "default" и пустых значений
+  const variantLabel = useMemo(() => {
+    const color = stock.color?.trim();
+    const size = stock.size?.trim();
+    const parts = [
+      color && color.toLowerCase() !== 'default' ? color : null,
+      size && size.toLowerCase() !== 'default' ? size : null,
+    ];
+    return parts.filter(Boolean).join(' · ');
+  }, [stock.color, stock.size]);
+
+  return (
+    <li className='relative flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-3'>
+      {/* thumb */}
+      <a
+        href={detailPath}
+        className='flex h-[52px] w-[52px] flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white'
+        aria-label={stock.product.translation?.title}
+      >
+        {stock.product.img ? (
+          <img
+            src={stock.product.img}
+            alt={stock.product.translation?.title}
+            className='h-full w-full object-cover'
+          />
+        ) : (
+          <ImageIcon className='h-5 w-5 opacity-60' />
+        )}
+      </a>
+
+      {/* title / links */}
+      <div className='min-w-0 flex-1'>
+        <a
+          href={detailPath}
+          className='text-secondary-text block truncate text-[15px] font-medium'
+          title={stock.product.translation?.title}
         >
-            {/* thumb */}
-            <a
-                href={href ?? "#"}
-                className="flex h-[52px] w-[52px] flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white"
-                aria-label={title}
-            >
-                {imageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={imageUrl} alt={title} className="h-full w-full object-cover" />
-                ) : (
-                    <ImageIcon className="h-5 w-5 opacity-60" />
-                )}
-            </a>
+          {stock.product.translation?.title}
+        </a>
 
-            {/* title/links */}
-            <div className="flex-1 min-w-0">
-                <a
-                    href={href ?? "#"}
-                    className="block truncate text-[15px] font-medium text-secondary-text"
-                    title={title}
-                >
-                    {title}
-                </a>
-                <a
-                    href={href ?? "#"}
-                    className="text-[13px] text-dark-blue underline-offset-4 hover:underline"
-                >
-                    Подробнее
-                </a>
-            </div>
+        {/* бейдж вариации (покажется только если есть что показать) */}
+        {variantLabel && (
+          <div className='mt-0.5 inline-flex items-center gap-2 rounded-full border border-slate-200 px-2.5 py-0.5 text-[11px] text-slate-600'>
+            {stock.color && stock.color.trim().toLowerCase() !== 'default' && (
+              <span
+                className='inline-block h-2.5 w-2.5 rounded-full border border-black/10'
+                style={{ backgroundColor: stock.color }}
+                aria-hidden
+              />
+            )}
+            <span className='truncate'>{variantLabel}</span>
+          </div>
+        )}
 
-            {/* prices */}
-            <div className="text-right">
-                <div className="text-[18px] font-semibold text-dark-blue">
-                    {formatPrice(price)} {currency}
-                </div>
-                {typeof oldPrice === "number" && oldPrice > price ? (
-                    <div className="text-[12px] text-secondary-gray line-through">
-                        {formatPrice(oldPrice)} {currency}
-                    </div>
-                ) : (
-                    <div className="h-[18px]" />
-                )}
-                {onRemove && (
-                    <button
-                        onClick={() => onRemove(id)}
-                        aria-label="Удалить"
-                        className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-secondary-gray hover:border-primary hover:text-primary"
-                    >
-                        <Trash2 className="h-4 w-4" />
-                    </button>
-                )}
-            </div>
-        </li>
-    );
+        <a
+          href={detailPath}
+          className='text-dark-blue block text-[13px] underline-offset-4 hover:underline'
+        >
+          Подробнее
+        </a>
+      </div>
+
+      {/* prices + remove */}
+      <div className='text-right'>
+        <div className='text-dark-blue text-[18px] font-semibold'>
+          {formatPrice((item.price ?? 0) - (item.discount ?? 0))} {currency}
+        </div>
+        {typeof item.discount === 'number' && item.discount > 0 ? (
+          <div className='text-secondary-gray text-[12px] line-through'>
+            {formatPrice(item.price)} {currency}
+          </div>
+        ) : (
+          <div className='h-[18px]' />
+        )}
+
+        {onRemove && (
+          <button
+            onClick={() => onRemove(id)}
+            aria-label='Удалить'
+            className='text-secondary-gray hover:border-primary hover:text-primary inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent'
+          >
+            <Trash2 className='h-4 w-4' />
+          </button>
+        )}
+      </div>
+    </li>
+  );
 };
 
 export default CardItem;

@@ -1,4 +1,7 @@
-import { DetailCardType, ProductCardType } from '@shared/types';
+import {
+  // DetailCardType,
+  ProductCardType,
+} from '@shared/types';
 import { Swiper as SwiperRoot, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
@@ -10,7 +13,7 @@ import type { Swiper as SwiperType } from 'swiper';
 import { PaginationOptions } from 'swiper/types';
 
 interface DetailsCarouselProps {
-  items: DetailCardType[] | ProductCardType[];
+  items: ProductCardType[];
   className?: string;
 }
 

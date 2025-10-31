@@ -1,4 +1,4 @@
-// import { productCardsMock } from '@/utils/mock';
+// import { productCardsMock } from '@utils/mock';
 import Catalog3dContent from '@widgets/main/catalog-3d-content';
 import PopularContent from '@widgets/main/popular-contant';
 // import ProductCard from '@shared/components/product-card/ui';

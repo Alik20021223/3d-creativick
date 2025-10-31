@@ -1,15 +1,11 @@
 import { Button } from '@shadcn/button';
-import {
-  Link, useLocation,
-  // useNavigate
-} from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoSrc from '@assets/logo-3d.svg';
 import userSrc from '@assets/user-profile.svg';
 import { ShoppingCart } from 'lucide-react';
 import { useIsMobile } from '@app/hook/useMobile';
 import MobileHeader from './mobileHeader';
 import { useAppStore } from '@app/store';
-import { useEffect } from 'react';
 import { HeaderType } from '@shared/types';
 import NavItem from '../navItem/ui';
 import { useHideOnScroll } from '@app/hook/useHideOnScroll';
@@ -19,9 +15,17 @@ type HeaderProps = { menuItems: HeaderType[] };
 export default function Header({ menuItems }: HeaderProps) {
   const { pathname, hash } = useLocation();
   const isMobile = useIsMobile();
-  const { openMenu, setOpenMenu, isAuth, setOpenShoppingCart, openShoppingCart } = useAppStore();
+  const {
+    openMenu,
+    setOpenMenu,
+    isAuth,
+    setOpenShoppingCart,
+    openShoppingCart,
+    setOpenLkModal,
+    cartItemsCount,
+  } = useAppStore();
 
-  // const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // 👇 скрываем при скролле вниз, показываем при скролле вверх
   const { hidden, atTop, setHidden } = useHideOnScroll({
@@ -35,12 +39,11 @@ export default function Header({ menuItems }: HeaderProps) {
   const linkClass = (href: string) => {
     const hasHashNow = !!hash; // true, когда, например, '#contacts'
 
-    const active =
-      isHash(href)
-        ? hash === href                      // активен только точный якорь
-        : hasHashNow
-          ? false                            // если есть хеш — роутовые ссылки неактивны
-          : pathname === href;               // иначе подсвечиваем по pathname
+    const active = isHash(href)
+      ? hash === href // активен только точный якорь
+      : hasHashNow
+        ? false // если есть хеш — роутовые ссылки неактивны
+        : pathname === href; // иначе подсвечиваем по pathname
 
     return [
       'inline-flex items-center h-full px-2 transition-colors border-b-2 hover:text-primary hover:border-primary',
@@ -48,16 +51,13 @@ export default function Header({ menuItems }: HeaderProps) {
     ].join(' ');
   };
 
-  useEffect(() => {
-    const { style } = document.documentElement;
-    if (openMenu) {
-      const prev = style.overflow;
-      style.overflow = 'hidden';
-      return () => {
-        style.overflow = prev;
-      };
+  const handleClickProfile = () => {
+    if (isAuth) {
+      navigate('/profile');
+    } else {
+      setOpenLkModal(true);
     }
-  }, [openMenu]);
+  };
 
   return (
     <>
@@ -65,7 +65,7 @@ export default function Header({ menuItems }: HeaderProps) {
       <div
         className={[
           'fixed inset-x-0 z-[60] px-10 max-md:px-2.5',
-          openShoppingCart ? 'md:top-0 max-md:top-5' : 'top-5', // оставляем твой отступ сверху
+          openShoppingCart ? 'max-md:top-5 md:top-0' : 'top-5', // оставляем твой отступ сверху
           'transition-transform duration-300 will-change-transform',
           hidden ? '-translate-y-[120%] max-md:-translate-y-[180%]' : 'translate-y-0',
         ].join(' ')}
@@ -73,8 +73,8 @@ export default function Header({ menuItems }: HeaderProps) {
       >
         <div
           className={[
-            'h-16 w-full  bg-white p-2.5 pl-[42px] max-sm:px-2.5',
-            openShoppingCart ? 'md:rounded-b-4xl max-md:rounded-4xl' : 'rounded-4xl',
+            'h-16 w-full bg-white p-2.5 pl-[42px] max-sm:px-2.5',
+            openShoppingCart ? 'max-md:rounded-4xl md:rounded-b-4xl' : 'rounded-4xl',
             'transition-shadow duration-300',
             atTop ? 'shadow-xl' : 'header-shadow',
           ].join(' ')}
@@ -127,22 +127,25 @@ export default function Header({ menuItems }: HeaderProps) {
                     </div>
 
                     <div className='flex gap-3'>
-                      <Button onClick={() => setOpenShoppingCart(true)}
-                        className='bg-primary relative flex h-11 w-[70px] !p-0 text-white button-shadow-blue-sm'>
+                      <Button
+                        onClick={() => setOpenShoppingCart(true)}
+                        className='bg-primary button-shadow-blue-sm relative flex h-11 w-[70px] !p-0 text-white'
+                      >
                         <ShoppingCart className='!h-8 !w-8' />
-                        <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm'>
-                          12
-                        </div>
+                        {cartItemsCount > 0 && (
+                          <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm'>
+                            {cartItemsCount}
+                          </div>
+                        )}
                       </Button>
 
                       <Button
+                        onClick={handleClickProfile}
                         variant='pink'
                         className='bg-pink-active flex h-11 w-[83px] justify-center'
                         asChild
                       >
-                        <Link to={isAuth ? '/profile' : '/login'}>
-                          <img src={userSrc} alt='user' className='pt-[5px]' />
-                        </Link>
+                        <img src={userSrc} alt='user' className='pt-[5px]' />
                       </Button>
                     </div>
                   </div>

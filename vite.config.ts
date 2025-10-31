@@ -39,5 +39,14 @@ export default defineConfig(({ command }) => {
         '@entities': path.resolve(__dirname, 'src/entities'),
       },
     },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'https://api.3dkreativik.store',
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
   };
 });

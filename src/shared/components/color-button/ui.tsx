@@ -1,4 +1,5 @@
-import { ColorButtonType } from '@/shared/types';
+import React from 'react';
+import { ColorButtonType } from '@shared/types';
 
 interface ColorButtonProps {
   data: ColorButtonType;
@@ -7,14 +8,17 @@ interface ColorButtonProps {
 }
 
 const ColorButton: React.FC<ColorButtonProps> = ({ data, activeColor, setNewColor }) => {
+  const isActive = activeColor === data.value;
+
   return (
     <button
+      type='button'
       onClick={() => setNewColor(data.value)}
-      className={`h-6 w-10 rounded-[6px] transition-all duration-300 ease-in-out ${
-        activeColor === data.value
-          ? 'color-btn-shadow scale-110 border border-white'
-          : 'scale-100 border border-transparent'
-      } ${data.class} `}
+      className={`h-6 w-10 rounded-[6px] transition-all duration-300 ease-in-out ${isActive ? 'color-btn-shadow scale-110 border border-white' : 'scale-100 border border-transparent'} `}
+      style={{
+        backgroundColor: data.class, // ✅ именно через inline-style, т.к. значение динамическое
+      }}
+      aria-label={data.value}
     />
   );
 };

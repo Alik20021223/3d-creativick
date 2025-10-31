@@ -1,26 +1,54 @@
-import FavoriteItem from "@/entities/profile/ui/favorite-card"
-import { Button } from "@/shared/shadcn/button"
-import { cards } from "@entities/profile/mock"
-import { ArrowDown } from "lucide-react"
+import FavoriteItem from '@entities/profile/ui/favorite-card';
+import { Button } from '@shared/shadcn/button';
+import { ArrowDown } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import type { FavoriteType } from '@entities/profile/types/favorite';
+import { useGetAllFavorite } from '@/entities/profile/hooks/getAllFavorite';
+import EmptyFavoriteContent from './empty-favorite-content';
+
+const PAGE = 5;
 
 const FavoriteContent = () => {
-    return (
-        <>
-            <section className="space-y-10">
-                <div className="space-y-5">
-                    {cards.map((favorite, i) => (
-                        <FavoriteItem key={i} data={favorite} />
-                    ))}
-                </div>
+  const [limit, setLimit] = useState(PAGE);
 
-                <div className="flex justify-center w-full">
-                    <Button variant="link" className="border-secondary-text text-[22px] leading-[130%] max-md:w-full text-secondary-text bg-white border h-14  button-shadow-blue hover:text-primary hover:border-primary">
-                        Показать еще
-                        <ArrowDown />
-                    </Button></div>
-            </section>
-        </>
-    )
-}
+  const params = {
+    perPage: limit,
+    page: 1,
+  };
 
-export default FavoriteContent
+  const { data, isLoading } = useGetAllFavorite(params);
+  // Бэки часто называют поле по-разному — подстрахуемся:
+  const all: FavoriteType[] = useMemo(() => data?.data ?? data?.data ?? [], [data]);
+
+  const pageItems = all.slice(0, limit);
+  const canLoadMore = limit < all.length;
+
+  if (!all.length && !isLoading) {
+    return <EmptyFavoriteContent />;
+  }
+
+  return (
+    <section className='space-y-10'>
+      <div className='space-y-5'>
+        {pageItems.map((favorite) => (
+          <FavoriteItem key={favorite.uuid} data={favorite} />
+        ))}
+      </div>
+
+      {canLoadMore && (
+        <div className='flex w-full justify-center'>
+          <Button
+            variant='link'
+            onClick={() => setLimit((v) => v + PAGE)}
+            className='border-secondary-text text-secondary-text button-shadow-blue hover:text-primary hover:border-primary h-14 border bg-white text-[22px] leading-[130%] max-md:w-full'
+          >
+            Показать еще
+            <ArrowDown />
+          </Button>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default FavoriteContent;

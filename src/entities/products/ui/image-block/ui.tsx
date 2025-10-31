@@ -5,18 +5,32 @@ import type { Swiper as SwiperType } from 'swiper';
 import { FreeMode, Navigation, Thumbs, Mousewheel } from 'swiper/modules';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 import 'swiper/swiper-bundle.css';
-import { NavigationOptions } from 'swiper/types';
-
-type Img = { src: string; alt?: string };
+import type { NavigationOptions } from 'swiper/types';
+import type { GalleriesType } from '@shared/types';
 
 type Props = {
-  images: Img[];
+  images: GalleriesType[];
   visible?: number; // сколько миниатюр видно по вертикали (desktop)
   thumbW?: number; // ширина превью
   thumbH?: number; // высота превью
   gap?: number; // отступ между превью
   className?: string;
 };
+
+// Собираем полный URL картинки
+function buildSrc(base_path?: string, path?: string): string {
+  const p = (path ?? '').trim();
+  const b = (base_path ?? '').trim();
+  if (!p) return '';
+  if (/^https?:\/\//i.test(p)) return p;
+  if (/^https?:\/\//i.test(b)) {
+    // нормализуем слэш
+    const slash = b.endsWith('/') || p.startsWith('/') ? '' : '/';
+    return `${b.replace(/\/+$/, '')}${slash}${p.replace(/^\/+/, '')}`;
+  }
+  // если нет base_path — вернём как есть (вдруг это относительный путь, который резолвится по <base> или CDN middleware)
+  return p;
+}
 
 const VerticalThumbGallerySwiper: React.FC<Props> = ({
   images,
@@ -26,6 +40,17 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
   gap = 12,
   className = '',
 }) => {
+  // Нормализуем входные изображения в { src, alt }
+  const normalized = useMemo(
+    () =>
+      (Array.isArray(images) ? images : []).map((g) => ({
+        key: `${g.id}-${g.path}`,
+        src: buildSrc(g.base_path, g.path),
+        alt: g.title || '',
+      })),
+    [images],
+  );
+
   // thumbs (превью) инстанс
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const safeThumbs = thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null;
@@ -41,8 +66,8 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
   const nextRef = useRef<HTMLButtonElement | null>(null);
 
   const slidesPerView = useMemo(
-    () => Math.min(visible, images.length || 1),
-    [visible, images.length],
+    () => Math.min(visible, normalized.length || 1),
+    [visible, normalized.length],
   );
   const thumbBoxH = slidesPerView * thumbH + (slidesPerView - 1) * gap;
 
@@ -63,7 +88,6 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
               watchSlidesProgress
               navigation={{ prevEl: prevDesktopRef.current, nextEl: nextDesktopRef.current }}
               onBeforeInit={(swiper) => {
-                // привязка кастомных стрелок ДО инициализации
                 if (typeof swiper.params.navigation === 'boolean') {
                   swiper.params.navigation = {};
                 }
@@ -72,22 +96,21 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
               }}
               className='desktop-thumbs h-full'
             >
-              {images.map((img, i) => (
-                <SwiperSlide key={`${i}-${img.src}`} className='!h-auto'>
+              {normalized.map((img, i) => (
+                <SwiperSlide key={`d-${img.key}`} className='!h-auto'>
                   <button
                     type='button'
                     className='thumb relative grid place-items-center overflow-hidden rounded-[14px] border border-slate-200 transition hover:border-slate-300'
                     style={{ width: thumbW, height: thumbH }}
                     aria-label={img.alt || `Превью ${i + 1}`}
                     onClick={() => {
-                      // ЯВНО синхронизируем оба, чтобы не было гонок
                       safeThumbs?.slideTo(i);
                       mainRef.current?.slideTo(i);
                     }}
                   >
                     <img
                       src={img.src}
-                      alt={img.alt || ''}
+                      alt={img.alt}
                       className='h-full w-full object-cover'
                       draggable={false}
                     />
@@ -121,8 +144,6 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
 
       {/* -------- Mobile: горизонтальная лента снизу -------- */}
       <aside className='flex flex-col md:hidden'>
-        {/* Кнопки рендерим ПЕРВЫМИ в DOM (чтобы refs были не null),
-            но визуально ставим НИЖЕ Swiper через order-2 */}
         <div className='order-2 mt-3 flex items-center justify-center gap-4'>
           <button
             ref={prevRef}
@@ -142,16 +163,14 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
           </button>
         </div>
 
-        {/* Важно: w-full min-w-0, чтобы Swiper получил реальную ширину в flex-колонке */}
         <div className='order-1 w-full min-w-0'>
           <Swiper
             modules={[FreeMode, Thumbs, Navigation]}
-            slidesPerView='auto' // ширина слайдов фиксируется классом ниже
+            slidesPerView='auto'
             spaceBetween={12}
             freeMode
             watchSlidesProgress
             onBeforeInit={(sw) => {
-              // refs уже не null (кнопки выше в DOM)
               if (typeof sw.params.navigation === 'boolean') {
                 sw.params.navigation = {};
               }
@@ -160,28 +179,26 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
             }}
             onSwiper={(sw) => {
               setThumbsSwiper(sw);
-              // гарантированно инициализируем/обновляем навигацию
               sw.navigation.init();
               sw.navigation.update();
             }}
             className='mobile-thumbs'
           >
-            {images.map((img, i) => (
-              <SwiperSlide key={`m-${i}-${img.src}`} className='!w-[140px]'>
+            {normalized.map((img, i) => (
+              <SwiperSlide key={`m-${img.key}`} className='!w-[140px]'>
                 <button
                   type='button'
                   className='thumb grid place-items-center overflow-hidden rounded-[14px] border border-slate-200 transition'
                   style={{ width: 140, height: 103 }}
                   aria-label={img.alt || `Превью ${i + 1}`}
                   onClick={() => {
-                    // ЯВНАЯ синхронизация при клике по превью
-                    thumbsSwiper?.slideTo(i);
+                    safeThumbs?.slideTo(i);
                     mainRef.current?.slideTo(i);
                   }}
                 >
                   <img
                     src={img.src}
-                    alt={img.alt || ''}
+                    alt={img.alt}
                     className='h-full w-full object-cover'
                     draggable={false}
                   />
@@ -197,17 +214,16 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
         <Swiper
           modules={[Thumbs]}
           onSwiper={(sw) => (mainRef.current = sw)}
-          // связь с превью для подсветки активного и автосинхры
-          thumbs={{ swiper: safeThumbs as SwiperType }}
+          thumbs={{ swiper: safeThumbs as SwiperType | null }}
           slidesPerView={1}
           speed={500}
           className='relative z-10 h-full'
         >
-          {images.map((img, i) => (
-            <SwiperSlide key={`big-${i}-${img.src}`} className='!h-full'>
+          {normalized.map((img) => (
+            <SwiperSlide key={`big-${img.key}`} className='!h-full'>
               <img
                 src={img.src}
-                alt={img.alt || ''}
+                alt={img.alt}
                 className='h-full w-full object-cover'
                 draggable={false}
               />
