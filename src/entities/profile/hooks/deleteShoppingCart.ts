@@ -8,7 +8,9 @@ export const useDeleteShoppingCart = () => {
     mutationKey: ['delete-shopping-cart'],
     mutationFn: (payload: { ids: number[] }) => profileService.deleteShoppingCart(payload),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['auth', 'get-shopping-cart'] });
+      // Принудительно обновляем данные корзины
+      qc.refetchQueries({ queryKey: ['auth', 'get-shopping-cart'] });
+      qc.invalidateQueries({ queryKey: ['order', 'calculate'] });
     },
   });
 };

@@ -24,6 +24,7 @@ export type CategoryResponse = {
 
 export type ItemFilter = {
   category_id?: string;
+  category_ids?: string[];
   search?: string;
   perPage?: number;
   page?: number;

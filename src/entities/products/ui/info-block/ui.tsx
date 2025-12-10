@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@shadcn/button';
 import ButtonSave from '@feature/button-save';
-import { useSharedStore } from '@shared/store';
-import TextInstructionBlock from './TextInstructionBlock';
+// import TextInstructionBlock from './TextInstructionBlock';
 import ColorButton from '@shared/components/color-button';
 // import BadgeInfo from '@feature/badge-info';
 import { ProductCardType } from '@shared/types';
 import { useProductInfoBlock } from '@shared/hooks/useProductInfoBlock';
 import { useDependentVariants } from '@shared/hooks/useDependentVariants';
+import { useAppStore } from '@app/store';
+import { useRequireAuth } from '@shared/hooks/useRequireAuth';
+import { useFavoritesIndex } from '@entities/profile/utils/favorite-hook/useFavoritesIndex';
+import { useToggleFavorite } from '@entities/profile/utils/favorite-hook/useToggleFavorite';
+import { getProductBadges } from '@utils/getProductBadges';
+import BadgeInfo from '@feature/badge-info';
 
 type Props = {
   data: ProductCardType;
-  textInstructions?: boolean;
   onAdd?: (id: number) => void;
   onRemove?: () => void; // ← NEW
   isInCart?: boolean; // ← NEW
   onColorChange?: (value: string) => void;
   onWeightChange?: (value: number) => void;
+  techData?: string;
+  isSeries: boolean;
 };
 
 const rub = new Intl.NumberFormat('ru-RU');
@@ -25,10 +31,11 @@ const InfoBlock: React.FC<Props> = ({
   data,
   onAdd,
   onRemove,
-  isInCart = false, // ← дефолт
+  isInCart = false,
+  isSeries,
   onColorChange,
   onWeightChange,
-  textInstructions,
+  techData = '',
 }) => {
   const {
     title,
@@ -41,9 +48,21 @@ const InfoBlock: React.FC<Props> = ({
     initialWeight,
   } = useProductInfoBlock(data);
 
+  const { isAuth } = useAppStore();
+  const requireAuth = useRequireAuth();
+
+  const favIndex = useFavoritesIndex();
+  const isFavorite = favIndex.ids.has(data.uuid);
+
+  const { toggle } = useToggleFavorite();
+
+  const badges = getProductBadges(data);
+
   // Локальные состояния выбора
   const [color, setColor] = useState<string>(initialColor ?? '');
   const [weight, setWeight] = useState<number>(initialWeight ?? 0);
+
+  const [favPending, setFavPending] = useState(false);
 
   // ✅ зависимые доступные опции
   const { availableColors, availableWeights, isValidCombo, corrected, selectedStockId } =
@@ -79,7 +98,24 @@ const InfoBlock: React.FC<Props> = ({
     onWeightChange?.(v);
   };
 
-  const { isSave, setSave } = useSharedStore();
+  const handleToggleFavorite = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (favPending) return;
+
+    if (!isAuth) {
+      requireAuth({ type: 'favorite', payload: { uuid: data.uuid } }, () => {});
+      return;
+    }
+
+    setFavPending(true);
+    try {
+      await toggle(data.uuid, !isFavorite);
+    } catch (err) {
+      console.error('favorite toggle error', err);
+    } finally {
+      setFavPending(false);
+    }
+  };
 
   return (
     <div className='flex w-full flex-col md:w-1/2'>
@@ -92,14 +128,13 @@ const InfoBlock: React.FC<Props> = ({
           )}
         </div>
 
-        {/* Бейджи */}
-        {/* {!!badges.length && (
+        {!!badges.length && (
           <div className='mt-4 flex flex-wrap gap-3'>
             {badges.map((b, i) => (
               <BadgeInfo data={b} key={i} />
             ))}
           </div>
-        )} */}
+        )}
 
         {/* Описание */}
         {description && (
@@ -155,45 +190,59 @@ const InfoBlock: React.FC<Props> = ({
           <div className='flex items-end gap-3'>
             {/* (заметь: обычно тут показывают текущую цену, а не oldPrice - price) */}
             <div className='text-dark-blue text-[34px] leading-none font-extrabold md:text-[38px]'>
-              {rub.format(oldPrice! - price)} <span className='text-[22px] font-bold'>₽</span>
+              {rub.format(price)}
+              <span className='text-[22px] font-bold'>₽</span>
             </div>
             {typeof oldPrice === 'number' && oldPrice > price && (
-              <div className='mb-1 text-slate-400 italic line-through'>{rub.format(oldPrice)}₽</div>
+              <div className='mb-1 text-slate-400 italic line-through'>
+                {rub.format(oldPrice)} ₽
+              </div>
             )}
           </div>
 
-          <div className='flex h-[56px] w-full items-center gap-3'>
+          <div className='flex h-[46px] w-full items-center gap-3 md:h-[56px]'>
             <Button
               onClick={() => {
                 if (!selectedStockId) return;
                 if (isInCart) {
-                  onRemove?.(); // ← если уже в корзине — удаляем
+                  onRemove?.();
                 } else {
-                  onAdd?.(selectedStockId); // ← иначе добавляем
+                  onAdd?.(selectedStockId);
                 }
               }}
               disabled={!selectedStockId}
-              // если у твоего <Button> есть вариант 'destructive' — можно подсветить удаление
               variant={isInCart ? 'destructive' : undefined}
               className='h-full w-full flex-1 rounded-full text-white'
-              aria-label={isInCart ? 'Удалить из корзины' : 'Добавить в корзину'}
+              aria-label={
+                isInCart ? 'Удалить из корзины' : isSeries ? 'Купить серию' : 'Добавить в корзину'
+              }
             >
-              {isInCart ? 'Удалить из корзины' : 'В корзину'} {/* ← динамический текст */}
+              {isInCart ? 'Удалить из корзины' : isSeries ? 'Купить серию' : 'В корзину'}
             </Button>
 
-            <ButtonSave
-              onSave={(e) => {
-                e.stopPropagation?.();
-                setSave(!isSave);
-              }}
-              status={isSave}
-              aria-label={isSave ? 'Удалить из сохранённых' : 'Сохранить товар'}
-            />
+            {!isSeries && (
+              <ButtonSave
+                onSave={(e) => {
+                  e.stopPropagation?.();
+                  handleToggleFavorite(e);
+                }}
+                status={isFavorite}
+                disabled={favPending}
+                aria-label={isFavorite ? 'Удалить из сохранённых' : 'Сохранить товар'}
+              />
+            )}
           </div>
         </div>
       </section>
 
-      {!textInstructions && <TextInstructionBlock />}
+      {techData && typeof techData === 'string' && (
+        <section className='mt-10'>
+          <div
+            className='space-y-3 text-sm text-slate-700'
+            dangerouslySetInnerHTML={{ __html: techData }}
+          />
+        </section>
+      )}
     </div>
   );
 };

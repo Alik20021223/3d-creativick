@@ -54,8 +54,12 @@ function LoyaltyLevelCard({
 
           {/* Декоративная картинка */}
           {art && (
-            <div className='pointer-events-none absolute -top-13 right-5 select-none'>
-              <img src={typeof art === 'string' ? art : ''} alt={title} />
+            <div className='pointer-events-none absolute -top-13 right-5 select-none max-md:scale-90 max-md:-right-2 md:scale-100'>
+              <img 
+                src={typeof art === 'string' ? art : ''} 
+                alt={title}
+                className='h-auto w-full max-w-[120px] sm:max-w-[140px] md:max-w-[160px] lg:max-w-[180px]'
+              />
             </div>
           )}
         </div>
@@ -77,14 +81,12 @@ function LoyaltyLevelCard({
         {!maxReached && (
           <div className='mb-4 flex items-center justify-between text-sm font-normal'>
             <span className='flex items-baseline gap-1'>
-              (
               <>
                 <span className='text-dark-blue text-lg md:text-xl'>{f(toNext)} ₽</span>
                 <span className='font-normal text-slate-400'>до следующего уровня</span>
               </>
-              )
             </span>
-            (<span className='text-dark-blue text-lg md:text-xl'>{f(nextThreshold)} ₽</span>)
+            <span className='text-dark-blue text-lg md:text-xl'>{f(nextThreshold)} ₽</span>
           </div>
         )}
 

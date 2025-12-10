@@ -3,15 +3,36 @@ import { Link } from 'react-router-dom';
 import logoSrc from '@assets/logo-3d.svg';
 import TgIcon from '@assets/tg-icon.svg';
 import VkIcon from '@assets/vk-icon.svg';
-import LogoRosatom from '@assets/logo-footer-rosatom.svg';
+import LogoRosatom from '@assets/logo-footer.svg';
 import { footerColumns } from '@utils/mock';
+import { useGetFilesFooter } from '@entities/support/hooks/getFilesFooter';
+import { useSharedStore } from '@/shared/store';
+import { useEffect } from 'react';
+import { AppSetting } from '@/entities/support/types';
 
 const Footer = () => {
+  const { data } = useGetFilesFooter();
+
+  const { setAppSettings, appSettings } = useSharedStore();
+
+  useEffect(() => {
+    if (data && Array.isArray(data)) {
+      setAppSettings(data as AppSetting[]);
+    }
+  }, [data, setAppSettings]);
+
+  const userAgreementUrl =
+    appSettings.find((s) => s.key === 'user_agreement')?.value ?? '/personal-data';
+
+  const phoneNumber = appSettings.find((s) => s.key === 'phone')?.value;
+
+  const offerAgreementUrl = appSettings.find((s) => s.key === 'offer_agreement')?.value ?? '/offer';
+
   return (
     <footer id='contacts' className='relative z-10 select-none'>
       {/* верхняя светлая зона */}
       <div className='bg-secondary-white'>
-        <div className='container-custom mx-auto px-4 py-8 md:px-10 md:py-12 2xl:px-0'>
+        <div className='container-custom mx-auto flex flex-col px-4 py-8 md:px-10 md:py-12 2xl:px-0'>
           {/* GRID: mobile-first */}
           <div className='grid grid-cols-12 gap-x-4 gap-y-8'>
             {/* Левый блок */}
@@ -31,9 +52,14 @@ const Footer = () => {
                 >
                   info@3dkreativik.ru
                 </a>
-                <a href='tel:+84959888282' className='text-base md:text-[22px]'>
-                  8 (495) 988-82-82
-                </a>
+                {phoneNumber && (
+                  <a
+                    href={`tel:${phoneNumber.replace(/\s/g, '').replace(/[()+-]/g, '')}`}
+                    className='text-base hover:underline md:text-[22px]'
+                  >
+                    {phoneNumber}
+                  </a>
+                )}
               </div>
 
               <div className='mt-4 flex justify-center gap-3 md:justify-start'>
@@ -82,9 +108,11 @@ const Footer = () => {
                 </div>
 
                 <div className='space-y-2 text-[13px] leading-5 text-zinc-600 md:space-y-3 md:text-sm'>
-                  <div className='text-secondary-text'>ООО «Росатом Аддитивные технологии»</div>
-                  <div className='text-secondary-gray'>ОГРН 5177746230547</div>
-                  <div className='text-secondary-gray'>
+                  <div className='text-secondary-text'>
+                    Общество с ограниченной ответственностью «Росатом Аддитивные технологии»
+                  </div>
+                  <div className='text-[#B4B7C2]'>ОГРН 5177746230547</div>
+                  <div className='text-[#B4B7C2]'>
                     Юр. адрес / Для корреспонденции:
                     <br />
                     115409, г. Москва, вн. тер. г. муниципальный округ Москворечье-Сабурово,
@@ -93,6 +121,32 @@ const Footer = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className='text-secondary-text mt-8 flex gap-4 opacity-80 max-md:flex-col'>
+            <span className='text-sm'>
+              Безопасность платежей обеспечивается с помощью Банка-эквайера (Газпромбанк
+              (Акционерное Общество)), функционирующего на основе современных протоколов и
+              технологий, разработанных платежными системами МИР, Visa International и Mastercard
+              Worldwide (3D-Secure: Verified by VISA, Mastercard SecureCode, MirAccept). Обработка
+              полученных конфиденциальных данных Держателя карты производится в процессинговом
+              центре Банка, сертифицированного по стандарту PCI DSS. Безопасность передаваемой
+              информации обеспечивается с помощью современных протоколов обеспечения безопасности в
+              сети Интернет.
+            </span>
+            <div className='mt-6'>
+              <div className='bg-mir'></div>
+            </div>
+          </div>
+
+          <div className='text-secondary-text mt-8 opacity-80'>
+            <p className='text-sm'>
+              После нажатия кнопки «оплатить»/по предоставленной ссылке (если оплата по ссылке) Вы
+              будете перенаправлены на защищенную платежную страницу "Газпромбанк" (Акционерное
+              общество), где будет необходимо ввести данные Вашей пластиковой карты. В случае
+              успешной авторизации Вы получите от сайта уведомление о том, что оплата проведена
+              и/или описание порядка получения товара/услуги.
+            </p>
           </div>
         </div>
       </div>
@@ -105,14 +159,21 @@ const Footer = () => {
             <div className='text-xs opacity-90'>Все права защищены ©2025.</div>
 
             <nav className='flex flex-col gap-2 text-sm md:flex-row md:items-center md:gap-6'>
-              <a href='/privacy' className='text-primary hover:underline'>
-                Политика конфиденциальности
+              <a
+                href={userAgreementUrl}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='text-primary hover:underline'
+              >
+                Пользовательское соглашение
               </a>
-              <a href='/personal-data' className='text-primary hover:underline'>
-                Политика обработки персональных данных
-              </a>
-              <a href='/offer' className='text-primary hover:underline'>
-                Публичная оферта
+              <a
+                href={offerAgreementUrl}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='text-primary hover:underline'
+              >
+                Публичная офферта
               </a>
             </nav>
           </div>

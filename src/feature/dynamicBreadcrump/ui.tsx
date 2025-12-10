@@ -4,16 +4,19 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@shadcn/breadcrumb';
 import { BreadCrumpType } from '@shared/types';
 
 type DynamicBreadcrumbsProps = {
   pathMap: Record<string, BreadCrumpType[]>;
+  startLink: {
+    value: string;
+    link: string;
+  };
 };
 
-const DynamicBreadcrumbs: React.FC<DynamicBreadcrumbsProps> = ({ pathMap }) => {
+const DynamicBreadcrumbs: React.FC<DynamicBreadcrumbsProps> = ({ pathMap, startLink }) => {
   const location = useLocation();
 
   const pathParts = useMemo(
@@ -37,17 +40,28 @@ const DynamicBreadcrumbs: React.FC<DynamicBreadcrumbsProps> = ({ pathMap }) => {
         data.find((item) => matchPath({ path: item.PATH, end: true }, currentPath)) ||
         data.find((item) => matchPath({ path: item.PATH, end: false }, currentPath));
 
-      if (matched) {
-        const paramMatches = matched.PATH.match(/:([a-zA-Z]+)/g) || [];
+      if (!matched) continue;
+
+      const paramMatches = matched.PATH.match(/:([a-zA-Z]+)/g) || [];
+
+      let link: string;
+
+      if (matched.LINK) {
+        // если явно задан LINK — используем его (вместе с query)
+        link = matched.LINK;
+      } else if (paramMatches.length && matched.PATH.includes(':')) {
+        // /support/:id → подставляем сегмент пути
         const params = Object.fromEntries(
-          paramMatches.map((param) => [param.slice(1), pathParts[i + 1]]),
+          paramMatches.map((param) => [param.slice(1), pathParts[i]]),
         ) as Record<string, string>;
 
-        const link = matched.PATH.includes(':') ? generatePath(matched.PATH, params) : matched.PATH;
+        link = generatePath(matched.PATH, params);
+      } else {
+        link = matched.PATH;
+      }
 
-        if (!items.find((el) => el.text === matched.BREADCRUMB)) {
-          items.push({ link, text: matched.BREADCRUMB });
-        }
+      if (!items.find((el) => el.text === matched.BREADCRUMB)) {
+        items.push({ link, text: matched.BREADCRUMB });
       }
     }
 
@@ -56,14 +70,12 @@ const DynamicBreadcrumbs: React.FC<DynamicBreadcrumbsProps> = ({ pathMap }) => {
 
   const len = breadcrumbs.length;
 
-  console.log(breadcrumbs);
-
   return (
     <Breadcrumb className='py-2.5'>
       <BreadcrumbList className='flex text-xs lg:text-sm'>
         <BreadcrumbItem>
-          <NavLink to='/' className='text-secondary-text text-sm'>
-            Каталог
+          <NavLink to={startLink.link} className='text-secondary-text text-sm'>
+            {startLink.value}
           </NavLink>
         </BreadcrumbItem>
 
@@ -86,9 +98,9 @@ const BreadcrumbSegment = ({
     <BreadcrumbSeparator />
     <BreadcrumbItem>
       {isLast ? (
-        <BreadcrumbPage>{item.text}</BreadcrumbPage>
+        <span className='text-secondary-text text-sm'>{item.text}</span>
       ) : (
-        <NavLink to={item.link} className='text-sm text-[#a8a8a8]'>
+        <NavLink to={item.link} className='text-secondary-text text-sm'>
           {item.text}
         </NavLink>
       )}

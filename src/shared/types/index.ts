@@ -1,8 +1,10 @@
 import SwiperInstance from 'swiper';
 
+// @shared/types.ts
 export type BreadCrumpType = {
   PATH: string;
   BREADCRUMB: string;
+  LINK?: string; // ← добавили
 };
 
 export type HeaderType = {
@@ -36,14 +38,37 @@ export type GalleriesType = {
   base_path: string;
 };
 
+export type TranslationType = {
+  id: number;
+  locale: string;
+  title: string;
+  description?: string | null;
+};
+
+export type ProductModelType = {
+  id: number;
+  product_id: number;
+
+  translation: TranslationType;
+
+  print_time_min: number;
+  material_grams: number;
+  file_size_mb: number;
+
+  galleries: GalleriesType[];
+};
+
+export type DiscountType = {
+    price: number;
+    type: string
+  }
+
 export type ProductCardType = {
   id: number;
   uuid: string;
   category_id: number;
   active: boolean;
-  discounts: {
-    price: number;
-  }[];
+  discounts: DiscountType[];
 
   img: string;
 
@@ -54,12 +79,7 @@ export type ProductCardType = {
   sell_price: number;
 
   /** Перевод (локализация) */
-  translation: {
-    id: number;
-    locale: string;
-    title: string;
-    description?: string | null;
-  };
+  translation: TranslationType;
 
   /** Остатки по складам / цветам / размерам */
   stock_balances: {
@@ -67,6 +87,16 @@ export type ProductCardType = {
     color?: string | null;
     size?: string | null;
   }[];
+
+  /** Badges продукта */
+  badges?: ProductBadge[];
+
+  has_models?: boolean;
+
+  models?: ProductModelType[];
+  print_time_min?: number;
+  material_grams?: number;
+  file_size_mb?: number;
 };
 
 export type ProductCardTypeById = {
@@ -75,8 +105,26 @@ export type ProductCardTypeById = {
 
 export type Badge = { icon: React.ReactNode; text: React.ReactNode };
 
+export type ProductBadge = {
+  id: number;
+  slug: string;
+  color: string;
+  bg_color: string;
+  icon: string;
+  active: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+  translation: {
+    id: number;
+    locale: string;
+    title: string;
+    description?: string;
+  };
+};
+
 export type SelectOption = {
-  value: number;
+  value: string | number;
   label: string;
 };
 
@@ -100,3 +148,5 @@ export type DetailCardType = {
 };
 
 export type Option = { label: string; value: string };
+
+export type ModalApp = 'menu' | 'cart' | 'lk';

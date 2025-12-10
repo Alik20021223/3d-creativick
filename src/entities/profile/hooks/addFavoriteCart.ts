@@ -2,17 +2,17 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { profileService } from '../service/profile.service';
 
 export const useAddToFavoriteCart = () => {
-  const queryClient = useQueryClient();
+  const qc = useQueryClient();
 
   return useMutation({
-    mutationKey: ['add-favorite'],
+    mutationKey: ['favorite', 'toggle'],
     mutationFn: (id: string) => profileService.AddFavorite(id),
-
-    // ⬇️ вызывается при успешном добавлении
     onSuccess: () => {
-      // инвалидируем (обновляем) кэш корзины
-      queryClient.invalidateQueries({
-        queryKey: ['auth', 'get-all-favorites'],
+      // Обновим все варианты списка избранного (с любыми params)
+      qc.invalidateQueries({
+        queryKey: ['auth', 'favorites'], // префикс
+        refetchType: 'active', // активные рефетчнем сразу
+        exact: false,
       });
     },
   });

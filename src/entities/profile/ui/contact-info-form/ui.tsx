@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { cn } from '@shared/lib/utils';
 import CustomInput from '@feature/custom-input';
+import { Button } from '@shared/shadcn/button';
 
 export type ContactInfoValues = {
   email: string;
@@ -13,6 +14,7 @@ type ContactInfoFormProps = {
   onSubmitEmail?: (values: Pick<ContactInfoValues, 'email'>) => void | Promise<void>;
   className?: string;
   title?: string;
+  submitDisabled?: boolean;
 };
 
 export default function ContactInfoForm({
@@ -20,11 +22,18 @@ export default function ContactInfoForm({
   onSubmitEmail,
   className,
   title = 'Контактная информация',
+  submitDisabled,
 }: ContactInfoFormProps) {
   const emailForm = useForm<ContactInfoValues>({
     defaultValues: { email: '', ...defaultValues },
     mode: 'onTouched',
   });
+
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting, isDirty, isValid },
+  } = emailForm;
 
   const submitEmail: SubmitHandler<ContactInfoValues> = (v) => onSubmitEmail?.({ email: v.email });
 
@@ -39,8 +48,11 @@ export default function ContactInfoForm({
         <h3 className='text-dark-blue text-xl font-bold md:text-2xl'>{title}</h3>
       </header>
 
-      {/* Email + кнопка подтверждения */}
-      <form onSubmit={emailForm.handleSubmit(submitEmail)} className='flex items-end gap-3'>
+      {/* Email + кнопка сохранения */}
+      <form
+        onSubmit={handleSubmit(submitEmail)}
+        className='flex flex-col items-stretch gap-3 sm:flex-row sm:items-end'
+      >
         <div className='flex-1'>
           <div className='flex items-center gap-2'>
             <label className='text-sm font-medium'>Email*</label>
@@ -48,14 +60,22 @@ export default function ContactInfoForm({
 
           <CustomInput<ContactInfoValues>
             name='email'
-            control={emailForm.control}
+            control={control}
             placeholder='example@gmail.com'
             containerClassName='mt-2'
             className='h-10'
             clearable={false}
-            disabled={true}
+            disabled={submitDisabled || isSubmitting}
           />
         </div>
+
+        <Button
+          disabled={submitDisabled || isSubmitting || !isDirty || !isValid}
+          type='submit'
+          className='rounded-full text-sm text-white'
+        >
+          Изменить
+        </Button>
       </form>
     </section>
   );

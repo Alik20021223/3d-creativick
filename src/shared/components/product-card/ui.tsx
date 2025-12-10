@@ -1,5 +1,5 @@
 // ProductCard.tsx
-import { JSX, useEffect, useMemo, useState } from 'react';
+import { JSX, useEffect, useMemo, useState, memo } from 'react';
 import { ChevronRight } from 'lucide-react';
 import ColorButton from '@shared/components/color-button';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,30 +13,37 @@ import { useDeleteShoppingCart } from '@entities/profile/hooks/deleteShoppingCar
 import { getProductDetailPath } from '@utils/product-variants';
 import { useProductVariantMeta } from '@shared/hooks/useProductVariantMeta';
 
-// ✅ добавь импорт общих утил
+// общие утилы
 import { calcPrice, calcOldPrice } from '@utils/product-pricing';
 import { findOptionIdBySelection } from '@utils/product-variants';
 import { cn } from '@shared/lib/utils';
-import { useAddToFavoriteCart } from '@entities/profile/hooks/addFavoriteCart';
-import { CartDetail } from '@/entities/profile/types/cart';
+import { CartDetail } from '@entities/profile/types/cart';
+
+// ⬇️ гостевая корзина
+import { useGuestCart } from '@entities/profile/utils/guest-cart/useGuestCart';
+import { useFavoritesIndex } from '@/entities/profile/utils/favorite-hook/useFavoritesIndex';
+import { useToggleFavorite } from '@/entities/profile/utils/favorite-hook/useToggleFavorite';
+import ProductBadge from '@shared/components/product-badge';
 
 const rub = new Intl.NumberFormat('ru-RU');
+const DEFAULT_SHOP_ID = 1;
+const DEFAULT_CURRENCY_ID = 1;
 
 interface ProductCardProps {
   data: ProductCardType;
 }
 
-export default function ProductCard({ data }: ProductCardProps): JSX.Element {
+const ProductCard = ({ data }: ProductCardProps): JSX.Element => {
   const navigate = useNavigate();
-  const { mutateAsync } = useAddToShoppingCart();
 
-  const { mutateAsync: addFavorite, isPending: favLoading } = useAddToFavoriteCart();
-
+  const { mutateAsync: addToCartApi } = useAddToShoppingCart();
   const { mutateAsync: deleteCart } = useDeleteShoppingCart();
 
-  const { cartItems } = useAppStore();
+  const { cartItems, isAuth, setExclusive } = useAppStore();
+  const cardItems = useMemo(() => cartItems?.user_carts?.[0]?.cartDetails || [], [cartItems]);
 
-  const cardItems = cartItems?.user_carts?.[0]?.cartDetails || [];
+  // гостевая корзина
+  const guest = useGuestCart();
 
   // варианты из стока
   const { options: stockOptions, colors: colorsFromStock, hasColors } = useProductVariantMeta(data);
@@ -52,9 +59,12 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
     hasColors ? uiColors[0]?.value : undefined,
   );
   const [selectedStockId, setSelectedStockId] = useState<number | undefined>(undefined);
-  const [isSave, setSave] = useState<boolean>(false);
+  const [favPending, setFavPending] = useState(false);
+  const favIndex = useFavoritesIndex();
+  const isFavorite = favIndex.ids.has(data.uuid);
+  const { toggle } = useToggleFavorite();
 
-  // ✅ актуализируем stock_id при смене товара/цвета/опций
+  // актуализируем stock_id при смене товара/цвета/опций
   useEffect(() => {
     if (!data) return;
     const stockId = findOptionIdBySelection(
@@ -63,53 +73,88 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
       undefined, // веса на карточке нет — подберется минимальный для цвета
     );
     setSelectedStockId(stockId ?? stockOptions?.[0]?.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.uuid, data?.stock_balances, color, stockOptions]);
 
   const handlePickColor = (v: string) => setColor(v);
 
-  // ✅ корректные цены товара
+  // корректные цены товара
   const price = useMemo(() => calcPrice(data ?? {}), [data]);
   const oldPrice = useMemo(() => calcOldPrice(data ?? {}, price), [data, price]);
+
+  const isInCart = useMemo(() => {
+    if (!selectedStockId) return false;
+    if (isAuth) {
+      if (!cardItems.length) return false;
+      return cardItems.some((cd: CartDetail) => cd?.stock?.id === selectedStockId);
+    }
+    return guest.hasStock(selectedStockId, DEFAULT_SHOP_ID);
+  }, [isAuth, cardItems, selectedStockId, guest]);
 
   // добавление
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!selectedStockId) return;
-    await mutateAsync({
-      products: [{ stock_id: selectedStockId, quantity: 1 }],
-      currency_id: 1,
-      shop_id: 1,
-    });
-  };
 
-  const handleToggleFavorite = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    try {
-      await addFavorite(data.uuid); // ⬅️ передаём UUID
-      setSave((s) => !s); // локальный флаг (оптимистично)
-    } catch (err) {
-      // опционально: показать тост/лог
-      console.error('favorite error', err);
+    if (isAuth) {
+      await addToCartApi({
+        products: [{ stock_id: selectedStockId, quantity: 1 }],
+        currency_id: DEFAULT_CURRENCY_ID,
+        shop_id: DEFAULT_SHOP_ID,
+      });
+    } else {
+      guest.add({
+        stock_id: selectedStockId,
+        quantity: 1,
+        weight: data.stock_balances[0].size || '',
+        product_uuid: data.uuid,
+        color: color || undefined,
+        shop_id: DEFAULT_SHOP_ID,
+        currency_id: DEFAULT_CURRENCY_ID,
+        img: data.img,
+        price: data.sell_price,
+        discount: data?.discounts[0] || 0,
+        title: data.translation.title,
+        description: data.translation.description || '',
+        addedAt: Date.now(),
+      });
     }
   };
-
-  // есть ли этот конкретный вариант в корзине
-  const isInCart = useMemo(() => {
-    if (!cardItems.length) return false;
-    if (selectedStockId)
-      return cardItems.some((cd: CartDetail) => cd?.stock?.id === selectedStockId);
-    return false;
-  }, [cardItems, selectedStockId]);
 
   // удаление именно выбранного варианта
   const handleRemoveFromCart = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    const idToDelete =
-      cardItems.find((cd: CartDetail) => cd?.stock?.id === selectedStockId)?.id ??
-      cardItems.find((cd: CartDetail) => cd?.stock?.product?.id === data.id)?.id ??
-      0; // фоллбек
-    if (idToDelete) {
-      await deleteCart({ ids: [idToDelete] });
+    if (!selectedStockId) return;
+
+    if (isAuth) {
+      const idToDelete =
+        cardItems.find((cd: CartDetail) => cd?.stock?.id === selectedStockId)?.id ??
+        cardItems.find((cd: CartDetail) => cd?.stock?.product?.id === data.id)?.id ??
+        0; // фоллбек
+      if (idToDelete) {
+        await deleteCart({ ids: [idToDelete] });
+      }
+    } else {
+      guest.removeByStockId(selectedStockId, DEFAULT_SHOP_ID);
+    }
+  };
+
+  const handleToggleFavorite = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (favPending) return;
+
+    if (!isAuth) {
+      setExclusive('lk');
+      return;
+    }
+
+    setFavPending(true);
+    try {
+      await toggle(data.uuid, !isFavorite);
+    } catch (err) {
+      console.error('favorite error', err);
+    } finally {
+      setFavPending(false);
     }
   };
 
@@ -117,21 +162,69 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
   const detailPath = getProductDetailPath(data);
   const linkText = hasColors ? 'Подробнее' : 'Посмотреть детали серии';
 
+  const detailUrl = useMemo(() => {
+    if (!location.search) return detailPath;
+
+    const params = new URLSearchParams(location.search);
+    const categoryId = params.get('category_id');
+
+    if (categoryId) {
+      return `${detailPath}?category_id=${categoryId}`;
+    }
+
+    return detailPath;
+  }, [detailPath]);
+
   return (
     <div
-      onClick={() => navigate(detailPath)}
-      className='bg-secondary-white relative flex h-full max-h-[520px] flex-col overflow-hidden rounded-[60px] shadow-lg max-md:max-h-fit max-md:min-h-[520px] max-md:max-w-[355px] md:max-h-[618px]'
+      onClick={() => navigate(detailUrl)}
+      className={cn(
+        'bg-secondary-white relative flex min-w-[355px] cursor-pointer flex-col overflow-hidden rounded-[60px] shadow-lg max-md:max-w-[355px]',
+        // если хочешь чуть ограничить на десктопе — оставь только max-w
+        // 'md:max-w-[380px]',
+        'button-shadow-blue',
+      )}
+      role='button'
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          navigate(detailUrl);
+        }
+      }}
     >
       <div
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation();
+          navigate(detailUrl);
+        }}
         onMouseDown={(e) => e.stopPropagation()}
         onTouchStart={(e) => e.stopPropagation()}
+        className='relative'
       >
         <ProductCarouselImage images={data.galleries} />
+        
+        {/* Badges */}
+        {data.badges && data.badges.length > 0 && (
+          <div className='absolute top-8 right-8 z-20 flex flex-col gap-1'>
+            {data.badges
+              .filter((badge) => badge.active)
+              .sort((a, b) => a.sort_order - b.sort_order)
+              .slice(0, 2)
+              .map((badge) => (
+                <ProductBadge key={badge.id} badge={badge} />
+              ))}
+          </div>
+        )}
       </div>
 
-      <div className='mt-auto p-5.5 pt-0'>
-        <h2 className='text-[32px] font-bold max-md:text-2xl'>{data.translation.title}</h2>
+      <div className='flex flex-col p-5.5 pt-0'>
+        {/* 🔹 Блок под заголовок одинаковой высоты на всех карточках */}
+        <div className='flex min-h-[72px] max-w-[350px] items-start max-md:max-w-[290px] md:min-h-[86px]'>
+          <h2 className='line-clamp-2 text-[32px] leading-tight font-bold max-md:text-2xl'>
+            {data.translation.title}
+          </h2>
+        </div>
 
         {hasColors && (
           <div className='mt-3' onClick={(e) => e.stopPropagation()}>
@@ -163,7 +256,7 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
           )}
         >
           <Link
-            to={detailPath}
+            to={detailUrl}
             onClick={(e) => e.stopPropagation()}
             className='text-secondary-text flex h-4 items-center text-sm hover:underline'
           >
@@ -183,7 +276,7 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
           </div>
         </div>
 
-        <div className='mt-5 flex h-[46px] items-center justify-between md:h-[56px]'>
+        <div className='mt-5 flex h-[46px] items-center justify-between gap-3 md:h-[56px]'>
           <Button
             className='h-full flex-1 rounded-full text-lg font-semibold text-white'
             onClick={isInCart ? handleRemoveFromCart : handleAddToCart}
@@ -194,13 +287,15 @@ export default function ProductCard({ data }: ProductCardProps): JSX.Element {
           </Button>
 
           <ButtonSave
-            active={isSave}
-            onSave={handleToggleFavorite} // ⬅️ используем новый обработчик
-            status={isSave}
-            disabled={favLoading} // ⬅️ блокируем на время запроса (если есть проп)
+            active={isFavorite}
+            onSave={handleToggleFavorite}
+            status={isFavorite}
+            disabled={favPending}
           />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default memo(ProductCard);

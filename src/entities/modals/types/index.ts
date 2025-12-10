@@ -6,7 +6,15 @@ export type ModalKey =
   | 'register_success'
   | 'email_otp'
   | 'change_email_form'
-  | 'change_email_success';
+  | 'change_email_success'
+  | 'order_form'
+  | 'fail_payment'
+  | 'success_payment'
+  | 'see_order'
+  | 'cancel_order'
+  | 'confirm_delete_all_item'
+  | 'confirm_delete_account'
+  | 'confirm_delete_item';
 
 export type VerifyCodeResponse = {
   timestamp: string;
@@ -75,3 +83,34 @@ export type AuthCheckResponse = {
     userRegistered: boolean;
   };
 };
+
+// types.ts
+export interface OrderAddress {
+  /** Полный адрес (улица, дом, квартира и т.п.) */
+  address: string;
+  /** Подъезд (опционально) */
+  entrance?: string;
+  /** Номер дома (опционально) */
+  house?: string;
+  /** Этаж (опционально) */
+  floor?: string;
+}
+
+export interface CreateOrderResponse {
+  data: {
+    id: number;
+  };
+  // ...доп. поля ответа
+}
+
+export type PayOrderPayload = { order_id: number };
+
+export interface CreateOrderRequest {
+  coupon?: string;
+  address: OrderAddress;
+  note?: string;
+  phone: string;
+  shop_id: number;
+  cart_id: number;
+  type: 'pickup' | 'delivery';
+}

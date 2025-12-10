@@ -1,5 +1,5 @@
 import EmptyState from '@feature/empty-content';
-import OrderEmptyImg from '@assets/empty-loop.svg';
+import OrderEmptyImg from '@assets/empty-loop.webp';
 
 const EmptyFavoriteContent = () => {
   return (

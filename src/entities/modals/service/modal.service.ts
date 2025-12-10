@@ -8,7 +8,10 @@ import {
   AuthCheckResponse,
   RegisterFormPayload,
   RegisterResponse,
+  CreateOrderRequest,
+  CreateOrderResponse,
 } from '../types';
+import { PayOrderResponse, PayOrderResponseType } from '../types/order';
 
 export const modalService = {
   async login(payload: LkLoginPayload, signal?: AbortSignal) {
@@ -25,6 +28,26 @@ export const modalService = {
       signal,
     });
     return data;
+  },
+
+  async createOrder(
+    payload: CreateOrderRequest,
+    signal?: AbortSignal,
+  ): Promise<CreateOrderResponse> {
+    const { data } = await axiosInstance.post<CreateOrderResponse>(
+      REQUEST_URL.CREATE_ORDER,
+      payload,
+      { signal },
+    );
+    return data;
+  },
+
+  async PayOrder(payload: { order_id: number }, signal?: AbortSignal): Promise<PayOrderResponse> {
+    const { data } = await axiosInstance.get<PayOrderResponseType>(REQUEST_URL.PAY_ORDER, {
+      params: payload,
+      signal,
+    });
+    return data.data; // <- ровно то, что ты хочешь вернуть
   },
 
   async verifyCode(code: string, signal?: AbortSignal) {

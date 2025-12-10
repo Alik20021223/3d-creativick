@@ -17,7 +17,6 @@ const FavoriteContent = () => {
   };
 
   const { data, isLoading } = useGetAllFavorite(params);
-  // Бэки часто называют поле по-разному — подстрахуемся:
   const all: FavoriteType[] = useMemo(() => data?.data ?? data?.data ?? [], [data]);
 
   const pageItems = all.slice(0, limit);
@@ -30,9 +29,11 @@ const FavoriteContent = () => {
   return (
     <section className='space-y-10'>
       <div className='space-y-5'>
-        {pageItems.map((favorite) => (
-          <FavoriteItem key={favorite.uuid} data={favorite} />
-        ))}
+        {pageItems
+          .filter((favorite) => favorite.active)
+          .map((favorite) => (
+            <FavoriteItem key={favorite.uuid} data={favorite} />
+          ))}
       </div>
 
       {canLoadMore && (

@@ -14,9 +14,9 @@ const ColorButton: React.FC<ColorButtonProps> = ({ data, activeColor, setNewColo
     <button
       type='button'
       onClick={() => setNewColor(data.value)}
-      className={`h-6 w-10 rounded-[6px] transition-all duration-300 ease-in-out ${isActive ? 'color-btn-shadow scale-110 border border-white' : 'scale-100 border border-transparent'} `}
+      className={`h-6 w-10 cursor-pointer rounded-[6px] transition-all duration-300 ease-in-out ${isActive ? 'color-btn-shadow scale-110 border border-white' : 'scale-100 border border-transparent'} `}
       style={{
-        backgroundColor: data.class, // ✅ именно через inline-style, т.к. значение динамическое
+        backgroundColor: data.class,
       }}
       aria-label={data.value}
     />

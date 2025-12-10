@@ -6,7 +6,7 @@ const TechPage = () => {
   const isMobile = useIsMobile();
 
   return (
-    <section className='px-6 py-10 max-md:px-0 max-md:py-[60px]'>
+    <section className='px-6 py-10 max-md:my-[60px] max-md:px-0'>
       <div className='mx-auto max-w-[1540px] rounded-[80px] bg-white p-2.5 pb-20 md:p-10'>
         <div className='grid w-full items-center gap-10 max-md:gap-20 md:grid-cols-2'>
           {/* Левая картинка */}
@@ -28,12 +28,12 @@ const TechPage = () => {
             </h1>
 
             <p className='text-secondary-text mt-[22px] text-base leading-[130%] font-normal md:text-[16px]'>
-              Приносим свои извинения за неудобства. Совсем скоро здесь будет онлайн-магазин С
-              уважением, команда 3D Креативик.
+              Приносим свои извинения за неудобства. Совсем скоро здесь будет онлайн-магазин. <br />{' '}
+              С уважением, команда 3D Креативик.
             </p>
 
             <div className='relative z-10 mt-8 flex gap-5 max-md:flex-col max-md:items-center max-md:justify-center'>
-              <a
+              {/* <a
                 href='https://t.me/'
                 target='_blank'
                 rel='noopener noreferrer'
@@ -48,7 +48,7 @@ const TechPage = () => {
                 className='bg-primary-active inline-flex h-[56px] w-[195px] items-center justify-center rounded-full text-[22px] font-normal text-white max-md:w-full max-md:text-lg'
               >
                 ВКонтакте
-              </a>
+              </a> */}
               <a
                 href='mailto:info@3dkreativik.ru'
                 className='bg-primary-active inline-flex h-[56px] w-[195px] items-center justify-center rounded-full text-[22px] font-normal text-white max-md:w-full max-md:text-lg'

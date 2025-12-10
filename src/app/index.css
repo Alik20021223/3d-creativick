@@ -76,6 +76,27 @@
   50%     { transform: rotate(0deg); }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #e0e0e0 20%,
+    #f0f0f0 40%,
+    #f0f0f0 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
 
 @theme {
     --color-pink-active: #F238B1; 
@@ -261,13 +282,13 @@ body {
 }
 
 .bg-gradient {
-  background-image: url(./assets/bg-default.png);
+  background-image: url(./assets/bg-default.webp);
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .bg-catalog { 
-  background-image: url(./assets/bg-catalog.png);
+  background-image: url(./assets/bg-catalog.webp);
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -467,7 +488,25 @@ div[style*="z-index: 2000000000"] * {
   z-index: 2147483647 !important; /* на всякий случай выше всего остального */
 }
 
-html { scroll-behavior: smooth; }
+/* Стили для корректного отображения <br> в HTML контенте */
+.paragraph br,
+.paragraph code br {
+  display: block;
+  content: '';
+  margin-bottom: 0.25rem;
+}
+
+.paragraph code {
+  display: block;
+  white-space: pre-wrap;
+  margin: 0.5rem 0;
+}
+
+.paragraph code br {
+  line-height: 1.5;
+}
+
+
 
 .bg-contact-form {
   background-image: url(./assets/bg-support-form.png);
@@ -483,4 +522,28 @@ html { scroll-behavior: smooth; }
   -11.81px 7.27px 25.48px 0px #00175C0F,
   -19.87px 12.23px 46.85px 0px #00175C13,
   -30.66px 18.87px 80px 0px #00175C1A;
+}
+
+.bg-mir {
+  width: 100px;
+  height: 35px;
+
+  background-image: url(./assets/Mir-logo.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* или 100% 100% */
+}
+
+@supports (height: 100dvh) {
+  .dialog-viewport-height {
+    height: calc(100dvh - 156px);
+    max-height: calc(100dvh - 156px);
+  }
+}
+
+@supports not (height: 100dvh) {
+  .dialog-viewport-height {
+    height: calc(100vh - 96px);
+    max-height: calc(100vh - 96px);
+  }
 }

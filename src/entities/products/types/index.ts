@@ -46,3 +46,43 @@ export type SeriesCardData = {
     savedAriaOff?: string;
   };
 };
+
+export interface BannerTranslation {
+  id: number;
+  locale: string; // 'ru', 'en', ...
+  title: string;
+  description: string;
+  button_text: string;
+}
+
+export interface Banner {
+  id: number;
+  url: string;
+  img: string;
+  active: 0 | 1;
+  clickable: 0 | 1;
+  mobile_img: string;
+  type: 'banner' | string;
+  created_at: string; // ISO datetime из бэка
+  updated_at: string;
+  translation: BannerTranslation | null;
+}
+
+export type BannersResponse = {
+  data: Banner[];
+};
+
+export interface ExternalStore {
+  id: number;
+  name: string;
+  logo: string; // относительный путь к лого
+  url: string; // внешний URL магазина
+  active: boolean;
+  sort: number;
+  created_at: string; // ISO datetime из бэка
+  updated_at: string;
+}
+
+export type ExternalStoresResponse = {
+  data: ExternalStore[];
+};

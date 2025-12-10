@@ -22,29 +22,34 @@ const OrderCard: React.FC<OrderCardProps> = ({ data, className }) => {
     price,
     currency = '₽',
     facts = [],
-    onDownload,
+    onOpenModal,
     onReorder,
     onPay,
   } = data;
 
+  console.log(status);
   const cfg = statusConfig[status];
+
   const ctaHandler =
-    (cfg.ctaHandlerKey === 'onDownload' && onDownload) ||
-    (cfg.ctaHandlerKey === 'onReorder' && onReorder) ||
-    (cfg.ctaHandlerKey === 'onPay' && onPay) ||
-    undefined;
+    cfg.ctaHandlerKey === 'onOpenModal' && onOpenModal
+      ? () => onOpenModal(orderNumber)
+      : cfg.ctaHandlerKey === 'onReorder' && onReorder
+        ? () => onReorder(orderNumber)
+        : cfg.ctaHandlerKey === 'onPay' && onPay
+          ? () => onPay(orderNumber)
+          : undefined;
 
   return (
     <section
       className={cn(
-        'h-[261px] rounded-3xl bg-[#EFF4F8] px-3 py-5 md:h-45 md:px-10 md:py-8',
+        'h-[261px] max-md:h-fit rounded-3xl bg-[#EFF4F8] px-3 py-5 md:h-45 md:px-10 md:py-8',
         'flex flex-col justify-center space-y-6',
         className,
       )}
     >
       <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
         {/* Левый блок: название + даты */}
-        <div className='flex min-w-0 flex-1 gap-6 max-md:justify-between'>
+        <div className='flex min-w-0 flex-1 gap-6 max-md:justify-between md:items-center'>
           <div className='flex flex-col gap-2.5 max-md:flex-col-reverse md:items-center'>
             <h3 className='text-2xl font-bold text-slate-900'>Заказ #{orderNumber}</h3>
 
@@ -65,7 +70,6 @@ const OrderCard: React.FC<OrderCardProps> = ({ data, className }) => {
               {createdAt ? (
                 <div>
                   <div>{splitDateTime(createdAt).date}</div>
-                  <div>в {splitDateTime(createdAt).time}</div>
                 </div>
               ) : (
                 <div className='opacity-60'>—</div>
@@ -73,11 +77,16 @@ const OrderCard: React.FC<OrderCardProps> = ({ data, className }) => {
             </div>
 
             <div>
-              <div className='mb-2.5 font-semibold'>Дата оплаты</div>
+              <div className='mb-2.5 font-semibold'>
+                {status === 'canceled'
+                  ? 'Дата отмены'
+                  : status === 'refund'
+                    ? 'Дата возврата'
+                    : 'Дата оплаты'}
+              </div>
               {paidAt ? (
                 <div>
                   <div>{splitDateTime(paidAt).date}</div>
-                  <div>в {splitDateTime(paidAt).time}</div>
                 </div>
               ) : (
                 <div className='opacity-60'>—</div>
@@ -104,7 +113,6 @@ const OrderCard: React.FC<OrderCardProps> = ({ data, className }) => {
               {createdAt ? (
                 <div>
                   <div>{splitDateTime(createdAt).date}</div>
-                  <div>в {splitDateTime(createdAt).time}</div>
                 </div>
               ) : (
                 <div className='opacity-60'>—</div>
@@ -116,7 +124,6 @@ const OrderCard: React.FC<OrderCardProps> = ({ data, className }) => {
               {paidAt ? (
                 <div>
                   <div>{splitDateTime(paidAt).date}</div>
-                  <div>в {splitDateTime(paidAt).time}</div>
                 </div>
               ) : (
                 <div className='opacity-60'>—</div>
@@ -135,6 +142,19 @@ const OrderCard: React.FC<OrderCardProps> = ({ data, className }) => {
             {cfg.ctaText}
             {cfg.CtaIcon && <cfg.CtaIcon className='mr-2 h-5 w-5' />}
           </Button>
+
+          {status === 'progress' && (
+            <Button
+              variant="link"
+              onClick={() => data.onCancel?.(orderNumber)}
+              className={cn(
+                'h-11.5 w-full rounded-full text-base font-normal shadow-sm md:w-50',
+                'bg-red-500 text-white! hover:bg-red-600',
+              )}
+            >
+              Отменить заказ
+            </Button>
+          )}
         </div>
 
         <div className='hidden w-full md:block md:w-auto md:shrink-0 md:basis-[280px]'>

@@ -18,7 +18,7 @@ export type CartItem = {
 };
 
 export type OrderCardItem = {
-  orderNumber: number | string;
+  orderNumber: string;
   status: OrderStatus;
 
   createdAt?: string; // "27.05.2014 в 13:00"
@@ -29,12 +29,13 @@ export type OrderCardItem = {
 
   facts?: Badge[]; // правые фиолетовые бейджи
 
-  onDownload?: () => void; // для paid
-  onReorder?: () => void; // для canceled
-  onPay?: () => void; // для pending
+  onOpenModal?: (orderNumber: string) => void;
+  onReorder?: (orderNumber: string) => void; // для canceled
+  onPay?: (orderNumber: string) => void;
+  onCancel?: (orderNumber: string) => void;
 };
 
-export type OrderStatus = 'paid' | 'canceled' | 'pending';
+export type OrderStatus = 'paid' | 'canceled' | 'progress' | 'refund';
 
 export type LoyaltyCardProps = {
   // Верхняя плашка
@@ -74,6 +75,7 @@ export interface UserData {
   uuid: string;
   firstname: string | null;
   email: string;
+  total_spent: number;
   gender: 'male' | 'female';
   role: 'user' | 'admin' | string;
   email_verified_at: string | null; // ISO-строка

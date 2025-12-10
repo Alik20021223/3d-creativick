@@ -4,6 +4,8 @@ import { Trash2, Image as ImageIcon } from 'lucide-react';
 import { formatPrice } from '@utils/constant';
 import { CartDetail } from '../../types/cart';
 import { getDetailPathByVariant } from '@utils/product-variants';
+import { calcOldPrice, calcPrice } from '@/utils/product-pricing';
+import { useAppStore } from '@/app/store';
 
 export type CardItemProps = {
   item: CartDetail;
@@ -13,19 +15,65 @@ export type CardItemProps = {
 
 const CardItem: React.FC<CardItemProps> = ({ item, currency = '₽', onRemove }) => {
   const { id, stock } = item;
+  const { isAuth } = useAppStore();
 
-  const detailPath = getDetailPathByVariant(stock.product.uuid, stock.color, stock.size);
+  if (!stock || !stock.product) {
+    return null;
+  }
 
-  // бейдж вариации без "default" и пустых значений
-  const variantLabel = useMemo(() => {
-    const color = stock.color?.trim();
-    const size = stock.size?.trim();
-    const parts = [
-      color && color.toLowerCase() !== 'default' ? color : null,
-      size && size.toLowerCase() !== 'default' ? size : null,
-    ];
-    return parts.filter(Boolean).join(' · ');
-  }, [stock.color, stock.size]);
+  console.log(item);
+
+  /** =============================
+   *      PRICE LOGIC
+   * ============================== */
+
+  const price = useMemo(() => {
+    // НЕ АВТОРИЗОВАН
+    if (!isAuth) {
+      const basePrice = item.price;
+      const discount = item.discount;
+
+      if (!discount) return basePrice;
+
+      const discountType = discount.type ?? 'fix';
+      let discountValue = 0;
+
+      if (discountType === 'fix') {
+        discountValue = discount.price;
+      } else if (discountType === 'percent') {
+        discountValue = (basePrice * discount.price) / 100;
+      }
+
+      return Math.max(basePrice - discountValue, 0);
+    }
+
+    // АВТОРИЗОВАН
+    return calcPrice(stock.product);
+  }, [isAuth, item.price, item.discount, stock?.product]);
+
+  const oldPrice = useMemo(() => {
+    // НЕ АВТОРИЗОВАН
+    if (!isAuth) {
+      if (!item.discount) return undefined;
+      return item.price; // до скидки
+    }
+
+    // АВТОРИЗОВАН
+    return calcOldPrice(stock.product, price);
+  }, [isAuth, item.discount, item.price, stock?.product, price]);
+
+  /** =============================
+   *      OTHER UI LOGIC
+   * ============================== */
+
+  const detailPath = getDetailPathByVariant(stock.product?.uuid, stock.color, stock.size);
+
+  const isHexColor =
+    typeof stock.color === 'string' &&
+    /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(stock.color);
+
+  const isNumericSize = !!stock.size && !isNaN(Number(stock.size));
+  const showVariantBadge = isHexColor || isNumericSize;
 
   return (
     <li className='relative flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-3'>
@@ -33,7 +81,6 @@ const CardItem: React.FC<CardItemProps> = ({ item, currency = '₽', onRemove })
       <a
         href={detailPath}
         className='flex h-[52px] w-[52px] flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white'
-        aria-label={stock.product.translation?.title}
       >
         {stock.product.img ? (
           <img
@@ -56,23 +103,28 @@ const CardItem: React.FC<CardItemProps> = ({ item, currency = '₽', onRemove })
           {stock.product.translation?.title}
         </a>
 
-        {/* бейдж вариации (покажется только если есть что показать) */}
-        {variantLabel && (
-          <div className='mt-0.5 inline-flex items-center gap-2 rounded-full border border-slate-200 px-2.5 py-0.5 text-[11px] text-slate-600'>
-            {stock.color && stock.color.trim().toLowerCase() !== 'default' && (
-              <span
-                className='inline-block h-2.5 w-2.5 rounded-full border border-black/10'
-                style={{ backgroundColor: stock.color }}
-                aria-hidden
-              />
+        {/* бейджи вариаций */}
+        {showVariantBadge && (
+          <div className='mt-0.5 inline-flex items-center gap-2 rounded-full border border-slate-200 px-2 py-0.5 text-[11px] text-slate-600'>
+            {isNumericSize && (
+              <span className='rounded-full bg-white px-2 py-0.5'>{stock.size} гр</span>
             )}
-            <span className='truncate'>{variantLabel}</span>
+
+            {isHexColor && (
+              <span className='inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5'>
+                <span
+                  className='inline-block h-2.5 w-2.5 rounded-full border border-black/10'
+                  style={{ backgroundColor: stock.color }}
+                />
+                Цвет
+              </span>
+            )}
           </div>
         )}
 
         <a
           href={detailPath}
-          className='text-dark-blue block text-[13px] underline-offset-4 hover:underline'
+          className='text-dark-blue block text-[13px] hover:underline underline-offset-4'
         >
           Подробнее
         </a>
@@ -81,21 +133,20 @@ const CardItem: React.FC<CardItemProps> = ({ item, currency = '₽', onRemove })
       {/* prices + remove */}
       <div className='text-right'>
         <div className='text-dark-blue text-[18px] font-semibold'>
-          {formatPrice((item.price ?? 0) - (item.discount ?? 0))} {currency}
+          {formatPrice(price)} {currency}
         </div>
-        {typeof item.discount === 'number' && item.discount > 0 ? (
+
+        {oldPrice && (
           <div className='text-secondary-gray text-[12px] line-through'>
-            {formatPrice(item.price)} {currency}
+            {formatPrice(oldPrice)} {currency}
           </div>
-        ) : (
-          <div className='h-[18px]' />
         )}
 
         {onRemove && (
           <button
             onClick={() => onRemove(id)}
             aria-label='Удалить'
-            className='text-secondary-gray hover:border-primary hover:text-primary inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent'
+            className='text-secondary-gray hover:text-primary inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors'
           >
             <Trash2 className='h-4 w-4' />
           </button>

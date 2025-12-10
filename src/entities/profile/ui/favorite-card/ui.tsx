@@ -11,6 +11,7 @@ import { useAppStore } from '@app/store';
 import { getDetailPathByVariant } from '@utils/product-variants';
 import { useAddToFavoriteCart } from '../../hooks/addFavoriteCart';
 import { CartDetail } from '../../types/cart';
+import { calcOldPrice, calcPrice } from '@/utils/product-pricing';
 
 type FavoriteItemProps = {
   data: FavoriteType;
@@ -25,7 +26,7 @@ export default function FavoriteItem({ data, currency = '₽', className = '' }:
   const { mutateAsync: addToCart, isPending: addLoading } = useAddToShoppingCart();
   const { mutateAsync: deleteCart, isPending: delLoading } = useDeleteShoppingCart();
   const { cartItems } = useAppStore();
-  const cartDetails = cartItems?.user_carts?.[0]?.cartDetails || [];
+  const cartDetails = useMemo(() => cartItems?.user_carts?.[0]?.cartDetails || [], [cartItems]);
 
   // избранное (лайк)
   const { mutateAsync: addFavorite, isPending: favLoading } = useAddToFavoriteCart();
@@ -36,11 +37,8 @@ export default function FavoriteItem({ data, currency = '₽', className = '' }:
   const imageUrl = data.img;
 
   // цены
-  const price = data.sell_price ?? data.net_price ?? 0;
-  const oldPrice =
-    data.net_price && data.sell_price && data.net_price > data.sell_price
-      ? data.net_price
-      : undefined;
+  const price = useMemo(() => calcPrice(data ?? {}), [data]);
+  const oldPrice = useMemo(() => calcOldPrice(data ?? {}, price), [data, price]);
 
   // первый вариант (как «быстрая покупка» с карточки избранного)
   const firstStock = data.stock_balances?.[0];
@@ -90,7 +88,7 @@ export default function FavoriteItem({ data, currency = '₽', className = '' }:
   return (
     <article
       className={cn(
-        'group bg-secondary-white relative flex h-[310px] w-full items-stretch gap-5 rounded-[28px] p-2.5 max-md:flex-col md:h-[190px] md:gap-6 md:p-5',
+        'group bg-secondary-white relative flex h-fit w-full items-stretch gap-5 rounded-[28px] p-2.5 max-md:flex-col md:h-[190px] md:h-[360px] md:gap-6 md:p-5',
         className,
       )}
       role='article'
@@ -98,11 +96,16 @@ export default function FavoriteItem({ data, currency = '₽', className = '' }:
       {/* Изображение */}
       <a
         href={href}
-        className='relative aspect-square h-37.5 w-full flex-shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-white ring-offset-2 transition outline-none group-hover:border-slate-300 focus:ring-2 focus:ring-indigo-500 md:w-[200px]'
+        className='relative aspect-square h-full flex-shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-white ring-offset-2 transition outline-none group-hover:border-slate-300 focus:ring-2 focus:ring-indigo-500 max-md:h-[150px] md:w-[320px]'
         aria-label={title}
       >
         {imageUrl ? (
-          <img src={imageUrl} alt={title} className='h-full w-full object-cover' loading='lazy' />
+          <img
+            src={imageUrl}
+            alt={title}
+            className='h-full w-full object-cover object-center'
+            loading='lazy'
+          />
         ) : (
           <div className='flex h-full w-full items-center justify-center'>
             <Image className='h-10 w-10 text-slate-400' />
@@ -111,11 +114,9 @@ export default function FavoriteItem({ data, currency = '₽', className = '' }:
       </a>
 
       {/* Контент */}
-      <div className='flex flex-1 justify-between gap-6 max-md:items-center'>
-        <div className='flex flex-col justify-center md:space-y-3'>
-          <h3 className='text-secondary-text truncate text-[22px] leading-tight font-semibold'>
-            {title}
-          </h3>
+      <div className='flex justify-between gap-6 max-md:items-start'>
+        <div className='flex w-3/4 flex-col justify-center md:space-y-3'>
+          <h3 className='text-secondary-text text-[22px] leading-tight font-semibold'>{title}</h3>
           {description ? (
             <p className='line-clamp-2 max-w-prose text-sm leading-relaxed text-slate-600 max-md:hidden'>
               {description}
@@ -129,29 +130,29 @@ export default function FavoriteItem({ data, currency = '₽', className = '' }:
           </a>
         </div>
 
-        <ButtonSave
-          className='h-10 w-10 md:hidden'
-          active
-          onSave={handleToggleFavorite}
-          status={isSave}
-          disabled={favLoading}
-        />
+        <div className='flex self-start'>
+          <ButtonSave
+            className='h-10 w-10 md:hidden'
+            active
+            onSave={handleToggleFavorite}
+            status={isSave}
+            disabled={favLoading}
+          />
+        </div>
       </div>
 
       <div className='flex min-w-[220px] flex-col items-end justify-end gap-3 max-md:hidden'>
-        {typeof oldPrice === 'number' && oldPrice > price ? (
+        {typeof oldPrice === 'number' && oldPrice > price && (
           <div className='text-secondary-gray text-right text-[18px] leading-[130%] line-through'>
             {formatPrice(oldPrice)} {currency}
           </div>
-        ) : (
-          <div className='h-[26px]' />
         )}
         <div className='text-dark-blue text-right text-[32px] leading-[110%] font-bold'>
           {formatPrice(price)} {currency}
         </div>
       </div>
 
-      <div className='flex items-end justify-between md:flex-col'>
+      <div className='flex items-center justify-between md:flex-col md:items-end'>
         <ButtonSave
           className='max-md:hidden md:h-12.5 md:w-12.5'
           active
@@ -160,13 +161,11 @@ export default function FavoriteItem({ data, currency = '₽', className = '' }:
           disabled={favLoading}
         />
 
-        <div className='flex min-w-[220px] flex-col items-start justify-start md:hidden'>
-          {typeof oldPrice === 'number' && oldPrice > price ? (
+        <div className='flex flex-col items-start justify-start md:hidden'>
+          {typeof oldPrice === 'number' && oldPrice > price && (
             <div className='text-secondary-gray text-left text-[18px] leading-[130%] line-through'>
               {formatPrice(oldPrice)} {currency}
             </div>
-          ) : (
-            <div className='h-[26px]' />
           )}
           <div className='text-dark-blue text-left text-[24px] leading-[110%] font-bold'>
             {formatPrice(price)} {currency}
@@ -179,7 +178,7 @@ export default function FavoriteItem({ data, currency = '₽', className = '' }:
           onClick={isInCart ? onRemoveFromCart : onAddToCart}
           variant={isInCart ? 'destructive' : undefined}
           className={cn(
-            'h-11 rounded-full px-14 text-base font-medium text-white disabled:opacity-60',
+            'h-11 rounded-full px-8 text-base font-medium text-white disabled:opacity-60 md:px-14',
           )}
         >
           {isInCart ? 'Удалить из корзины' : 'В корзину'}

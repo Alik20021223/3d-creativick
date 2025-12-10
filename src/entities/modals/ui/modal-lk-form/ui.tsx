@@ -8,10 +8,11 @@ import { type ModalLkFormType, ModalLkSchema } from './validation';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useLkLogin } from '../../hooks/sendEmailAuth';
 import { useModalStore } from '../../store';
+import { ModalApp } from '@shared/types';
 
 interface ModalLkProps {
   open: boolean;
-  setOpen: (v: boolean) => void;
+  setOpen: (v: ModalApp, state?: boolean) => void;
 }
 
 const ModalLkForm: React.FC<ModalLkProps> = ({ open, setOpen }) => {
@@ -25,7 +26,7 @@ const ModalLkForm: React.FC<ModalLkProps> = ({ open, setOpen }) => {
 
   const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null);
 
-  const { mutate } = useLkLogin();
+  const { mutate, isPending } = useLkLogin();
   const { openModal, setEmail } = useModalStore();
 
   const onSubmit = (data: ModalLkFormType) => {
@@ -39,7 +40,7 @@ const ModalLkForm: React.FC<ModalLkProps> = ({ open, setOpen }) => {
           } else {
             openModal('register_otp');
           }
-          setOpen(false);
+          setOpen('lk');
           form.reset();
         },
         onError: (e) => {
@@ -55,7 +56,7 @@ const ModalLkForm: React.FC<ModalLkProps> = ({ open, setOpen }) => {
   };
 
   const handleOpenChange = (v: boolean) => {
-    setOpen(v);
+    setOpen('lk', v);
     if (!v) {
       // закрыли модалку → сбросить reCAPTCHA (закроет popup и очистит токен)
       recaptchaRef.current?.reset();
@@ -65,7 +66,7 @@ const ModalLkForm: React.FC<ModalLkProps> = ({ open, setOpen }) => {
 
   // Hardcoded benefits list from the image
   const benefits = [
-    'Совершать покупки и скачивать 3D модели в любое время;',
+    'Совершать покупки и скачивать 3D-модели в любое время;',
     'Сохранять понравившиеся товары в избранное;',
     'Получать наши актуальные акции и специальные предложения.',
   ];
@@ -84,7 +85,7 @@ const ModalLkForm: React.FC<ModalLkProps> = ({ open, setOpen }) => {
             <Button
               onClick={form.handleSubmit(onSubmit)}
               className='h-full flex-1 text-white'
-              disabled={!recaptchaValue} // Disable if reCAPTCHA not completed
+              disabled={!recaptchaValue || isPending} // Disable if reCAPTCHA not completed
             >
               Вход / Регистрация
             </Button>

@@ -39,14 +39,44 @@ export default defineConfig(({ command }) => {
         '@entities': path.resolve(__dirname, 'src/entities'),
       },
     },
-    server: {
-      proxy: {
-        '/api': {
-          target: 'https://api.3dkreativik.store',
-          changeOrigin: true,
-          secure: false,
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Разделяем vendor библиотеки на отдельные чанки
+            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+            'ui-vendor': [
+              '@radix-ui/react-dialog',
+              '@radix-ui/react-dropdown-menu',
+              '@radix-ui/react-select',
+              '@radix-ui/react-tabs',
+              '@radix-ui/react-tooltip',
+            ],
+            'query-vendor': ['@tanstack/react-query'],
+            'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
+            'swiper-vendor': ['swiper'],
+          },
         },
       },
+      // Увеличиваем лимит предупреждений для больших чанков
+      chunkSizeWarningLimit: 1000,
+      // Включаем source maps только для production (опционально)
+      sourcemap: false,
+      // Минификация
+      minify: 'esbuild',
     },
+    // Оптимизация зависимостей
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'react-router-dom'],
+    },
+    // server: {
+    //   proxy: {
+    //     '/api': {
+    //       target: 'https://api.3dkreativik.store',
+    //       changeOrigin: true,
+    //       secure: false,
+    //     },
+    //   },
+    // },
   };
 });

@@ -24,7 +24,7 @@ const ButtonSave: React.FC<ButtonSaveProps> = ({
         variant='outline'
         onClick={onSave}
         className={cn(
-          'ml-3 h-full w-[46px] gap-0 rounded-full border p-3 md:w-[56px]',
+          'h-full w-[46px] gap-0 rounded-full border p-3 md:w-[56px]',
           active ? 'border-primary-active text-primary-active' : 'border-primary text-primary',
           className,
         )}

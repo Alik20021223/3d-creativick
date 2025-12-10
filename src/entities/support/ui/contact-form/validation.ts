@@ -10,7 +10,7 @@ export const contactSchema = z.object({
   agreePrivacy: z.boolean().refine((v) => v, { message: 'Обязательное поле' }),
   agreePersonal: z.boolean().refine((v) => v, { message: 'Обязательное поле' }),
   // БЫЛО: z.boolean().default(true)
-  agreeMarketing: z.boolean(), // ← делаем обязательным
+  // agreeMarketing: z.boolean(), // ← делаем обязательным
 });
 
 export type ContactFormFields = z.infer<typeof contactSchema>;
@@ -23,5 +23,5 @@ export const contactDefaultValues: ContactFormFields = {
   message: '',
   agreePrivacy: false,
   agreePersonal: false,
-  agreeMarketing: true, // дефолт задаём тут
+  // agreeMarketing: true, // дефолт задаём тут
 };

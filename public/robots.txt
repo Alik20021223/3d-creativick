@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://3dkreativik.ru/sitemap.xml
+Host: 3dkreativik.ru

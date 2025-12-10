@@ -2,31 +2,46 @@ import { cn } from '@shared/lib/utils';
 import { Button } from '@shadcn/button';
 import TopMainImg from '@entities/main/ui/top-main-img';
 import { useIsMobile } from '@app/hook/useMobile';
-import bearImg from '@assets/mini-bear-mobile-store.png';
+import bearImg from '@assets/mini-bear-mobile-store.webp';
+import { useNavigate } from 'react-router-dom';
+import { useAppStore } from '@app/store';
 
 const TopMainContent = () => {
   const isMobile = useIsMobile();
 
+  const { isAuth, setExclusive } = useAppStore();
+
+  const navigate = useNavigate();
+
+  const handleClickProfile = () => {
+    if (isAuth) {
+      navigate('/profile');
+    } else {
+      setExclusive('lk');
+    }
+  };
+
   return (
     <>
       <div className='bg-main container-custom relative z-10 w-full px-2.5 max-md:flex max-md:flex-col max-md:items-center max-md:gap-8 md:px-[83px]'>
-        <div className='relative z-10 mt-[140px] flex w-[355px] flex-col space-y-[47px] text-white max-md:mb-75 max-md:text-center md:mt-[130px] md:w-[551px]'>
+        <div className='relative z-10 mt-[140px] flex w-full flex-col space-y-[47px] text-white max-md:mb-75 max-md:text-center md:mt-[130px] md:w-[551px]'>
           <h1 className='font-ros-bold text-[46px] leading-[110%] font-bold tracking-[0px] md:text-7xl'>
-            Креативик Store: магазин 3D-моделей
+            Креативик Store: магазин <br /> 3D-моделей
           </h1>
           <h3 className='text-2xl leading-[120%] font-normal md:max-w-[502px] md:text-[32px]'>
-            Создавай эксклюзивы вместе с&nbsp;набором для&nbsp;творчества 3D&#8209;Креативик
+            Создавай эксклюзивы вместе с&nbsp;набором для&nbsp;творчества <br /> 3D Креативик
           </h3>
           <Button
             variant='pink'
+            onClick={handleClickProfile}
             className={cn('h-[68px] w-full text-2xl font-bold md:w-[461px] md:text-[32px]')}
           >
             В личный кабинет
           </Button>
         </div>
         {isMobile && (
-          <div className='absolute -bottom-55 left-[45%] z-0 w-[486px] -translate-x-1/2'>
-            <img src={bearImg} alt='bear' className='relative z-0 block h-[435px] w-[486px]' />
+          <div className='absolute -bottom-55 left-[40%] z-0 w-[500px] -translate-x-1/2'>
+            <img src={bearImg} alt='bear' className='relative z-0 block h-[500px] w-[500px]' />
           </div>
         )}
 

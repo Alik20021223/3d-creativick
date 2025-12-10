@@ -1,6 +1,6 @@
-import bearImg from '@assets/mini-bear-store.png';
+import bearImg from '@assets/mini-bear-store.webp';
 import heartImg from '@assets/heart-main.png';
-import moscowImg from '@assets/moscow-main.png';
+import moscowImg from '@assets/moscow-main.webp';
 import katushkaImg from '@assets/katushka-main.svg';
 
 const TopMainImg = () => {

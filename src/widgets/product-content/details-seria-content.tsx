@@ -1,11 +1,11 @@
 // src/widgets/product/DetailsSeriesContent.tsx
 import DetailsCarousel from '@entities/products/ui/details-carousel';
 // import { DETAILS_MOCK_10 } from '@utils/mock';
-import { ProductCardType } from '@shared/types'; // тип для items
+import { ProductModelType } from '@shared/types'; // тип для items
 
 type Props = {
   title?: string;
-  items: ProductCardType[];
+  items: ProductModelType[];
   className?: string;
 };
 
@@ -15,7 +15,7 @@ const DetailsSeriesContent: React.FC<Props> = ({
   className = '',
 }) => {
   return (
-    <section className={`container-custom pt-20 pb-25 max-md:py-15 ${className}`}>
+    <section className={`container-custom py-10 ${className}`}>
       <h1 className='title-text px-10 text-white max-md:pb-10 max-md:text-center 2xl:px-0'>
         {title}
       </h1>

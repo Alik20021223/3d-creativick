@@ -5,11 +5,17 @@ import React from 'react';
 interface ModalConfirmDeleteAccountProps {
   open: boolean;
   setOpen: (v: boolean) => void;
+  handleDelete: () => void;
 }
 
-const ModalConfirmDeleteAccount: React.FC<ModalConfirmDeleteAccountProps> = ({ open, setOpen }) => {
+const ModalConfirmDeleteAccount: React.FC<ModalConfirmDeleteAccountProps> = ({
+  open,
+  setOpen,
+  handleDelete,
+}) => {
   const handleClick = () => {
     setOpen(false);
+    handleDelete();
   };
 
   return (
@@ -20,7 +26,7 @@ const ModalConfirmDeleteAccount: React.FC<ModalConfirmDeleteAccountProps> = ({ o
         headerClassName='text-left'
         title='Удалить аккаунт?'
         footer={
-          <div className='flex w-full gap-3'>
+          <div className='flex w-full flex-col gap-3 md:flex-row'>
             <Button onClick={() => setOpen(false)} className='h-full flex-1 text-white'>
               Отмена
             </Button>

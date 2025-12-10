@@ -15,10 +15,10 @@ export default function CartDrawerLayout({ open, onClose, children }: CartDrawer
       className={[
         // позиция: под шапкой, справа
         'fixed top-24 z-[60] md:top-[78px]',
-        'w-full max-w-full px-2.5',
+        'w-full max-w-full px-2.5 max-md:pb-2.5',
         'md:right-10 md:w-[520px] md:max-w-[92vw] md:px-0',
         // карточка
-        'h-[calc(100vh-96px)]',
+        'dialog-viewport-height',
         // анимация появления/исчезновения
         'transition-all duration-250',
         open
@@ -27,13 +27,13 @@ export default function CartDrawerLayout({ open, onClose, children }: CartDrawer
       ].join(' ')}
     >
       {/* Заголовок карточки */}
-      <div className='bg-secondary-white flex h-full w-full flex-col rounded-[40px]'>
-        <div className='absolute top-2.5 right-2.5'>
+      <div className='bg-secondary-white flex h-full w-full flex-col rounded-[40px] relative'>
+        <div className='absolute top-2.5 right-2.5 z-[100]'>
           <Button
             variant='link'
             onClick={onClose}
             aria-label='Закрыть корзину'
-            className='text-primary-active rounded-full p-2 transition'
+            className='text-primary-active rounded-full p-2 transition pointer-events-auto'
           >
             <X className='h-6 w-6' />
           </Button>

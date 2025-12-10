@@ -8,7 +8,7 @@ const AuthContent = () => {
   return (
     <>
       <ModalAuthForm open={auth_otp} />
-      <ModalSuccessAuth open={success_auth_otp} />
+      <ModalSuccessAuth open={success_auth_otp} modalKey='success_auth_otp' />
     </>
   );
 };

@@ -7,7 +7,7 @@ const NextButton = ({ swiperRef, className = '' }: SwiperButtonProps & { classNa
     <Button
       variant='outline'
       onClick={() => swiperRef.current?.slideNext()}
-      className={`hover:text-primary-active grid h-10 w-10 place-items-center rounded-full border-none bg-transparent text-white outline-2 hover:bg-white ${className}`}
+      className={`hover:text-primary-active grid h-10 w-10 place-items-center rounded-full bg-transparent text-white outline-2 hover:bg-white ${className}`}
       aria-label='Next'
     >
       <ChevronRight className='h-5 w-5' />

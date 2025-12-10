@@ -1,13 +1,9 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Controller, UseFormReturn, FieldValues, FieldPath } from 'react-hook-form'; // Используем типы UseFormReturn и FieldValues
+import { useEffect, useMemo } from 'react';
+import { Controller, UseFormReturn, FieldValues, FieldPath } from 'react-hook-form';
 import { Button } from '@shadcn/button';
-
-// Предполагаемые импорты InputOTP из вашей кодовой базы
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@shared/shadcn/input-otp';
-
-// --- КОНСТАНТЫ ДЛЯ ТАЙМЕРА ---
-const RESEND_TIME_LIMIT = 5 * 60; // 5 минут в секундах
-// ------------------------------
+import { useResendTimer } from '../../hooks/useResendTimer';
+import { formatTime } from '../../utils/timer';
 
 // --- ИНТЕРФЕЙС КОМПОНЕНТА ---
 
@@ -44,73 +40,27 @@ const CodeVerificationStep = <TForm extends FieldValues & { code: string }>({
   onResend,
   errorMessage,
   open,
-  form, // Принимаем форму из пропсов
+  form,
 }: CodeVerificationStepProps<TForm>) => {
-  // 1. Состояние для таймера
-  const [timeLeft, setTimeLeft] = useState(RESEND_TIME_LIMIT);
-  const [isResendActive, setIsResendActive] = useState(false);
-
   const CODE_FIELD = 'code' as FieldPath<TForm>;
 
-  // Используем переданные методы RHF
   const { handleSubmit, control, setError, reset } = form;
 
-  // 2. Функция для запуска/сброса таймера
-  const startTimer = useCallback(() => {
-    setTimeLeft(RESEND_TIME_LIMIT);
-    setIsResendActive(false);
-    onResend(); // Вызываем внешний колбэк для отправки кода
-  }, [onResend]);
+  const { timeLeft, isResendActive, startTimer } = useResendTimer(open, onResend);
 
-  // Запускаем таймер и сбрасываем форму при открытии
+  // Сбрасываем форму при открытии
   useEffect(() => {
     if (open) {
-      // ИСПРАВЛЕНИЕ: Используем 'as any' для обхода ошибки типизации RHF
       reset({ code: '' } as TForm);
-      startTimer();
     }
-    // Если open переключается на false, timerId должен быть очищен через cleanup в useEffect[3]
-  }, [open, startTimer, reset]);
+  }, [open, reset]);
 
-  // 3. Эффект для обратного отсчета - ИСПРАВЛЕНИЕ БЕСКОНЕЧНОГО ЦИКЛА
-  // Зависимости: [isResendActive] - запускается, когда становится false
-  useEffect(() => {
-    if (open && timeLeft > 0 && !isResendActive) {
-      const timerId = setInterval(() => {
-        // Используем колбэк-форму для setTimeLeft.
-        // Это позволяет удалить 'timeLeft' из массива зависимостей.
-        setTimeLeft((prevTime) => {
-          if (prevTime <= 1) {
-            return 0; // Возвращаем 0, но clearInterval вызывается в cleanup/следующем цикле
-          }
-          return prevTime - 1;
-        });
-      }, 1000);
-
-      // Логика очистки, которая всегда гарантирует, что таймер остановлен,
-      // когда isResendActive становится true или open становится false.
-      return () => clearInterval(timerId);
-    }
-
-    // Если timeLeft достигает 0, активируем кнопку повторной отправки
-    if (timeLeft === 0 && !isResendActive) {
-      setIsResendActive(true);
-    }
-  }, [open, isResendActive, timeLeft]); // Добавляем timeLeft сюда, чтобы ловить его изменение до 0
-
-  // 4. Обработка ошибки
+  // Обработка ошибки
   useEffect(() => {
     if (errorMessage) {
       setError(CODE_FIELD, { type: 'manual', message: errorMessage });
     }
   }, [errorMessage, setError, CODE_FIELD]);
-
-  // 5. Форматирование времени (MM:SS)
-  const formatTime = (totalSeconds: number) => {
-    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
-    const seconds = String(totalSeconds % 60).padStart(2, '0');
-    return `${minutes}:${seconds}`;
-  };
 
   // 6. Функция, которая вызывает внешний onVerify, передавая код
   const handleFormSubmit = handleSubmit((data: TForm) => {
@@ -167,9 +117,9 @@ const CodeVerificationStep = <TForm extends FieldValues & { code: string }>({
           <span className='font-semibold'>{formatTime(timeLeft)}</span>
         </p>
       )}
+      {/* Примечание: Кнопка "Отправить" должна быть вставлена родительским компонентом,
+    который обернул этот компонент в <FormProvider> и имеет доступ к form. */}
     </div>
-    // Примечание: Кнопка "Отправить" должна быть вставлена родительским компонентом,
-    // который обернул этот компонент в <FormProvider> и имеет доступ к form.
   );
 };
 

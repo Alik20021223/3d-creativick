@@ -1,6 +1,6 @@
 import { Button } from '@shared/shadcn/button';
 import ModalLayout from '@app/layout/modalLayout';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type ModalAuthFormType, ModalAuthSchema } from './validation';
@@ -8,10 +8,9 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '@shared/shadcn/input-otp'
 import { useModalStore } from '../../store';
 import { useVerifyCode } from '../../hooks/getCode';
 import { useAppStore } from '@app/store';
-
-// --- КОНСТАНТЫ ДЛЯ ТАЙМЕРА ---
-const RESEND_TIME_LIMIT = 5 * 60; // 5 минут в секундах
-// ------------------------------
+import { useResendTimer } from '../../hooks/useResendTimer';
+import { formatTime } from '../../utils/timer';
+import { ErrorMessage } from '@shared/components/error-message';
 
 interface ModalAuthFormProps {
   open: boolean;
@@ -23,15 +22,9 @@ const ModalAuthForm: React.FC<ModalAuthFormProps> = ({ open }) => {
 
   const [serverError, setServerError] = useState<string | null>(null);
 
-  // 1. Состояние для таймера
-  const [timeLeft, setTimeLeft] = useState(RESEND_TIME_LIMIT);
-  const [isResendActive, setIsResendActive] = useState(false);
-
   const { mutate, isPending } = useVerifyCode();
 
-  // 2. Инициализация формы
   const form = useForm<ModalAuthFormType>({
-    // Убедитесь, что 'code' есть в ModalAuthFormType
     defaultValues: { code: '' },
     resolver: zodResolver(ModalAuthSchema),
     mode: 'onBlur',
@@ -40,35 +33,7 @@ const ModalAuthForm: React.FC<ModalAuthFormProps> = ({ open }) => {
   const { watch, handleSubmit, control } = form;
   const currentCode = watch('code');
 
-  // 3. Функция для запуска/сброса таймера
-  const startTimer = useCallback(() => {
-    setTimeLeft(RESEND_TIME_LIMIT);
-    setIsResendActive(false);
-  }, []);
-
-  // Запускаем таймер при первом открытии
-  useEffect(() => {
-    if (open) {
-      startTimer();
-    }
-  }, [open, startTimer]);
-
-  // 4. Эффект для обратного отсчета
-  useEffect(() => {
-    if (timeLeft > 0 && open && !isResendActive) {
-      const timerId = setInterval(() => {
-        setTimeLeft((prevTime) => {
-          if (prevTime <= 1) {
-            clearInterval(timerId);
-            setIsResendActive(true); // Показываем кнопку "Отправить повторно"
-            return 0;
-          }
-          return prevTime - 1;
-        });
-      }, 1000);
-      return () => clearInterval(timerId);
-    }
-  }, [timeLeft, open, isResendActive]);
+  const { timeLeft, isResendActive, startTimer } = useResendTimer(open);
 
   const onSubmit = (data: ModalAuthFormType) => {
     setServerError(null); // сброс перед запросом
@@ -96,16 +61,8 @@ const ModalAuthForm: React.FC<ModalAuthFormProps> = ({ open }) => {
   };
 
   const handleResend = () => {
-    // Логика повторной отправки кода на сервер
     console.log('Код отправлен повторно. Запуск таймера.');
     startTimer();
-  };
-
-  // Форматирование времени (MM:SS)
-  const formatTime = (totalSeconds: number) => {
-    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
-    const seconds = String(totalSeconds % 60).padStart(2, '0');
-    return `${minutes}:${seconds}`;
   };
 
   return (
@@ -119,11 +76,7 @@ const ModalAuthForm: React.FC<ModalAuthFormProps> = ({ open }) => {
         footer={
           <>
             <div className='flex w-full flex-col gap-2'>
-              {serverError && (
-                <div className='w-full rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600'>
-                  {serverError}
-                </div>
-              )}
+              <ErrorMessage message={serverError ?? ''} />
               <div className='flex w-full gap-3'>
                 <div className='flex w-full gap-3'>
                   <Button
@@ -141,7 +94,9 @@ const ModalAuthForm: React.FC<ModalAuthFormProps> = ({ open }) => {
       >
         <div className='flex flex-col items-center'>
           <h1 className='text-secondary-text my-3 text-center'>Код отправлен на почту {email}</h1>
-          <p className='mb-6 text-base text-gray-700'>Введите код из SMS</p>
+          <p className='mb-6 text-center text-base text-gray-700'>
+            Если письма нет 1–2 минуты, проверьте папки «Спам» и «Промоакции».
+          </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className='mb-6'>
             {/* Использование Controller для интеграции с react-hook-form */}

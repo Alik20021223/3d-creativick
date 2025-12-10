@@ -1,25 +1,25 @@
-'use client';
-
 import React from 'react';
 import { Button } from '@shadcn/button';
 import MenuIcon from '@assets/menu-icon.svg';
 import { Popover, PopoverTrigger, PopoverContent } from '@shadcn/popover';
 import userSrc from '@assets/user-profile.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@shared/lib/utils';
 import { ShoppingCart, XIcon } from 'lucide-react';
-import { HeaderType } from '@shared/types';
+import { HeaderType, ModalApp } from '@shared/types';
 import { useAppStore } from '@app/store';
 import TgIcon from '@assets/tg-icon.svg';
 import VkIcon from '@assets/vk-icon.svg';
+import NavItem from '../navItem';
+import { useSharedStore } from '@/shared/store';
 
 type MobileHeaderProps = {
   menuItems: HeaderType[]; // передаём массив напрямую
   cartCount: number; // количество в корзине
   linkClass: (href: string) => string;
-  setOpen: (v: boolean) => void;
-  onClickCart: () => void;
+  setOpen: (v: ModalApp, state?: boolean) => void;
   open: boolean;
+  pathname: string;
 };
 
 const MobileHeader: React.FC<MobileHeaderProps> = ({
@@ -28,24 +28,32 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
   cartCount = 0,
   setOpen,
   open,
-  onClickCart,
+  pathname,
 }) => {
-  const { isAuth, setOpenLkModal } = useAppStore();
+  const { isAuth } = useAppStore();
 
   const navigate = useNavigate();
+
+  const { appSettings } = useSharedStore();
+
+  const phoneNumber = appSettings.find((s) => s.key === 'phone')?.value;
 
   const handleClickProfile = () => {
     if (isAuth) {
       navigate('/profile');
     } else {
-      setOpenLkModal(true);
+      setOpen('lk', true);
     }
+  };
+
+  const handleClickCart = () => {
+    setOpen('cart');
   };
 
   return (
     <>
       <div className='relative z-50'>
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={open} onOpenChange={(v) => setOpen('menu', v)}>
           <PopoverTrigger asChild>
             <Button
               variant='ghost'
@@ -65,30 +73,35 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
             align='end'
             sideOffset={20}
             className='data-[state=open]:animate-in data-[state=closed]:animate-out bg-secondary-active w-[300px] rounded-2xl border-none p-0 p-5 shadow-xl'
-            onEscapeKeyDown={() => setOpen(false)}
+            onEscapeKeyDown={() => setOpen('menu', false)}
           >
             <nav className='mb-10 flex flex-col text-end'>
               {menuItems.map((item) => (
-                <Link key={item.href} to={item.href} className={cn(linkClass(item.href), 'py-2')}>
-                  {item.label}
-                </Link>
+                <NavItem
+                  pathname={pathname}
+                  linkClass={linkClass}
+                  label={item.label}
+                  href={item.href}
+                  onClick={() => setOpen('menu', false)}
+                  onHashClick={() => setOpen('menu', false)}
+                />
               ))}
             </nav>
 
             <div className='mb-10 flex w-full items-center gap-2'>
-              {isAuth && (
-                <div className='flex-1'>
-                  <Button
-                    onClick={onClickCart}
-                    className='bg-primary relative h-11 w-full !p-0 text-white'
-                  >
-                    <ShoppingCart className='!h-8 !w-8' />
+              <div className='flex-1'>
+                <Button
+                  onClick={handleClickCart}
+                  className='bg-primary relative h-11 w-full !p-0 text-white'
+                >
+                  <ShoppingCart className='!h-8 !w-8' />
+                  {cartCount > 0 && (
                     <div className='bg-pink-active absolute -top-2 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm'>
                       {cartCount}
                     </div>
-                  </Button>
-                </div>
-              )}
+                  )}
+                </Button>
+              </div>
 
               <div className='flex-1'>
                 <Button
@@ -111,9 +124,14 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
                 >
                   info@3dkreativik.ru
                 </a>
-                <a href='tel:+84959888282' className='text-base md:text-[22px]'>
-                  8 (495) 988-82-82
-                </a>
+                {phoneNumber &&
+                    <a 
+                      href={`tel:${phoneNumber.replace(/\s/g, '').replace(/[()+-]/g, '')}`}
+                      className='text-base md:text-[22px]'>
+                      {phoneNumber}
+                     </a>
+                     }
+                
               </div>
 
               <div className='flex justify-center gap-3 md:justify-start'>

@@ -23,6 +23,9 @@ export const useAddToShoppingCart = () => {
       queryClient.invalidateQueries({
         queryKey: ['auth', 'get-shopping-cart'],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['order', 'calculate'],
+      });
     },
   });
 };

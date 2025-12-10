@@ -1,5 +1,13 @@
 import { LevelDef, OrderStatus } from '@entities/profile/types';
-import { Download, RotateCcw, CreditCard, CheckCircle2, XCircle, Clock3 } from 'lucide-react';
+import {
+  Download,
+  RotateCcw,
+  CreditCard,
+  CheckCircle2,
+  XCircle,
+  Clock3,
+  InfoIcon,
+} from 'lucide-react';
 import ImgCubick from '@assets/novichok-kubick.svg';
 import ImgBook from '@assets/student-book.svg';
 import ImgHat from '@assets/master-hat.svg';
@@ -44,18 +52,18 @@ export const statusConfig: Record<
     LeftIcon: typeof CheckCircle2;
     ctaText: string;
     ctaVariant: 'default' | 'secondary' | 'outline' | 'link';
-    ctaHandlerKey: 'onDownload' | 'onReorder' | 'onPay';
-    CtaIcon?: typeof Download | typeof RotateCcw | typeof CreditCard;
+    ctaHandlerKey: 'onOpenModal' | 'onReorder' | 'onPay';
+    CtaIcon?: typeof Download | typeof RotateCcw | typeof CreditCard | typeof InfoIcon;
   }
 > = {
   paid: {
     label: 'Заказ оплачен',
     leftPillClass: 'bg-lime-500 text-white',
     LeftIcon: CheckCircle2,
-    ctaText: 'Скачать',
+    ctaText: 'Детали заказа',
     ctaVariant: 'default',
-    ctaHandlerKey: 'onDownload',
-    CtaIcon: Download,
+    ctaHandlerKey: 'onOpenModal',
+    CtaIcon: InfoIcon,
   },
   canceled: {
     label: 'Заказ отменён',
@@ -65,13 +73,22 @@ export const statusConfig: Record<
     ctaVariant: 'default',
     ctaHandlerKey: 'onReorder',
   },
-  pending: {
+  progress: {
     label: 'Ожидает оплаты',
     leftPillClass: 'bg-amber-500 text-white',
     LeftIcon: Clock3,
     ctaText: 'Оплатить',
     ctaVariant: 'default',
     ctaHandlerKey: 'onPay',
+  },
+  refund: {
+    label: 'Возврат средств',
+    leftPillClass: 'bg-sky-500 text-white',
+    LeftIcon: RotateCcw,
+    ctaText: 'Повторить заказ',
+    ctaVariant: 'default',
+    ctaHandlerKey: 'onReorder',
+    CtaIcon: RotateCcw,
   },
 };
 

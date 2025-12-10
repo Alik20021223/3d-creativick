@@ -7,5 +7,11 @@ export const PROFILE_ROUTES = [
   {
     path: PROFILE_URL.BASE,
     element: <ProfilePage />,
+    children: [
+      {
+        path: PROFILE_URL.PAYMENT_STATUS,
+        element: <ProfilePage />,
+      },
+    ],
   },
 ];

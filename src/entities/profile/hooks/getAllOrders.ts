@@ -5,12 +5,11 @@ import { OrderProfileResponse } from '@entities/profile/types/order';
 
 export function useGetAllOrders(params?: ItemFilter) {
   return useQuery<OrderProfileResponse>({
-    queryKey: ['auth', 'get-all-orders'],
+    queryKey: ['auth', 'get-all-orders', params],
     queryFn: async ({ signal }) => {
       const res = await profileService.getOrderProfile(params, signal);
       return res;
     },
     staleTime: 60_000,
-    placeholderData: (prev) => prev,
   });
 }

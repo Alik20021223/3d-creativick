@@ -5,11 +5,21 @@ import React from 'react';
 interface ModalConfirmDeleteItemProps {
   open: boolean;
   setOpen: (v: boolean) => void;
+  handleDeleteItem: (id: number) => void;
+  id: number;
+  title: string
 }
 
-const ModalConfirmDeleteItem: React.FC<ModalConfirmDeleteItemProps> = ({ open, setOpen }) => {
+const ModalConfirmDeleteItem: React.FC<ModalConfirmDeleteItemProps> = ({
+  open,
+  setOpen,
+  handleDeleteItem,
+  id,
+  title
+}) => {
   const handleClick = () => {
     setOpen(false);
+    handleDeleteItem(id);
   };
 
   return (
@@ -20,7 +30,7 @@ const ModalConfirmDeleteItem: React.FC<ModalConfirmDeleteItemProps> = ({ open, s
         headerClassName='text-left'
         title='Удалить из корзины?'
         footer={
-          <div className='flex w-full gap-3'>
+          <div className='flex w-full flex-col gap-3 md:flex-row'>
             <Button onClick={() => setOpen(false)} className='h-full flex-1 text-white'>
               Отмена
             </Button>
@@ -31,7 +41,7 @@ const ModalConfirmDeleteItem: React.FC<ModalConfirmDeleteItemProps> = ({ open, s
         }
       >
         <p className='text-secondary-text text-lg'>
-          Товар «Очень красивая серия 1» будет удалён из&nbsp;корзины, продолжить?
+          Товар «{title}» будет удалён из&nbsp;корзины, продолжить?
         </p>
       </ModalLayout>
     </>

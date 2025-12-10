@@ -1,10 +1,8 @@
 import { DropdownItem, SelectOption } from '@shared/types';
-import ourActions from '@assets/our-actions.png';
-import ourActionsMobile from '@assets/mobile-actions.png';
-import wbLogo from '@assets/mobile-wb.png';
-import yandexLogo from '@assets/mobile-yandex.png';
-import megaLogo from '@assets/mobile-mega.png';
-import ozonLogo from '@assets/mobile-ozon.png';
+// import wbLogo from '@assets/mobile-wb.png';
+// import yandexLogo from '@assets/mobile-yandex.png';
+// import megaLogo from '@assets/mobile-mega.png';
+// import ozonLogo from '@assets/mobile-ozon.png';
 import AtomLogo from '@assets/atom-store.png';
 // import { slugify } from './constant';
 
@@ -16,8 +14,8 @@ export const headerMock = {
     { label: 'Поддержка', href: '/support' },
   ],
   shop: [
-    { label: 'Главная', href: '/' },
-    { label: 'Каталог', href: '/#shop' },
+    { label: 'Главная', href: 'https://3dkreativik.ru/' },
+    { label: 'Каталог', href: '/' },
     { label: 'Контакты', href: '#contacts' },
     { label: 'Поддержка', href: '/support' },
   ],
@@ -65,38 +63,31 @@ export const footerColumns = [
   {
     title: 'Главная',
     links: [
-      { to: '/about', label: 'О нас' },
-      { to: '/reviews', label: 'Отзывы' },
-      { to: '/where-to-buy', label: 'Где купить' },
+      { to: 'https://3dkreativik.ru/#about', label: 'О нас' },
+      { to: 'https://3dkreativik.ru/#reviews', label: 'Отзывы' },
+      { to: 'https://3dkreativik.ru/#where-to-buy', label: 'Где купить' },
     ],
     colSpan: 'col-span-6 md:col-span-2',
   },
   {
     title: 'Магазин',
     links: [
-      { to: '/catalog', label: 'Каталог' },
-      { to: '/cart', label: 'Корзина' },
-      { to: '/account', label: 'Личный кабинет' },
+      { to: '/#shop', label: 'Каталог' },
+      { to: '/shopping-cart', label: 'Корзина' },
+      { to: '/profile', label: 'Личный кабинет' },
     ],
     colSpan: 'col-span-6 md:col-span-2',
   },
   {
     title: 'Поддержка',
     links: [
-      { to: '/software', label: 'Программное обеспечение' },
-      { to: '/manuals', label: 'Руководство пользователя' },
+      { to: '/support#instructions', label: 'Программное обеспечение' },
+      { to: '/support#instructions', label: 'Руководство пользователя' },
       { to: '/support#faq', label: 'Часто задаваемые вопросы' },
       { to: '/support#have-questions', label: 'Остались вопросы?' },
     ],
     colSpan: 'col-span-12 md:col-span-2',
   },
-];
-
-export const ourActionsMock: string[] = [ourActions, ourActions, ourActions];
-export const ourActionsMockMobile: string[] = [
-  ourActionsMobile,
-  ourActionsMobile,
-  ourActionsMobile,
 ];
 
 export const PerPageSelect: SelectOption[] = [
@@ -113,72 +104,98 @@ export const SortMock: DropdownItem[] = [
   { value: 'newest', label: 'Сначала новые' },
 ];
 
+export const sortOrderOptions: SelectOption[] = [
+  { label: 'Сначала новые', value: 'newest' },
+  { label: 'Сначала старые', value: 'oldest' },
+];
+
+export const statusFilterOptions: SelectOption[] = [
+  { label: 'Показывать все', value: 'all' },
+  { label: 'Статус Ожидает оплаты', value: 'progress' },
+  { label: 'Статус Заказ оплачен', value: 'paid' },
+  { label: 'Статус Заказ отменен', value: 'canceled' },
+];
+
+
+
 export const marketplaces = [
   {
     name: 'Atom',
     logo: AtomLogo,
-    url: 'https://atomstore.ru',
+    url: 'https://shop.atom.museum/catalog/additivnye_tekhnologii__1/',
   },
-  {
-    name: 'Wildberries',
-    logo: wbLogo,
-    url: 'https://www.wildberries.ru',
-  },
-  {
-    name: 'Яндекс Маркет',
-    logo: yandexLogo,
-    url: 'https://market.yandex.ru',
-  },
-  {
-    name: 'Мега Маркет',
-    logo: megaLogo,
-    url: 'https://megamarket.ru',
-  },
-  {
-    name: 'Ozon',
-    logo: ozonLogo,
-    url: 'https://ozon.ru',
-  },
+  // {
+  //   name: 'Wildberries',
+  //   logo: wbLogo,
+  //   url: 'https://www.wildberries.ru',
+  // },
+  // {
+  //   name: 'Яндекс Маркет',
+  //   logo: yandexLogo,
+  //   url: 'https://market.yandex.ru',
+  // },
+  // {
+  //   name: 'Мега Маркет',
+  //   logo: megaLogo,
+  //   url: 'https://megamarket.ru',
+  // },
+  // {
+  //   name: 'Ozon',
+  //   logo: ozonLogo,
+  //   url: 'https://ozon.ru',
+  // },
 ];
 
 export const marketplacesMobile = [
   {
     name: 'Atom',
     logo: AtomLogo,
-    url: 'https://atomstore.ru',
+    url: 'https://shop.atom.museum/catalog/additivnye_tekhnologii__1/',
   },
-  {
-    name: 'Wildberries',
-    logo: wbLogo,
-    url: 'https://www.wildberries.ru',
-  },
-  {
-    name: 'Яндекс Маркет',
-    logo: yandexLogo,
-    url: 'https://market.yandex.ru',
-  },
-  {
-    name: 'Мега Маркет',
-    logo: megaLogo,
-    url: 'https://megamarket.ru',
-  },
-  {
-    name: 'Ozon',
-    logo: ozonLogo,
-    url: 'https://ozon.ru',
-  },
+  // {
+  //   name: 'Wildberries',
+  //   logo: wbLogo,
+  //   url: 'https://www.wildberries.ru',
+  // },
+  // {
+  //   name: 'Яндекс Маркет',
+  //   logo: yandexLogo,
+  //   url: 'https://market.yandex.ru',
+  // },
+  // {
+  //   name: 'Мега Маркет',
+  //   logo: megaLogo,
+  //   url: 'https://megamarket.ru',
+  // },
+  // {
+  //   name: 'Ozon',
+  //   logo: ozonLogo,
+  //   url: 'https://ozon.ru',
+  // },
 ];
 
 export const SupportTabs = [
-  { id: 'service', label: 'Обслуживание' },
-  { id: 'troubleshoot', label: 'Поиск и устранение неполадок' },
-  { id: 'slicer', label: 'Слайсер' },
+  {
+    id: 'service', // value для Tabs
+    label: 'Обслуживание',
+    pageCategoryId: 1, // ← id категории из бэка
+  },
+  {
+    id: 'troubleshoot',
+    label: 'Поиск и устранение неполадок',
+    pageCategoryId: 2,
+  },
+  {
+    id: 'slicer',
+    label: 'Слайсер',
+    pageCategoryId: 3,
+  },
 ] as const;
 
 export const ProfileTabs = [
   { id: 'orders', label: 'Заказы' },
   { id: 'favorites', label: 'Избранное' },
-  { id: 'personal-info', label: 'Персональный данные' },
+  { id: 'personal-info', label: 'Персональные данные' },
 ] as const;
 
 export type TabId = (typeof ProfileTabs)[number]['id'];
@@ -200,4 +217,11 @@ export const SupportCards: Record<(typeof SupportTabs)[number]['id'], string[]> 
     'Извлечение и замена шестерней подачи пластика',
   ],
   slicer: ['Быстрые пресеты для PLA', 'Профили ретракта', 'Артефакты на периметрах: как убрать'],
+};
+
+export const COUPON_ERROR_MESSAGES: Record<string, string> = {
+  ERROR_251: 'Этот промокод уже был использован',
+  ERROR_252: 'Промокод не найден',
+  ERROR_250: 'Срок действия промокода истёк',
+  // ...добавишь остальные коды, какие есть
 };

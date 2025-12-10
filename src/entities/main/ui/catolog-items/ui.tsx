@@ -9,13 +9,15 @@ import { ArrowDownWideNarrow, Search } from 'lucide-react';
 import CustomDropdown from '@feature/custom-dropdown';
 import { useMainStore } from '../../store';
 import { ProductCardType } from '@shared/types';
+import { ProductListSkeleton } from '@shared/components/skeleton';
 
 type CatalogGridProps = {
   topRef?: React.RefObject<HTMLDivElement | null>;
   products?: ProductCardType[];
+  isLoading?: boolean;
 };
 
-export default function CatalogGrid({ topRef, products }: CatalogGridProps) {
+export default function CatalogGrid({ topRef, products, isLoading }: CatalogGridProps) {
   const {
     perPage,
     setPerPage,
@@ -33,18 +35,23 @@ export default function CatalogGrid({ topRef, products }: CatalogGridProps) {
 
   // Дебаунс: после паузы обновляем значение в сторе
   useEffect(() => {
-    const t = setTimeout(() => setSearchStore(searchValue.trim()), 400);
+    const trimmed = searchValue.trim();
+    if (trimmed === searchStore) return; // Не обновляем если значение не изменилось
+    
+    const t = setTimeout(() => setSearchStore(trimmed), 400);
     return () => clearTimeout(t);
-  }, [searchValue, setSearchStore]);
+  }, [searchValue, searchStore, setSearchStore]);
 
   const scrollToTop = () => topRef?.current?.scrollIntoView({ behavior: 'smooth' });
 
   const totalPages = Math.max(1, Math.ceil(total / perPage));
 
-  // если пользователь уменьшил perPage и текущая страница стала “пустой”
+  // если пользователь уменьшил perPage и текущая страница стала "пустой"
   useEffect(() => {
-    if (page > totalPages) setPage(totalPages);
-  }, [perPage, totalPages, page]);
+    if (totalPages > 0 && page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [perPage, totalPages, page, setPage]);
 
   return (
     <section className='w-full'>
@@ -81,11 +88,15 @@ export default function CatalogGrid({ topRef, products }: CatalogGridProps) {
       </div>
 
       {/* грид карточек */}
-      <div className='grid grid-cols-1 gap-4 max-md:justify-items-center md:grid-cols-2 xl:grid-cols-3'>
-        {products?.map((item) => (
-          <ProductCard key={item.id} data={item} />
-        ))}
-      </div>
+      {isLoading ? (
+        <ProductListSkeleton count={perPage} />
+      ) : (
+        <div className='grid grid-cols-1 gap-4 max-md:justify-items-center md:grid-cols-2 xl:grid-cols-3'>
+          {products?.map((item) => (
+            <ProductCard key={item.id} data={item} />
+          ))}
+        </div>
+      )}
 
       {/* пагинация */}
       <div className='mt-10 flex justify-center'>

@@ -7,25 +7,31 @@ import { useModalStore } from '../../store';
 interface ModalSuccessAuthProps {
   open: boolean;
   title?: string;
+  modalKey?: 'register_success' | 'success_auth_otp';
 }
 
 const ModalSuccessAuth: React.FC<ModalSuccessAuthProps> = ({
   open,
   title = 'Авторизация выполнена',
+  modalKey,
 }) => {
   const navigate = useNavigate();
 
-  const { closeModal, closeAll } = useModalStore();
+  const { closeModal, closeAll, register_success } = useModalStore();
+
+  // Определяем, какую модалку закрывать, если modalKey не передан
+  const currentModalKey: 'register_success' | 'success_auth_otp' =
+    modalKey || (register_success ? 'register_success' : 'success_auth_otp');
 
   return (
     <>
       <ModalLayout
         open={open}
-        onOpenChange={() => closeModal('success_auth_otp')}
+        onOpenChange={() => closeModal(currentModalKey)}
         headerClassName='text-left'
         title={title}
         footer={
-          <div className='flex w-full gap-3'>
+          <div className='flex w-full gap-3 max-md:flex-col'>
             <Button
               onClick={() => {
                 closeAll();

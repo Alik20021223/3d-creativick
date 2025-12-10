@@ -12,16 +12,24 @@ import { useModalStore } from '../../store';
 import { useRegisterForm } from '../../hooks/sendRegisterForm';
 import { formattedBirthDate } from '@utils/constant';
 import { useAppStore } from '@app/store';
+import { useSharedStore } from '@/shared/store';
 
 interface ModalRegisterProfileProps {
   open: boolean;
 }
 
 const ModalRegisterProfileForm: React.FC<ModalRegisterProfileProps> = ({ open }) => {
-  const { closeModal, email, openModal } = useModalStore();
+  const { closeModal, email, openModal, closeAll } = useModalStore();
   const { setIsAuth } = useAppStore();
 
   const { mutate } = useRegisterForm();
+
+  const { appSettings } = useSharedStore();
+
+  const userAgreementUrl =
+    appSettings.find((s) => s.key === 'user_agreement')?.value ?? '/personal-data';
+
+  const offerAgreementUrl = appSettings.find((s) => s.key === 'offer_agreement')?.value ?? '/offer';
 
   const form = useForm<ModalRegisterFormType>({
     defaultValues: {
@@ -54,6 +62,7 @@ const ModalRegisterProfileForm: React.FC<ModalRegisterProfileProps> = ({ open })
           setIsAuth?.(true);
           openModal('register_success');
           closeModal('register_form');
+          closeAll()
         },
         onError: (e) => {
           console.error('Login error:', e);
@@ -132,7 +141,20 @@ const ModalRegisterProfileForm: React.FC<ModalRegisterProfileProps> = ({ open })
                 onCheckedChange={(checked) =>
                   form.setValue('policyAgreement', !!checked, { shouldValidate: true })
                 }
-                label='Я ознакомлен(а) с политикой конфиденциальности'
+                label={
+                  <span className='text-secondary-text text-sm'>
+                    Я ознакомлен(-на) с{' '}
+                    <a
+                      href={userAgreementUrl}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-primary hover:underline'
+                    >
+                      {' '}
+                      Пользовательским соглашением{' '}
+                    </a>
+                  </span>
+                }
                 error={form.formState.errors.policyAgreement?.message}
                 className='data-[state=checked]:bg-primary-active'
               />
@@ -143,7 +165,20 @@ const ModalRegisterProfileForm: React.FC<ModalRegisterProfileProps> = ({ open })
                 onCheckedChange={(checked) =>
                   form.setValue('dataProcessing', !!checked, { shouldValidate: true })
                 }
-                label='Даю согласие на обработку персональных данных'
+                label={
+                  <span className='text-secondary-text text-sm'>
+                    Даю согласие на{' '}
+                    <a
+                      href={offerAgreementUrl}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-primary hover:underline'
+                    >
+                      {' '}
+                      Обработку персональных данных{' '}
+                    </a>
+                  </span>
+                }
                 error={form.formState.errors.dataProcessing?.message}
                 className='data-[state=checked]:bg-primary-active'
               />

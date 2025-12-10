@@ -2,6 +2,7 @@ import { useIsMobile } from '@app/hook/useMobile';
 import { Link } from 'react-router-dom';
 import ErrorImg from '@assets/Error-img.png';
 import MobileErrorImg from '@assets/Mobile-Error-img.png';
+import { Button } from '@shared/shadcn/button';
 
 const ErrorPage = () => {
   const isMobile = useIsMobile();
@@ -38,22 +39,13 @@ const ErrorPage = () => {
               </p>
 
               <div className='relative z-10 mt-8 flex gap-5 max-md:flex-col max-md:items-center max-md:justify-center'>
-                <Link
-                  to='/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='bg-primary-active inline-flex h-[56px] w-[195px] items-center justify-center rounded-full text-[22px] font-normal text-white max-md:w-full max-md:text-lg'
-                >
-                  На главную
-                </Link>
-                <Link
-                  to='/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='bg-primary-active inline-flex h-[56px] w-[195px] items-center justify-center rounded-full text-[22px] font-normal text-white max-md:w-full max-md:text-lg'
-                >
-                  В магазин
-                </Link>
+                <Button className='bg-primary-active inline-flex h-[56px] w-[195px] items-center justify-center rounded-full text-[22px] font-normal text-white max-md:w-full max-md:text-lg'>
+                  <Link to='https://3dkreativik.ru/'>На главную</Link>
+                </Button>
+
+                <Button className='bg-primary-active inline-flex h-[56px] w-[195px] items-center justify-center rounded-full text-[22px] font-normal text-white max-md:w-full max-md:text-lg'>
+                  <Link to='/'>В магазин</Link>
+                </Button>
               </div>
             </div>
           </div>

@@ -10,7 +10,11 @@ const RegisterContent = () => {
     <>
       <ModalRegisterForm open={register_otp} />
       <ModalRegisterProfileForm open={register_form} />
-      <ModalSuccessAuth open={register_success} title='Регистрация прошла успешно!' />
+      <ModalSuccessAuth
+        open={register_success}
+        title='Регистрация прошла успешно!'
+        modalKey='register_success'
+      />
     </>
   );
 };

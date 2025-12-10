@@ -222,3 +222,18 @@ export function findOptionIdBySelection(
 
   return fallback?.id;
 }
+
+/**
+ * Проверяет, есть ли у товара хотя бы один доступный вариант (stock_id)
+ * @param product - Товар для проверки
+ * @returns true, если есть доступный вариант, false - если нет
+ */
+export function hasAvailableStock(product: ProductLike): boolean {
+  if (!product?.stock_balances || product.stock_balances.length === 0) {
+    return false;
+  }
+
+  // Проверяем, есть ли хотя бы один доступный вариант через findOptionIdBySelection
+  const stockId = findOptionIdBySelection(product, undefined, undefined);
+  return stockId !== undefined;
+}

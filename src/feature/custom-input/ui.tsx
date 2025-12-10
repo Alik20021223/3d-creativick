@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import {
   Controller,
   Control,
@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 import { cn } from '@lib/utils';
 import { Input } from '@shadcn/input';
+import { formatPhoneMask, handlePhoneChange } from '@utils/phone-mask';
 
 type BaseProps = React.ComponentProps<typeof Input>;
 
@@ -45,6 +46,11 @@ export function CustomInput<T extends FieldValues>({
   const [show, setShow] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const isPassword = type === 'password';
+  
+  // Определяем, нужно ли применять маску телефона
+  const isPhoneField = useMemo(() => {
+    return type === 'tel' || (typeof name === 'string' && name.toLowerCase().includes('phone'));
+  }, [type, name]);
 
   return (
     <Controller
@@ -64,6 +70,14 @@ export function CustomInput<T extends FieldValues>({
             aria-invalid={!!fieldState.error}
             {...field}
             {...inputProps}
+            value={isPhoneField && field.value ? formatPhoneMask(field.value) : field.value}
+            onChange={(e) => {
+              if (isPhoneField) {
+                handlePhoneChange(e, field.onChange, inputRef);
+              } else {
+                field.onChange(e);
+              }
+            }}
             ref={(node) => {
               // RHF ref + локальный ref для фокуса после очистки
               field.ref(node);

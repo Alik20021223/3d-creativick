@@ -5,13 +5,21 @@ import { PRODUCT_URL } from '@entities/products/constant';
 import { SUPPORT_ROUTES } from '@entities/support/router';
 import { PROFILE_URL } from '@entities/profile/constant';
 import { PROFILE_ROUTES } from '@entities/profile/router';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import AppLayout from '@app/layout/appLayout';
 import ErrorPage from '@pages/404-page';
 import MaintenanceGate from './MaintenanceGate';
 import ProtectedRoute from './ProtectedRoute';
+import { LoadingSpinner } from '@shared/components/loading-spinner';
 
 const ShoppingCartPage = lazy(() => import('@pages/shopping-cart-page'));
+
+// Компонент для отображения загрузки страниц
+const PageLoader = () => (
+  <div className='flex min-h-screen items-center justify-center'>
+    <LoadingSpinner size='lg' />
+  </div>
+);
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +42,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/shopping-cart',
-            element: <ShoppingCartPage />,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <ShoppingCartPage />
+              </Suspense>
+            ),
           },
         ],
       },

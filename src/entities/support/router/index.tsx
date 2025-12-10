@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { SUPPORT_URL } from '@entities/support/constant';
 
 const SupportPage = lazy(() => import('@pages/support-page'));
+// const TechPage = lazy(() => import('@pages/tech-page'));
 const ItemSupportPage = lazy(() => import('@pages/item-support-page'));
 
 export const SUPPORT_ROUTES = [

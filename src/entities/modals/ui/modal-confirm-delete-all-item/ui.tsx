@@ -5,13 +5,14 @@ import React from 'react';
 interface ModalConfirmDeleteAllItemProps {
   open: boolean;
   setOpen: (v: boolean) => void;
+  onConfirm: () => void;
 }
 
-const ModalConfirmDeleteAllItem: React.FC<ModalConfirmDeleteAllItemProps> = ({ open, setOpen }) => {
-  const handleClick = () => {
-    setOpen(false);
-  };
-
+const ModalConfirmDeleteAllItem: React.FC<ModalConfirmDeleteAllItemProps> = ({
+  open,
+  setOpen,
+  onConfirm,
+}) => {
   return (
     <>
       <ModalLayout
@@ -20,11 +21,11 @@ const ModalConfirmDeleteAllItem: React.FC<ModalConfirmDeleteAllItemProps> = ({ o
         headerClassName='text-left'
         title='Очистить корзину?'
         footer={
-          <div className='flex w-full gap-3'>
+          <div className='flex w-full flex-col gap-3 md:flex-row'>
             <Button onClick={() => setOpen(false)} className='h-full flex-1 text-white'>
               Отмена
             </Button>
-            <Button onClick={handleClick} variant='outline' className='h-full flex-1'>
+            <Button onClick={onConfirm} variant='outline' className='h-full flex-1'>
               Да, очистить
             </Button>
           </div>

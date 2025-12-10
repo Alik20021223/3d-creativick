@@ -1,15 +1,15 @@
 import EmptyState from '@feature/empty-content';
 import ShoppingCartContent from '@widgets/profile/shopping-cart/shopping-cart-content';
 import miniBearCard from '@assets/bear-card-store.png';
-import { useAppStore } from '@app/store';
+import { useCartBadgeCount } from '@/entities/profile/utils/guest-cart/useCartBadgeCount';
 
 const ShoppingCartPage = () => {
-  const { cartItemsCount } = useAppStore();
+  const cartCount = useCartBadgeCount();
 
   return (
     <>
-      <section className='mt-15 rounded-t-[80px] bg-white md:py-20'>
-        {cartItemsCount > 0 ? (
+      <section className='mt-25 rounded-t-[80px] bg-white md:mt-15 md:py-20'>
+        {cartCount > 0 ? (
           <ShoppingCartContent />
         ) : (
           <EmptyState

@@ -1,8 +1,11 @@
 import bearPng from '@assets/bear-card-store.png';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '@shadcn/button';
+import { useAppStore } from '@/app/store';
 
 const EmptyCardDrawer = () => {
+  const { setExclusive } = useAppStore();
+
   return (
     <>
       <div className='h-full px-10 py-5'>
@@ -11,12 +14,12 @@ const EmptyCardDrawer = () => {
             Здесь ещё ничего нет
           </p>
 
-          <div className='flex flex-grow flex-col justify-center'>
-            <div className='my-4 flex justify-center'>
+          <div className='flex min-h-0 flex-grow flex-col'>
+            <div className='my-4 flex min-h-0 flex-1 items-center justify-center'>
               <img
                 src={bearPng}
                 alt='Пустая корзина'
-                className='h-[378px] w-auto select-none'
+                className='h-full w-auto select-none object-contain'
                 draggable={false}
               />
             </div>
@@ -27,8 +30,12 @@ const EmptyCardDrawer = () => {
             </p>
           </div>
 
-          <Button asChild className='mt-6 h-12 w-full rounded-full text-white'>
-            <a href='/catalog' className='flex items-center'>
+          <Button
+            onClick={() => setExclusive(null)}
+            asChild
+            className='mt-6 h-12 w-full rounded-full text-white'
+          >
+            <a href='/#shop' className='flex items-center'>
               В каталог <ChevronRight />
             </a>
           </Button>

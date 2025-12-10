@@ -38,7 +38,7 @@ export const useMainStore = create<MainState>()(
       page: 1,
       setPage: (v) => set({ page: v }),
       // sort
-      sort: 'price_asc',
+      sort: '',
       setSort: (v) => set({ sort: v }),
 
       // search

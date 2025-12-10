@@ -3,25 +3,21 @@
 
 import * as React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@shadcn/dialog';
-import { cn } from '@shared/lib/utils'; // опционально
+import { cn } from '@shared/lib/utils';
+import SuccessImg from '@assets/mini-bear-success.webp';
 
 export type ModalLayoutProps = {
-  /** Управляемое состояние модалки */
   open: boolean;
   onOpenChange: (v: boolean) => void;
+  successPay?: boolean;
 
-  /** Контент */
   title?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
-
   headerClassName?: string;
 
-  /** Кастомный футер (если передан, авто-кнопки не рисуются) */
   footer: React.ReactNode;
-
-  /** Поведение */
-  closeOnOverlay?: boolean; // по умолчанию true
+  closeOnOverlay?: boolean;
 };
 
 export function ModalLayout({
@@ -33,15 +29,51 @@ export function ModalLayout({
   headerClassName,
   footer,
   closeOnOverlay = true,
+  successPay = false,
 }: ModalLayoutProps) {
+  // 🔒 Локим скролл body, пока модалка открыта
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (open) {
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        // Принудительно восстанавливаем overflow при закрытии
+        // Используем пустую строку, чтобы вернуть исходное значение браузера
+        document.body.style.overflow = '';
+      };
+    } else {
+      // Если модалка закрывается, сразу восстанавливаем overflow
+      document.body.style.overflow = '';
+    }
+  }, [open]);
+
+  // единая разметка контента без внешней обёртки
+  const content = (
+    <>
+      {title && (
+        <DialogHeader>
+          <DialogTitle
+            className={cn('text-dark-blue text-[32px] leading-[110%] font-bold', headerClassName)}
+          >
+            {title}
+          </DialogTitle>
+        </DialogHeader>
+      )}
+
+      {/* основной контент */}
+      <div>{children}</div>
+
+      {/* футер */}
+      {footer && <DialogFooter className='min-h-14 w-full'>{footer}</DialogFooter>}
+    </>
+  );
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* Можно оставить возможность внешнего Trigger при желании:
-          <DialogTrigger asChild>...</DialogTrigger>
-        */}
-
       <DialogContent
-        className={cn('rounded-[40px] p-10 sm:max-w-2xl', className)}
+        className={cn('rounded-[40px] p-7.5 sm:max-w-2xl md:p-10', className)}
         onInteractOutside={(e) => {
           if (!closeOnOverlay) e.preventDefault();
         }}
@@ -49,26 +81,14 @@ export function ModalLayout({
           if (!closeOnOverlay) e.preventDefault();
         }}
       >
-        {title && (
-          <DialogHeader>
-            {title && (
-              <DialogTitle
-                className={cn(
-                  'text-dark-blue text-[32px] leading-[110%] font-bold',
-                  headerClassName,
-                )}
-              >
-                {title}
-              </DialogTitle>
-            )}
-          </DialogHeader>
+        {/* если successPay === true — оборачиваем в <div>, иначе выводим как есть */}
+        {successPay ? <div className='space-y-4'>{content}</div> : content}
+
+        {successPay && (
+          <div className='hidden md:block'>
+            <img src={SuccessImg} alt='success-img' />
+          </div>
         )}
-
-        {/* основной контент */}
-        <div>{children}</div>
-
-        {/* футер */}
-        {footer && <DialogFooter className='min-h-14 w-full'>{footer}</DialogFooter>}
       </DialogContent>
     </Dialog>
   );
