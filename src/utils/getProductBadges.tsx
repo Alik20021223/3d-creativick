@@ -10,8 +10,27 @@ const formatPrintTime = (minutes: number) => {
   return `${hours} ч ${restMin} мин`;
 };
 
-export const getProductBadges = (data: ProductCardType): Badge[] => {
+type BadgeOptions = { isSeries?: boolean };
+
+const getSeriesPrintTime = (data: ProductCardType) => {
+  if (typeof data.print_time_min === 'number') return data.print_time_min;
+
+  if (Array.isArray(data.models)) {
+    const total = data.models.reduce((acc, model) => {
+      return typeof model.print_time_min === 'number' ? acc + model.print_time_min : acc;
+    }, 0);
+    return total > 0 ? total : undefined;
+  }
+
+  return undefined;
+};
+
+export const getProductBadges = (data: ProductCardType, options?: BadgeOptions): Badge[] => {
   const badges: Badge[] = [];
+  const isSeries = options?.isSeries ?? false;
+
+  console.log(options);
+  
 
   if (typeof data.file_size_mb === 'number') {
     badges.push({
@@ -25,13 +44,15 @@ export const getProductBadges = (data: ProductCardType): Badge[] => {
     });
   }
 
-  if (typeof data.print_time_min === 'number') {
+  const printTime = isSeries ? getSeriesPrintTime(data) : data.print_time_min;
+
+  if (typeof printTime === 'number') {
     badges.push({
       icon: <AlarmClock className='size-5' />,
       text: (
         <div className='flex w-full justify-between gap-2'>
-          <span>Время печати модели</span>
-          <span className='font-semibold'>{formatPrintTime(data.print_time_min)}</span>
+          <span>{!isSeries ? 'Время печати серии' : 'Время печати модели'}</span>
+          <span className='font-semibold'>{formatPrintTime(printTime)}</span>
         </div>
       ),
     });

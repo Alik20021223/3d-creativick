@@ -15,7 +15,7 @@ interface OrderDetailItemProps {
   currencySymbol?: string;
 }
 
-const FILE_BASE_URL = import.meta.env.VITE_FILE_BASE_URL || ''; // <-- настроишь под своё API/сторедж
+const BACKEND_STORAGE = import.meta.env.VITE_BACKEND_STORAGE || '';
 
 const OrderDetailItem: React.FC<OrderDetailItemProps> = ({ detail, currencySymbol = '₽' }) => {
   const stock = detail?.stock;
@@ -82,9 +82,17 @@ const OrderDetailItem: React.FC<OrderDetailItemProps> = ({ detail, currencySymbo
   const buildFileUrl = (rawPath: string) => {
     if (!rawPath) return '';
     const isAbsoluteUrl = /^https?:\/\//i.test(rawPath);
-    return isAbsoluteUrl
-      ? rawPath
-      : `${FILE_BASE_URL.replace(/\/$/, '')}/${rawPath.replace(/^\//, '')}`;
+    if (isAbsoluteUrl) return rawPath;
+    
+    // Если есть BACKEND_STORAGE, используем его для построения полного URL
+    if (BACKEND_STORAGE) {
+      const baseUrl = BACKEND_STORAGE.replace(/\/$/, '');
+      const filePath = rawPath.replace(/^\//, '');
+      return `${baseUrl}/${filePath}`;
+    }
+    
+    // Если нет BACKEND_STORAGE, возвращаем путь как есть
+    return rawPath;
   };
 
   // общий хелпер скачивания

@@ -97,7 +97,7 @@ export const LEVELS: LevelDef[] = [
     key: 'novice',
     title: 'Новичок',
     threshold: 0,
-    perks: ['-3% на первый заказ'],
+    perks: [''],
     art: ImgCubick,
     nextDiscountLabel: '5%',
   },

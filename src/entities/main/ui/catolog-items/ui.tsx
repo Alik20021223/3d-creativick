@@ -66,24 +66,33 @@ export default function CatalogGrid({ topRef, products, isLoading }: CatalogGrid
           />
         </div>
         <div className='flex w-full gap-2 md:w-[336px]'>
-          <CustomDropdown
-            trigger={<ArrowDownWideNarrow />}
-            items={SortMock}
-            selectedValue={sort}
-            onSelect={setSort}
-            align='end'
-            side='bottom'
-            sideOffset={4}
-          />
-          <CustomSelect
-            options={PerPageSelect}
-            value={String(perPage)}
-            onValueChange={(v) => {
-              setPerPage(Number(v));
-              setPage(1);
-            }}
-            placeholder='Показывать по'
-          />
+          <div className='w-fit'>
+            <CustomDropdown
+              trigger={<ArrowDownWideNarrow />}
+              items={SortMock}
+              selectedValue={sort}
+              onSelect={(value) => {
+                setSort(value);
+                setPage(1);
+              }}
+              align='end'
+              side='bottom'
+              sideOffset={4}
+            />
+          </div>
+
+          <div className='flex-1'>
+            <CustomSelect
+              options={PerPageSelect}
+              value={String(perPage)}
+              onValueChange={(v) => {
+                setPerPage(Number(v));
+                setPage(1);
+              }}
+              classNameTrigger='!h-10 w-full rounded-[12px] bg-white shadow-xs'
+              placeholder='Показывать по'
+            />
+          </div>
         </div>
       </div>
 

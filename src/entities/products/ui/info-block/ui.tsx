@@ -56,7 +56,7 @@ const InfoBlock: React.FC<Props> = ({
 
   const { toggle } = useToggleFavorite();
 
-  const badges = getProductBadges(data);
+  const badges = getProductBadges(data, { isSeries });
 
   // Локальные состояния выбора
   const [color, setColor] = useState<string>(initialColor ?? '');

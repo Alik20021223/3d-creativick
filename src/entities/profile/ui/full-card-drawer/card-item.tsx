@@ -21,8 +21,6 @@ const CardItem: React.FC<CardItemProps> = ({ item, currency = '₽', onRemove })
     return null;
   }
 
-  console.log(item);
-
   /** =============================
    *      PRICE LOGIC
    * ============================== */

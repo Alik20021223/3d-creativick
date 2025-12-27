@@ -189,7 +189,7 @@ const VerticalThumbGallerySwiper: React.FC<Props> = ({
                 <button
                   type='button'
                   className='thumb grid place-items-center overflow-hidden rounded-[14px] border border-slate-200 transition'
-                  style={{ width: 140, height: 103 }}
+                  style={{ width: 140, height: 140 }}
                   aria-label={img.alt || `Превью ${i + 1}`}
                   onClick={() => {
                     safeThumbs?.slideTo(i);

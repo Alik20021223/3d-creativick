@@ -5,7 +5,6 @@ type Priced = {
 };
 
 export function calcPrice(p: Priced): number {
-  console.log(p);
   // базовая цена
   const sell = typeof p.sell_price === 'number' && Number.isFinite(p.sell_price) ? p.sell_price : 0;
 

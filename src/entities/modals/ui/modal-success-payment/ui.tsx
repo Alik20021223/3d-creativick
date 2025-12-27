@@ -5,6 +5,7 @@ import { ChevronRight } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useGetOrderById } from '@/entities/profile/hooks/getOrderById';
 import { OrderDetail } from '@/entities/profile/types/order';
+import { LoadingSpinner } from '@shared/components/loading-spinner';
 
 interface ModalSuccessPaymentProps {
   open: boolean;
@@ -28,7 +29,7 @@ const ModalSuccessPayment: React.FC<ModalSuccessPaymentProps> = ({
   const searchParams = new URLSearchParams(search);
   const orderId = searchParams.get('order_id');
 
-  const { data: orderData } = useGetOrderById(orderId || '');
+  const { data: orderData, isLoading: isLoadingOrder } = useGetOrderById(orderId || '');
 
   const fileUrlFromOrder = useMemo(() => {
     if (!orderData) return undefined;
@@ -51,15 +52,47 @@ const ModalSuccessPayment: React.FC<ModalSuccessPaymentProps> = ({
       digital.stock.product.model_assets_archive) as string | undefined;
   }, [orderData]);
 
+  console.log('fileUrlFromOrder', fileUrlFromOrder);
+  console.log('fileUrl', fileUrl);
+  
+
   // итоговый URL для скачивания: приоритет — пропсы, потом orderData
   const effectiveFileUrl = fileUrl || fileUrlFromOrder;
 
   // есть ли вообще что скачивать
-  const hasDigitalFile = Boolean(file || effectiveFileUrl);
+  // Важно: если есть явные пропсы (file/fileUrl), используем их сразу
+  // Если их нет, ждем завершения загрузки данных заказа, чтобы правильно определить тип контента
+  const hasExplicitFile = Boolean(file || fileUrl);
+  const hasDigitalFile = useMemo(() => {
+    // Если есть явные пропсы, используем их сразу
+    if (hasExplicitFile) {
+      return true;
+    }
+    
+    // Если нет явных пропсов, ждем загрузки данных
+    // Не делаем вывод до завершения загрузки
+    if (isLoadingOrder) {
+      return false; // Временно false, обновится после загрузки
+    }
+    
+    // После загрузки проверяем данные из заказа
+    return Boolean(effectiveFileUrl);
+  }, [hasExplicitFile, isLoadingOrder, effectiveFileUrl]);
+
+  console.log('hasDigitalFile', hasDigitalFile);
+  console.log('isLoadingOrder', isLoadingOrder);
+  console.log('hasExplicitFile', hasExplicitFile);
 
   const email = 'info@3dkreativik.ru';
 
-  const description: React.ReactNode = hasDigitalFile ? (
+  const description: React.ReactNode = useMemo(() => {
+    // Пока идет загрузка и нет явных пропсов, ждем завершения загрузки
+    // чтобы показать правильное описание
+    if (!hasExplicitFile && isLoadingOrder) {
+      return null; // Не показываем описание до загрузки данных
+    }
+
+    return hasDigitalFile ? (
     <>
       Печатайте, учитесь, творите! Чтобы скачать серию, зайдите в личный кабинет, откройте раздел
       «Заказы» откройте заказ "{orderId}" и нажмите «Детали заказа». Если возникнут сложности — мы
@@ -71,14 +104,25 @@ const ModalSuccessPayment: React.FC<ModalSuccessPaymentProps> = ({
     </>
   ) : (
     <>
-      Ваш заказ обрабатывается, мы свяжемся с вами в ближайшее время. Если возникнут сложности,
-      просто напишите нам на{' '}
+      Благодарим за обращение!
+      <br />
+      Ваш заказ принят и будет отправлен после новогодних каникул - 12 января.
+      <br />
+      Желаем волшебных праздников и вдохновения для создания 3D-шедевров в Новом Году!
+      <br />
+      <br />
+      Спасибо, что Вы с нами!
+      <br />
+      С уважением, команда «3D Креативик».
+      <br />
+      Если возникнут вопросы, просто напишите нам на{' '}
       <a href={`mailto:${email}`} className='text-primary underline'>
         {email}
       </a>
-      . Все ваши покупки вы можете отследить в личном кабинете.
+      .
     </>
   );
+  }, [hasExplicitFile, isLoadingOrder, hasDigitalFile, orderId, email]);
 
   return (
     <ModalLayout
@@ -98,7 +142,14 @@ const ModalSuccessPayment: React.FC<ModalSuccessPaymentProps> = ({
     >
       <div className='space-y-2'>
         <p className='text-secondary-text text-lg'>Поздравляем с покупкой!</p>
-        <p className='text-secondary-text'>{description}</p>
+        {!hasExplicitFile && isLoadingOrder ? (
+          <div className='flex items-center gap-3 py-2'>
+            <LoadingSpinner size='sm' variant='dots' />
+            <p className='text-secondary-text'>Загрузка информации о заказе...</p>
+          </div>
+        ) : (
+          description && <p className='text-secondary-text'>{description}</p>
+        )}
       </div>
     </ModalLayout>
   );
